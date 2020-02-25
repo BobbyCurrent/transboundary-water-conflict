@@ -1,0 +1,61 @@
+---
+title: "Final Project Data"
+author: "Wyatt Hurt"
+date: "02/24/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+# Installing necessary packages.
+
+library(gt)
+library(readr)
+library(janitor)
+library(dplyr)
+library(lubridate)
+library(tidyverse)
+```
+
+```{r events, include=FALSE}
+
+events <- read_csv("events_raw.csv") %>%
+  clean_names() %>%
+  rename(source_2 = source_source)
+  # mutate(date = as.Date(date), doc_date = as.Date(doc_date))
+  # select(!c(id, unique_id, id1, )) %>% (don't want to use this)
+
+# how to clean up column contents (formulas typed wrong, "n/a - text" in number columns, etc.)
+# add comments with explanation of columns
+# recode yes/no as 1/0
+# split up list of countries
+
+```
+
+```{r organizations, include=FALSE}
+
+organizations <- read_csv("organizations_raw.csv") %>%
+  clean_names()
+
+# add comments with explanation of columns
+# clean question mark characters out of observations
+# recode yes/no as 1/0
+# changed typed n/a, dots, blanks, etc to actual n/a
+# split up type, list of countries
+
+```
+
+```{r treaties, include=FALSE}
+
+treaties <- read_csv("treaties_raw.csv") %>%
+  clean_names()
+
+# add comments with explanation of columns
+# need to rename/select columns
+#clean question mark characters out of observations
+# recode yes/no as 1/0
+# changed typed n/a, dots, blanks, etc to actual n/a
+# how to split out signatories, basin members
+
+```
