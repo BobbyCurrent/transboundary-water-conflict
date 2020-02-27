@@ -16,27 +16,38 @@ library(janitor)
 library(dplyr)
 library(lubridate)
 library(tidyverse)
+library(naniar)
+library(wbstats)
+library(readxl)
 ```
 
 ```{r events, include=FALSE}
+na_strings <- c("NA", "N.A.", "n/a", "?location", "?relvant", ".", " ")
 
-events <- read_csv("events_raw.csv") %>%
+# Data already in tidy format. 
+
+events <- read_csv("events_raw.csv", 
+    col_types = 
+      # Why are dates reading in as NA?
+      cols(DATE = col_date(format = "%m/%d/%Y"), 
+      DOC_DATE = col_date(format = "%m/%d/%Y"))) %>%
   clean_names() %>%
-  rename(source_2 = source_source)
-  # mutate(date = as.Date(date), doc_date = as.Date(doc_date))
-  # select(!c(id, unique_id, id1, )) %>% (don't want to use this)
+  replace_with_na_all(condition = ~.x %in% na_strings) %>%
+  select(!c(id, id1, event_master, doc_date))
 
+# how will I join these tables? bccode, but what about dates?
 # how to clean up column contents (formulas typed wrong, "n/a - text" in number columns, etc.)
 # add comments with explanation of columns
-# recode yes/no as 1/0
-# split up list of countries
+# split up list of countries?
 
 ```
 
 ```{r organizations, include=FALSE}
 
+
 organizations <- read_csv("organizations_raw.csv") %>%
-  clean_names()
+  clean_names() %>%
+  replace_with_na_all(condition = ~.x %in% na_strings)
 
 # add comments with explanation of columns
 # clean question mark characters out of observations
@@ -49,7 +60,9 @@ organizations <- read_csv("organizations_raw.csv") %>%
 ```{r treaties, include=FALSE}
 
 treaties <- read_csv("treaties_raw.csv") %>%
-  clean_names()
+  clean_names() %>%
+  replace_with_na_all(condition = ~.x %in% na_strings) %>%
+  select(!c(entry_id))
 
 # add comments with explanation of columns
 # need to rename/select columns
@@ -58,4 +71,27 @@ treaties <- read_csv("treaties_raw.csv") %>%
 # changed typed n/a, dots, blanks, etc to actual n/a
 # how to split out signatories, basin members
 
+```
+
+```{r stats, include=FALSE}
+
+# User guide for wbstats() http://127.0.0.1:15723/library/wbstats/doc/Using_the_wbstats_package.html
+pop <- wb(indicator = "SP.POP.TOTL", startdate = 1900, enddate = 2015) %>%
+  select(code = iso3c, date, pop = value)
+
+gdp <- wb(indicator = "NY.GDP.PCAP.CD", startdate = 1900, enddate = 2015) %>%
+  select(code = iso3c, date, gdp = value)
+
+trade_percent_gdp <- wb(indicator = "TG.VAL.TOTL.GD.ZS", startdate = 1900, enddate = 2015) %>%
+  select(code = iso3c, date, trade_percent_gdp = value)
+
+```
+
+```{r join, include=FALSE}
+
+joined <- treaties %>%
+  full_join(organizations, by = "bccode", suffix = c("_treaties", "_orgs")) %>%
+  full_join(events, by = c("bccode" = "bccode1"), suffix = c("_treaties/orgs", "_events"))
+
+# bccode2 also transfered, so should be okay that only merging based on bccode 1
 ```

@@ -1,0 +1,30 @@
+---
+title: "About"
+author: "Wyatt Hurt"
+date: "02/25/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Background
+In recent years, journalists, policymakers, and academics have become increasingly worried about the implications of climate-induced water scarcity for international conflict. In the face of [Water scarcity statistic], some have suggested that countries will turn to violent conflict as a solution to preserve their water supplies. In contrast to those speaking of "water wars," a group of academics (led by Elinor Ostrom, who won the Nobel Prize in Economics for her work in this area) has suggested that increased scarcity will drive states to cooperate with one another as they attempt to govern shared resources. 
+
+While many academics have conducted in-depth case studies of water governanc in transboundary zones, including the Jordan River, Nile River, and Indus River, relatively few quantitative researchers have attempted to establish causal inference about the effect of resource scarcity on water governance outcomes. This project aims to fill that research gap, applying new methods to existing datasets to analyze water governance outcomes over the past 200 years to answer the following question: Is natural resource scarcity correlated with cooperation or conflict between states?
+
+## The Data
+This project heavily draws on the following datasets from the Oregon State University [Program in Water Conflict Management and Transformation](https://transboundarywaters.science.oregonstate.edu/content/data-and-datasets):^[These descriptions are quoted directly from the OSU website.]
+
+* **International Freshwater Treaties Database:** A database of over 600 international, freshwater-related agreements, covering the years 1820 to 2007.
+* **International Water Events Database:** A database documenting historical international water relations from 1948 to 2008.
+* **International River Basin Organization (Database):** A database, compiled by Susanne Schmeier, of the currently known international river basin organizations coded by basin and countries involved, including level and type of collaboration, principal issue(s), date of creation, a short description of the organization and the source.
+
+This project also extensively draws on data from the [World Bank](https://data.worldbank.org), accessed using the [wbstats() package](https://cran.r-project.org/web/packages/wbstats/index.html) in R.
+
+## Acknowledgements
+This project builds on research I have done under the supervision of Professor William Clark, Professor Rosie Bsheer, Dr. Michaela Thompson, and Dr. Alicia Harley. I am grateful for their support during the research process. I am also grateful for the guidance provided David Kane and Alyssa Huberts as I learned the art of data science and developed this project.
+
+## About Me
+I am a third-year undergraduate at Harvard University, pursuing a joint degree in Environmental Science & Public Policy and Near Eastern Languages & Civilizations. My research (and upcoming senior thesis) focuses on mechanisms for improving the governance of transboundary natural resources in conflict zones. You can reach me at [wyatthurt@college.harvard.edu](mailto:wyatthurt@college.harvard.edu). 
