@@ -1,7 +1,7 @@
 ---
 title: "Final Project Data"
 author: "Wyatt Hurt"
-date: "02/24/2020"
+date: "02/28/2020"
 output: html_document
 ---
 
@@ -22,9 +22,9 @@ library(dplyr)
 
 # The "events" data is already in tidy format, but it is very messy. For now, I
 # selected the columns relevant to my analysis, set each column to the correct
-# type, and recoded appropriate values as NA. Once it becomes clearer which data is relevant to my
-# final product, I will be able to further narrow down columns and perform even
-# more rigorous data cleaning.
+# type, and recoded appropriate values as NA. Once it becomes clearer which data
+# is relevant to my final product, I will be able to further narrow down columns
+# and perform even more rigorous data cleaning.
 
 na_strings <- c("NA", "N.A.", "n/a", "?location", "?relvant", ".", " ")
 
@@ -36,8 +36,9 @@ events <- read_csv("raw_data/events_raw.csv") %>%
 
 # I spent several hours attempting to recode messy observations in the
 # "event_type" column, before realizing that two other columns ("issue_type1"
-# and "issue_type2") provided the same data in a format that was much easier to
-# parse.
+# and "issue_type2") provided what I think is the same data in a format that was
+# much easier to parse. However, the code is included below in case it is of use
+# later.
 
 # See raw_data/events_codebook.doc for a detailed description of each column.
 ```
@@ -56,11 +57,11 @@ organizations <- read_csv("raw_data/organizations_raw.csv") %>%
 
 ```{r treaties, include=TRUE}
 
-# The "treaties" data is also already in tidy format. It contains many, many
-# columns (114), and it is unclear precisely which will be most relevant to my
-# analysis. Thus, I refrained from recoding any of their values until I have a
-# better idea where I want to take the final project. For now, I replaced the
-# appropriate values with NA and selected the relevant columns.
+# The "treaties" data is also already in tidy format. It contains many columns
+# (114), and it is unclear precisely which will be most relevant to my analysis.
+# Thus, I refrained from recoding any of their values until I have a better idea
+# where I want to take the final project. For now, I replaced the appropriate
+# values with NA and selected the relevant columns.
 
 treaties <- read_csv("raw_data/treaties_raw.csv") %>%
   clean_names() %>%
@@ -72,10 +73,10 @@ treaties <- read_csv("raw_data/treaties_raw.csv") %>%
 
 ```{r stats, include=TRUE}
 
-#I will use the wbstats() package to pull World Bank data for the countries
-#involved in water treaties and conflicts. I expect that the most relevant
-#measures will be population, GDP and trade as a percentage of GDP (which could
-#serve as a rough proxy for international integration).
+# I will use the wbstats() package to pull World Bank data for the countries
+# involved in water treaties and conflicts. I expect that the most relevant
+# measures will be population, GDP and trade as a percentage of GDP (which could
+# serve as a rough proxy for international integration).
 
 pop <- wb(indicator = "SP.POP.TOTL", startdate = 1900, enddate = 2015) %>%
   select(code = iso3c, date, pop = value)
@@ -92,20 +93,19 @@ trade_percent_gdp <- wb(indicator = "TG.VAL.TOTL.GD.ZS", startdate = 1900, endda
 
 ```{r join, include=TRUE}
 
-# Now, I join my data together into one table. Performing all these join
+# Now, I joined my data together into one table. Performing all these join
 # operations with already large datasets requires a significant amount of time
 # and memory (in fact, my computer runs out of memory before completing this
 # code chunk. Before these operations will be usable, I will need to narrow down
 # the variables and observations I am carrying over from the previous data
-# tables. I suppose it is also possible that I could join my data into 2 or 3
-# separate tables, but I am interested in analyzing and plotting these data as a
-# unit, so ideally they will be in one table.
+# tables.
 
 joined <- treaties %>%
   full_join(organizations, by = "bccode", suffix = c("_treaties", "_orgs")) %>%
   full_join(events, by = c("bccode" = "bccode1"), suffix = c("_treaties/orgs", "_events")) %>%
 
-# bccode2 transfers as its own column, so it should be okay that I am only merging based on bccode 1
+# bccode2 transfers as its own column, so it should be okay that I am only
+# merging by bccode 1.
   
   left_join(pop, by = c("ccode1" = "code"), suffix = c("_", "_c1")) %>%
   left_join(pop, by = c("ccode2" = "code"), suffix = c("_", "_c2")) %>%
