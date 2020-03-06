@@ -1,0 +1,66 @@
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(ggmap)
+library(rgdal)
+library(rgeos)
+library(maptools)
+library(tmap)
+library(sf)
+library(RgoogleMaps)
+library(leaflet)
+```
+
+```{r data}
+basemap <- get_map(location = c(lon = 35.7196433, lat = 32.65874), zoom = 1, scale = 2, maptype = "terrain", size=c(480,1000))
+
+basins_geometry <- readOGR("geometry/wb_major_basins", layer = "Major_Basins_of_the_World")
+```
+
+```{r}
+ggmap(basemap) + 
+  geom_polygon(aes(x = long, y = lat, group = id), data = basins_geometry, color = "white", fill = "orangered4", alpha = .4, size = .2) + 
+  scale_y_continuous(limits=c(-55, 70.0)) + 
+  labs(title = "Major River Basins of the World", subtitle = "Grouped by XXX", caption = "Source: World Bank 2017, Google Maps")
+```
+
+
+```{r}
+leaflet() %>% 
+  addProviderTiles(providers$CartoDB.Positron) %>% 
+  setView(lng = 0, lat=30,zoom=1.5) %>% 
+  addPolygons(data = basins_geometry, weight=1, col = 'blue')
+```
+
+basins_geometry <- st_read(
+  "geometry/wb_major_basins/Major_Basins_of_the_World.shp") %>%
+  filter(NAME == "Jordan")
+
+Fill based on numbe of events
+```{r conflict over time}
+ggplot(events, aes(year)) + geom_histogram() 
+
+basins_geometry <- st_read(
+  "geometry/wb_major_basins/Major_Basins_of_the_World.shp") %>%
+  filter(NAME == "Jordan")
+
+ggplot() + 
+  geom_sf(data = basins_geometry) + 
+  ggtitle("AOI Boundary Plot") + 
+  coord_sf()
+```
+
+```{r isr-pal}
+jord <- joined %>%
+  filter(bcode == "JORD")
+
+ggplot(jord, aes(year)) + geom_histogram()
+
+# consistent with period of stagnation that I've written about previously
+```
+
+## Project plan:
+1. Water conflict, treaties, etc. broadly. What are the spatial and temporal trends? 
+2. Case study #1: Jordan River Basin
+3. Case study #2: Indus? 
+4. Case study #3: ? 
+5. Summary/conclusions

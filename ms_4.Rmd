@@ -1,0 +1,95 @@
+---
+title: "Milestone 4"
+author: "Wyatt Hurt"
+date: "3/5/2020"
+output: html_document
+---
+(Link to GitHub repository)[https://github.com/wyatthurt/gov1005-final-project].
+
+This week, I began manipulating my data and turning it into useful information. I especially focused on creating "demo visualizations," where I figure out how to use necessary packages in R and manipulate my data. As I continue with the project, I will be able to replicate the architectures of these visualizations and apply them to different components of the project. 
+
+## Mapping 
+I am really interested in spatial data and am hoping to incorporate maps into my project. I began by downloading river basin shapefiles from the World Bank. It took me several different tries (and packages) before I figured out that readOGR(), from the rgdal package, was the best option, despite the fact that it produces a strange output: a PolygonsDataFrame. Wrestling with this strange format became more important when actually creating my demo map.
+```{r setup_data, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+
+# Running a script to gather my data (slightly modified from milestone 3).
+
+library(rmarkdown)
+render("gather.R")
+
+# Importing World Bank shapefiles for the world's major river basins: https://datacatalog-worldbank-org.ezp-prod1.hul.harvard.edu/dataset/major-river-basins-world. 
+
+basins_geometry <- readOGR("geometry/wb_major_basins", layer = "Major_Basins_of_the_World") 
+```
+
+Initially, I used the get_map() function and the ggmap package to create a static map of the world's river basins. However, it produced a low-resolution product, and I wanted my audience to be able to interact with the map. I found a library called 'leaflet" that makes this possible. I decided to create a demo plot of the world's river basins, colored by their relative level of water conflict since 1948 (when the OSU dataset begins). 
+```{r mapping}
+
+# Create a tibble with a list of events with non-conflict events filtered out. I
+# need to refine my filtering approach, but using these four terms works as an
+# initial proxy for my demo case. To be able to merge this data with my
+# polygons, I produce a per-basin count of conflict-related events.
+
+events_n <- joined %>%
+  filter(str_detect(event_summary, c("conflict", "war", "violence", "military"))) %>%
+  distinct(date, .keep_all = TRUE) %>%
+  group_by(basin_name) %>%
+  count() %>%
+  rename(num_events = n)
+
+# I then merge these counts with my polygon data. Leaflet throws an error if
+# your variable column includes NA values, so I replaced all NA values.
+
+basins_geometry@data <- merge(basins_geometry@data, events_n, by.x = "NAME", by.y = "basin_name") %>%
+  replace_na(list(num_events = 0))
+
+# Defining my leaflet color bin.
+
+binpal <- colorBin("Blues", basins_geometry$num_events, 9, pretty = FALSE)
+
+# Creating my leaflet map, using a simple CartoDB basemap. Zoomed out and
+# centered the map as is standard for world maps, and added my polygons,
+# changing their color based on their relative number of events. Added a legend.
+
+leaflet() %>% 
+  addProviderTiles(providers$CartoDB.Positron) %>% 
+  setView(lng = 0, lat=30,zoom=1.5) %>% 
+  addPolygons(data = basins_geometry, stroke = FALSE, smoothFactor = 0.2, fillOpacity = .6,
+    color = ~binpal(num_events)) %>%
+    addLegend("bottomright", pal = binpal, values = basins_geometry$num_events, title = "# of water conflicts since 1948", opacity = 1)
+```
+
+## Case Study: Jordan River Basin
+I plan to present both aggregate data and specific case studies in my project. To test my ability to manipulate the data and produce basin-specific visualizations, I filtered for water conflict events in the Jordan River Basin.
+```{r jor_data}
+jord <- joined %>%
+  filter(bcode == "JORD") %>%
+  filter(str_detect(event_summary, c("conflict", "war", "violence", "military"))) %>%
+  arrange(date) %>%
+  distinct(date, .keep_all = TRUE)
+```
+
+Then, I created a frequency histogram of these events over time. The relatively calm period in the 1970s and 80s is consistent with a period of stagnation that I've written about previously for other research projects.
+```{r jor_hist}
+ggplot(jord, aes(year)) + 
+  geom_histogram(bins = 60) + 
+  labs(title = "Water Conflict Events in the Jordan River Basin, 1948-2008", 
+       caption = "Source: OSU Program in Water Conflict Management and Transformation") + 
+  xlab("Year") + ylab("Count") + 
+  theme_classic()
+```
+<br><br>
+Next, I created a table that displays the conflict events in the basin. After looking at the events being returned, it seems like a more accurate title might be "Water Conflict Events *and Rhetoric*", since a number of the "events" in the OSU databsae are not so much violent conflict as violent rhetoric and/or negotiations to avoid conflict. I have conducted research on the Jordan River Basin for over a year now, and in my opinion these events appropriately characterize the water conflict and negotiations that have occured over this period.
+```{r jor_table}
+jord_gt <- jord %>%
+  select(date, dyad_code, event_summary)
+
+gt(jord_gt) %>%
+  tab_header("Water Conflict Events in the Jordan River Basin, 1948-2008") %>%
+  cols_label(date = "Date", 
+             dyad_code = "Conflict Dyad", 
+             event_summary = "Event Summary")
+```
+<br><br>
+Next week, I hope to expand the depth and breadth of my analysis of the Jordan River Basin, and also develop case studies of the Mekong, Indus, and Colorado river basins.
