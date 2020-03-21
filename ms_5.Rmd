@@ -23,7 +23,7 @@ render("gather.R")
 ## This Week's Progress
 I worked on three main projects this week: 
 
-1. **Visualizing my data spatially:** After submitting last week's milestone, I realized that my leaflet map was plotting basins in the completely wrong locations. I spent an inordinate amount of time trying to pass arguments into readOGR(), changing my coordinate systems, and using different mapping packages before I finally figured out that the problem was rather simple: I was trying to join my data onto the spatial polygons using merge(), when I should have been using join(). Apparently, merge() does not preserve the original order of the joined rows, which means that it scrambles your data and prevents it from being plotted correctly by leaflet(). Using join() preserves the row order, and ensures that leaflet() can plot SpatialPolygonsDataFrame objects correctly. In addition to correcting the polygons, I added 6 layers to my map, described in greater detail below. In the future, I will likely add 3 additional layers and split this one map into multiple visualizations, so that there are only 2-3 datasets per map. For now, as a "proof of concept," I am leaving them in the same map. 
+1. **Visualizing my data spatially:** After submitting last week's milestone, I realized that my leaflet map was plotting basins in the completely wrong locations. I spent an inordinate amount of time trying to pass arguments into readOGR(), changing my coordinate systems, and using different mapping packages before I finally figured out that the problem was rather simple: I was trying to join my data onto the spatial polygons using merge(), when I should have been using join(). Apparently, merge() does not preserve the original order of the joined rows, which means that it scrambles data and prevents it from being plotted correctly by leaflet(). Using join() preserves the row order, and ensures that leaflet() can plot SpatialPolygonsDataFrame objects correctly. In addition to correcting the polygons, I added 6 layers to my map, described in greater detail below. In the future, I will likely add 3 additional layers and split this one map into multiple visualizations, so that there are only 2-3 datasets per map. For now, as a "proof of concept," I am leaving them in the same map. 
 2. **Twitter data:** To supplement the high-level aggregated data provided by OSU and the World Bank, I experimented with scraping Tweets related to each of my river basin case studies, to gain insight into the discourses surrounding them. After looking through the data and experimenting with several different approaches, I do not think that Tweets will provide helpful information for my analysis (surprisingly, river basins are not a hot topic on Twitter). Though I left my Tweet scraping code for the Jordan River Basin in this document (so that I have a record in case I hope to return to it in the future), I now plan to instead scrape news sources for my case study basins to conduct sentiment analysis. I plan to model my approach on the method found [here](https://www.r-bloggers.com/scraping-google-news-with-rvest/). 
 3. **Organizing and consolidating my code:** Looking ahead to the Shiny app that needs to be created for the next milestone, I wanted to consolidate and organize my code. I modified my "gather.R" script and moved relevant components from past milestones to this milestone. I also converted much of my code for the Jordan River Basin into functions, so that it could easily be replicated for other basins. 
 
@@ -54,13 +54,13 @@ This research also uses data from the [World Bank](https://data.worldbank.org), 
 <br>
 
 ## Overview 
-We begin by exploring the broad spatial trends that define water conflict. The interactive map below includes five layers (which can be toggled using the "layers" button in the top right corner): 
+We begin by exploring the broad spatial trends that define water conflict. The interactive map below includes six layers (which can be toggled using the "layers" button in the top right corner): 
 
 * **Country Borders:** United Nations international borders.
 * **Conflict Events:** The number of water conflicts since 1948, for each river basin. Hover over a river basin for more details.
 * **Treaties:** The number of treaties negotiated between states since 1948, for each river basin. Hover over a river basin for more details.
 * **Population (2015):** Population per country.
-* **GDP (2015):* Gross Domestic Product per country, which serves as a rough approximation of economic development for the purposes of my study.
+* **GDP (2015):** Gross Domestic Product per country, which serves as a rough approximation of economic development for the purposes of my study.
 * **Trade % GDP (2015):** The percentage of GDP made up by international trade per country, which serves as a rough approximation of globalization for the purposes of my study.
 
 In the future, I will also map the following variables: 
@@ -312,7 +312,7 @@ leaflet(width = "100%") %>%
 <br>
 
 ## Case Studies {.tabset .tabset-fade}
-While high-level, aggregate datasets are useful for making causal inference, it is worth testing the conclusions drawn above (in the statistical analysis section) by applying them to specific case studies. This study examines the Jordan River, Colorado River, Mekong River, and Indus River basins. These cases are roughly comparable demographically and geopolitically, but have wide variability in the number of water conflicts they have experienced.
+While high-level, aggregate datasets are useful for making causal inference, it is worth testing the conclusions drawn above (in the statistical analysis section) by applying them to micro-level case studies. This study examines the Jordan River, Colorado River, Mekong River, and Indus River basins. These cases are roughly comparable demographically and geopolitically, but have wide variability in the number of water conflicts they have experienced.
 
 ```{r events_functions}
 
@@ -411,6 +411,7 @@ plot_org_table(jord_orgs) %>%
 #### Twitter Sentiments
 ```{r twitter}
 # https://utstat.toronto.edu/~nathan/teaching/sta4002/Class1/scrapingtwitterinR-NT.html
+# Create a word cloud? 
 
 fn_twitter <- searchTwitter("jordan + river", n=18000,
 # geocode="39.5501,-105.7821,500km",
@@ -448,9 +449,6 @@ tweet_words_interesting %>%
   summarise(n=n()) %>%
   gt() %>% 
   tab_header(title = "Sentiment Analysis", subtitle = "Words Appearing Alongside 'Jordan River' on Twitter (2018)")
-
-# Create a word cloud? 
-
 ```
 <br>
 
