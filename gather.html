@@ -11,7 +11,7 @@
 
 <meta name="author" content="wyatthurt" />
 
-<meta name="date" content="2020-03-06" />
+<meta name="date" content="2020-03-20" />
 
 <title>gather.R</title>
 
@@ -365,7 +365,7 @@ summary {
 
 <h1 class="title toc-ignore">gather.R</h1>
 <h4 class="author">wyatthurt</h4>
-<h4 class="date">2020-03-06</h4>
+<h4 class="date">2020-03-20</h4>
 
 </div>
 
@@ -384,8 +384,42 @@ library(leaflet)
 library(sf)
 library(rgdal)
 library(gt)
+library(tidytext)
+library(twitteR)
 
-#################### Events ##############################
+# I began by downloading river basin shapefiles from the World Bank. It took me
+# several different tries (and packages) before I figured out that readOGR(),
+# from the rgdal package, was the best option, despite the fact that it produces
+# a strange output: a PolygonsDataFrame. Wrestling with this strange format
+# became more important when creating my demo map. Source link:
+# https://datacatalog.worldbank.org/dataset/major-river-basins-world
+
+basins_geometry &lt;- readOGR(&quot;geometry/wb_major_basins&quot;, layer = &quot;Major_Basins_of_the_World&quot;)</code></pre>
+<pre><code>## OGR data source with driver: ESRI Shapefile 
+## Source: &quot;/Users/wyatthurt/GoogleDrive/3.2_spring_2020/GOV1005/final/geometry/wb_major_basins&quot;, layer: &quot;Major_Basins_of_the_World&quot;
+## with 254 features
+## It has 15 fields</code></pre>
+<pre class="r"><code># I also downloaded country shapefiles from the ArcGIS Hub. Source link:
+# https://hub.arcgis.com/datasets/a21fdb46d23e4ef896f31475217cbb08_1
+
+countries_geometry &lt;- readOGR(&quot;geometry/countries_wgs84&quot;, layer = &quot;Countries_WGS84&quot;)</code></pre>
+<pre><code>## OGR data source with driver: ESRI Shapefile 
+## Source: &quot;/Users/wyatthurt/GoogleDrive/3.2_spring_2020/GOV1005/final/geometry/countries_wgs84&quot;, layer: &quot;Countries_WGS84&quot;
+## with 251 features
+## It has 2 fields
+## Integer64 fields read as strings:  OBJECTID</code></pre>
+<pre class="r"><code># I tried the following approaches when Deprecated approaches
+# CRS(&quot;+proj=longlat +datum=WGS84&quot;) already has CRS arguments
+# reproject &lt;- CRS(&quot;+proj=robin +lon_0=0 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs&quot;)
+# basins_geometry &lt;- st_transform(basins_geometry, &quot;+proj=longlat +ellps=WGS84 +datum=WGS84&quot;)
+
+consumer_key &lt;- &quot;cWehMlSV3XSkYPOmx8uTbVHkB&quot;
+consumer_secret &lt;- &quot;xTbcXiXSNH7fEm7P6kh81Kkf5XTUdlHp3sysCukt5JeewMmqtN&quot;
+access_token &lt;- &quot;2722523293-qNjrF5uWr7VDnSuSSzzJr50bEWChsigqD2g6wNl&quot;
+access_secret &lt;- &quot;EihgBXI9Ew8vSfNPjsjzaqP5VtWv0gxvYCAjv6fvRMs5F&quot;
+setup_twitter_oauth(consumer_key, consumer_secret, access_token, access_secret)</code></pre>
+<pre><code>## [1] &quot;Using direct authentication&quot;</code></pre>
+<pre class="r"><code>#################### Events ##############################
 
 # The &quot;events&quot; data is already in tidy format, but it is very messy. For now, I
 # selected the columns relevant to my analysis, set each column to the correct
@@ -438,6 +472,10 @@ treaties &lt;- read_csv(&quot;raw_data/treaties_raw.csv&quot;) %&gt;%
 
 #################### World Bank Stats ##############################
 
+# Import World Bank country codes:
+# https://wits-worldbank-org.ezp-prod1.hul.harvard.edu/wits/wits/witshelp/content/codes/country_codes.htm):
+wb_codes &lt;- read_csv(&quot;raw_data/wb_country_codes.csv&quot;)
+
 # I will use the wbstats() package to pull World Bank data for the countries
 # involved in water treaties and conflicts. I expect that the most relevant
 # measures will be population, GDP and trade as a percentage of GDP (which could
@@ -445,15 +483,18 @@ treaties &lt;- read_csv(&quot;raw_data/treaties_raw.csv&quot;) %&gt;%
 
 pop &lt;- wb(indicator = &quot;SP.POP.TOTL&quot;, startdate = 1900, enddate = 2015) %&gt;%
   select(code = iso3c, date, pop = value) %&gt;%
-  mutate(date = as.double(date))
+  mutate(date = as.double(date)) %&gt;%
+  left_join(wb_codes, by = c(&quot;code&quot; = &quot;country_code&quot;))
 
 gdp &lt;- wb(indicator = &quot;NY.GDP.PCAP.CD&quot;, startdate = 1900, enddate = 2015) %&gt;%
   select(code = iso3c, date, gdp = value) %&gt;%
-  mutate(date = as.double(date))
+  mutate(date = as.double(date)) %&gt;%
+  left_join(wb_codes, by = c(&quot;code&quot; = &quot;country_code&quot;))
 
 trade_percent_gdp &lt;- wb(indicator = &quot;TG.VAL.TOTL.GD.ZS&quot;, startdate = 1900, enddate = 2015) %&gt;%
   select(code = iso3c, date, trade_percent_gdp = value) %&gt;%
-  mutate(date = as.double(date))
+  mutate(date = as.double(date)) %&gt;%
+  left_join(wb_codes, by = c(&quot;code&quot; = &quot;country_code&quot;))
 
 # See http://127.0.0.1:15723/library/wbstats/doc/Using_the_wbstats_package.html
 # for a user guide on using the wbstats() package.

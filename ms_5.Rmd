@@ -1,0 +1,550 @@
+---
+title: "Milestone 5"
+author: "Wyatt Hurt"
+date: "03/20/2020"
+output: html_document
+---
+
+```{r setup_data, include = FALSE}
+
+# I turned off warnings and messages temporarily for the purpose of knitting
+# this document. Since I am actively in the process of manipulating data, I have
+# not been able to eliminate the sources of all these warnings and messages.
+
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+
+# Running a script to gather and clean my data (this script has been modified
+# since milestone 4):
+
+library(rmarkdown)
+render("gather.R")
+```
+
+## This Week's Progress
+I worked on three main projects this week: 
+
+1. **Visualizing my data spatially:** After submitting last week's milestone, I realized that my leaflet map was plotting basins in the completely wrong locations. I spent an inordinate amount of time trying to pass arguments into readOGR(), changing my coordinate systems, and using different mapping packages before I finally figured out that the problem was rather simple: I was trying to join my data onto the spatial polygons using merge(), when I should have been using join(). Apparently, merge() does not preserve the original order of the joined rows, which means that it scrambles your data and prevents it from being plotted correctly by leaflet(). Using join() preserves the row order, and ensures that leaflet() can plot SpatialPolygonsDataFrame objects correctly. In addition to correcting the polygons, I added 6 layers to my map, described in greater detail below. In the future, I will likely add 3 additional layers and split this one map into multiple visualizations, so that there are only 2-3 datasets per map. For now, as a "proof of concept," I am leaving them in the same map. 
+2. **Twitter data:** To supplement the high-level aggregated data provided by OSU and the World Bank, I experimented with scraping Tweets related to each of my river basin case studies, to gain insight into the discourses surrounding them. After looking through the data and experimenting with several different approaches, I do not think that Tweets will provide helpful information for my analysis (surprisingly, river basins are not a hot topic on Twitter). Though I left my Tweet scraping code for the Jordan River Basin in this document (so that I have a record in case I hope to return to it in the future), I now plan to instead scrape news sources for my case study basins to conduct sentiment analysis. I plan to model my approach on the method found [here](https://www.r-bloggers.com/scraping-google-news-with-rvest/). 
+3. **Organizing and consolidating my code:** Looking ahead to the Shiny app that needs to be created for the next milestone, I wanted to consolidate and organize my code. I modified my "gather.R" script and moved relevant components from past milestones to this milestone. I also converted much of my code for the Jordan River Basin into functions, so that it could easily be replicated for other basins. 
+
+By the next milestone, I hope to have these visualizations finished, and to have the "presentation" of my aggregate and case study data completed. More broadly, I want to incorporate a statistical component into my project. I have not taken any statistics courses, so I would love to talk with you about potential options for trying to perform causal inference related to the propensity for water conflict in river basins.
+
+Like last week, I set "echo = TRUE" for this milestone, to allow for easier review of my code. 
+
+<br>
+
+## Project Background
+In recent years, journalists, policymakers, and academics have become increasingly worried about the potential for climate-induced water scarcity to cause international conflict. Approximately [1.2 billion people](https://www.un.org/waterforlifedecade/scarcity.shtml) live in water-scarce areas worldwide, and this number is expected to increase significantly under the stress of [climate change](https://blogs.ei.columbia.edu/2019/09/23/climate-change-impacts-water/). Some academics have suggested that countries will turn to violent conflict as they attempt to preserve precious transboundary water supplies. Others, led by [Elinor Ostrom](https://www.econlib.org/library/Enc/bios/Ostrom.html), winner of the Nobel Prize in Economics, have suggested that increased scarcity will motivate states to cooperate with one another as they attempt to collectively govern shared waters.
+
+While many academics have conducted in-depth qualitative case studies of water governance in transboundary river basins—including the Jordan River, Nile River, and Indus River—few quantitative studies have examined the effect of resource scarcity on water conflict. This project aims to fill that research gap using newly-released datasets covering water governance outcomes over the past 200 years. In so doing, it seeks to answer the following question: Is water scarcity correlated with cooperation or conflict between states?
+
+This project's GitHub repository lives [here](https://github.com/wyatthurt/gov1005-final-project).
+
+<br>
+
+## The Data
+This project draws heavily on the following datasets from the Oregon State University [Program in Water Conflict Management and Transformation](https://transboundarywaters.science.oregonstate.edu/content/data-and-datasets):
+
+* **International Freshwater Treaties Database:** A dataset of over 600 international, freshwater-related agreements, covering the years 1820 to 2007. This dataset provides detailed information on the issues covered by treaties and is coded by river basin, enabling it to be joined with other datasets from OSU.
+* **International Water Events Database:** A dataset of water conflicts between 1948 and 2008, which provides information on the source of conflict, duration of conflict, and how resolution was achieved.
+* **International River Basin Organization Database:** A dataset of currently-extant international river basin organizations, coded by basin and countries involved, including level and type of collaboration, principal issue(s), date of creation, and a short description of the organization's activities.
+
+This research also uses data from the [World Bank](https://data.worldbank.org), accessed using the [wbstats() package](https://cran.r-project.org/web/packages/wbstats/index.html) in R.
+
+<br>
+
+## Overview 
+We begin by exploring the broad spatial trends that define water conflict. The interactive map below includes five layers (which can be toggled using the "layers" button in the top right corner): 
+
+* **Country Borders:** United Nations international borders.
+* **Conflict Events:** The number of water conflicts since 1948, for each river basin. Hover over a river basin for more details.
+* **Treaties:** The number of treaties negotiated between states since 1948, for each river basin. Hover over a river basin for more details.
+* **Population (2015):** Population per country.
+* **GDP (2015):* Gross Domestic Product per country, which serves as a rough approximation of economic development for the purposes of my study.
+* **Trade % GDP (2015):** The percentage of GDP made up by international trade per country, which serves as a rough approximation of globalization for the purposes of my study.
+
+In the future, I will also map the following variables: 
+
+* **Organizations:** International water management organizations present in each river basin.
+* **Climate data:** Climactic patterns over time, to answer the question: Are drier climactic conditions correlated with water conflict? 
+* **Water availability data:** Drought patterns over time, to answer the question: Are water shortages correlated with water conflict? Water shortages can result from drought, poor management, or obstruction of water supplies by an aggressor. 
+
+```{r mapping}
+
+################# Preparing Data for Mapping #################
+
+# Created a tibble with a list of events. I chose to filter for strings that
+# include words related to conflict. I need to refine my filtering approach, but
+# using these four terms works as an initial proxy for my demo case. To be able
+# to merge this data with my polygons, I produced a per-basin count of
+# conflict-related events.
+
+events_n <- joined %>%
+  filter(str_detect(event_summary, c("conflict", "war", "violence", "military"))) %>%
+  distinct(date, .keep_all = TRUE) %>%
+  group_by(basin_name) %>%
+  rename(NAME = basin_name) %>%
+  count() %>%
+  rename(num_events = n)
+
+# Same approach, for treaties.
+
+treaties_n <- joined %>%
+  distinct(document_name, .keep_all = TRUE) %>%
+  group_by(basin_name) %>%
+  rename(NAME = basin_name) %>%
+  count() %>%
+  rename(num_treaties = n)
+
+# Same approach, for organizations. R is throwing a weird error when I try to
+# plot this data, so I commented it out for now.
+
+# orgs_n <- joined %>%
+  # distinct(rbo_name, .keep_all = TRUE) %>%
+  # group_by(rbo_name) %>%
+  # rename(NAME = rbo_name) %>%
+  # count() %>%
+  # rename(num_orgs = n)
+
+# It would be best to derive gdp, population, and trade from my "joined"
+# dataset, and allow the user to select a year to see these variables, in
+# addition to the organizations, treaties, and conflicts present in that year.
+# Once I have Shiny set up, I think I will be able to do that. For now, I just
+# displayed the most recently-available GDP from the World Bank dataset (2015).
+
+gdp_mapping <- gdp %>%
+  filter(date == 2015) %>%
+  rename(CNTRY_NAME = country_name)
+
+pop_mapping <- pop %>%
+  filter(date == 2015) %>%
+  rename(CNTRY_NAME = country_name)
+
+trade_mapping <- trade_percent_gdp %>%
+  filter(date == 2015) %>%
+  rename(CNTRY_NAME = country_name)
+
+
+################# Modifying Polygon Shapefiles #################
+
+# I then merged these counts with my polygon data. Leaflet throws an error if
+# the variable column includes NA values, so I replaced all NA values.
+
+basins_geometry@data <- left_join(basins_geometry@data, events_n, by = "NAME") %>%
+  left_join(treaties_n, by = "NAME") 
+# %>% left_join(orgs_n, by = "NAME")
+
+# Same approach for countries.
+
+countries_geometry@data <- left_join(countries_geometry@data, gdp_mapping, by = "CNTRY_NAME") %>%
+  left_join(pop_mapping, by = "CNTRY_NAME") %>%
+  left_join(trade_mapping, by = "CNTRY_NAME")
+
+
+################# Creating Leaflet Map #################
+
+# Set my color palettes for each variable. 
+
+binpal_num_events <- colorBin("Blues", basins_geometry$num_events, 5, pretty = FALSE, na.color = "#DFDFDF")
+binpal_num_treaties <- colorBin("Greens", basins_geometry$num_treaties, 5, pretty = FALSE, na.color = "#DFDFDF")
+binpal_num_orgs <- colorBin("Yellows", basins_geometry$num_orgs, 5, pretty = FALSE, na.color = "#DFDFDF")
+binpal_gdp <- colorBin("Reds", countries_geometry$gdp, 5, pretty = FALSE, na.color = "#DFDFDF")
+binpal_pop <- colorBin("Purples", countries_geometry$pop, 5, pretty = FALSE, na.color = "#DFDFDF")
+binpal_trade <- colorBin("Oranges", countries_geometry$trade_percent_gdp, 5, pretty = FALSE, na.color = "#DFDFDF")
+
+# Created my Leaflet map, using a simple CartoDB basemap. Zoomed out and
+# centered the map, added my polygons, and changed their color based on their
+# relative number of events. Added a layer toggle by grouping polygons and their
+# respective legends.
+
+leaflet(width = "100%") %>% 
+  addProviderTiles(providers$CartoDB.Positron) %>% 
+  setView(lng = 0, lat = 30,zoom = 1.5) %>% 
+  
+## Conflict Events ## 
+  
+  addPolygons(data = basins_geometry, 
+              stroke = FALSE, 
+              smoothFactor = 0.2, 
+              fillOpacity = .6, 
+              popup= paste("Name:", 
+                           basins_geometry$NAME, 
+                           "Basin <br>", 
+                           "Number of Violent Conflicts:",
+                           basins_geometry$num_events), 
+              color = ~binpal_num_events(num_events), 
+              group = "Conflict Events"
+              ) %>%
+  addLegend("bottomright", 
+              pal = binpal_num_events, 
+              values = basins_geometry$num_events, 
+              title = "# of water conflict <br> events since 1948", 
+              opacity = 1, 
+              labFormat = labelFormat(digits = 0), 
+              group = "Conflict Events"
+              ) %>%
+  
+## Treaties ## 
+  
+  addPolygons(data = basins_geometry, 
+              stroke = FALSE, 
+              smoothFactor = 0.2, 
+              fillOpacity = .6, 
+              popup= paste("Name:", 
+                           basins_geometry$NAME, 
+                           "Basin <br>", 
+                           "Number of Treaties:",
+                           basins_geometry$num_treaties), 
+              color = ~binpal_num_treaties(num_treaties), 
+              group = "Treaties"
+              ) %>%
+  addLegend("bottomright", 
+              pal = binpal_num_treaties, 
+              values = basins_geometry$num_treaties, 
+              title = "# of treaties <br> since 1948", 
+              opacity = 1, 
+              labFormat = labelFormat(digits = 0), 
+              group = "Treaties"
+              ) %>%
+  
+## Organizations ## 
+  
+  # addPolygons(data = basins_geometry, 
+              # stroke = FALSE, 
+              # smoothFactor = 0.2, 
+              # fillOpacity = .6, 
+              # popup= paste("Name:", 
+                           # basins_geometry$NAME, 
+                           # "Basin <br>", 
+                           # "Number of Organizations:",
+                           # basins_geometry$num_orgs), 
+              # color = ~binpal_num_orgs(num_orgs), 
+              # group = "Organizations"
+              # ) %>%
+  # addLegend("bottomright", 
+              # pal = binpal_num_orgs, 
+              # values = basins_geometry$num_orgs, 
+              # title = "# of Organizations", 
+              # opacity = 1, 
+              # labFormat = labelFormat(digits = 0), 
+              # group = "Organizations"
+              # ) %>%
+  
+## GDP ## 
+  
+  addPolygons(data = countries_geometry, 
+              stroke = FALSE, 
+              smoothFactor = 0.2, 
+              fillOpacity = .6, 
+              color = ~binpal_gdp(gdp), 
+              group = "GDP (2015)"
+              ) %>%
+  addLegend("bottomleft", 
+              pal = binpal_gdp, 
+              values = countries_geometry$gdp, 
+              title = "2015 GDP", 
+              opacity = 1, 
+              labFormat = labelFormat(digits = 0), 
+              group = "GDP (2015)"
+              ) %>%
+  
+## Pop ## 
+  
+    addPolygons(data = countries_geometry, 
+              stroke = FALSE, 
+              smoothFactor = 0.2, 
+              fillOpacity = .6,
+              color = ~binpal_pop(pop), 
+              group = "Population (2015)"
+              ) %>%
+  addLegend("bottomleft", 
+              pal = binpal_pop, 
+              values = countries_geometry$pop, 
+              title = "2015 Population", 
+              opacity = 1, 
+              labFormat = labelFormat(digits = 0), 
+              group = "Population (2015)"
+              ) %>%
+  
+## Trade ## 
+  
+    addPolygons(data = countries_geometry, 
+              stroke = FALSE, 
+              smoothFactor = 0.2, 
+              fillOpacity = .6, 
+              color = ~binpal_trade(trade_percent_gdp), 
+              group = "Trade % GDP (2015)"
+              ) %>%
+  addLegend("bottomleft", 
+              pal = binpal_trade, 
+              values = countries_geometry$gdp_percent_trade, 
+              title = "GDP Percent Trade", 
+              opacity = 1, 
+              labFormat = labelFormat(digits = 0), 
+              group = "Trade % GDP (2015)"
+              ) %>%
+  
+## Countries ## 
+  
+  addPolygons(data = countries_geometry, 
+              stroke = TRUE, 
+              color = "black", 
+              weight = .4,
+              label = countries_geometry$CNTRY_NAME,
+              fill = FALSE,
+              smoothFactor = 0.2, 
+              group = "Countries"
+              ) %>%
+  
+## Layer Control ## 
+  
+  addLayersControl(overlayGroups = c("Countries", "Conflict Events", "Treaties", "Population (2015)", "GDP (2015)", "Trade % GDP (2015)"),
+    options = layersControlOptions(collapsed = TRUE)
+  ) %>%
+  hideGroup(c("Treaties", "Population (2015)", "GDP (2015)", "Trade % GDP (2015)"))
+```
+
+<br>
+
+## Statistical Analysis
+[Causal inference; under construction. I hope to discuss this with Alyssa.]
+
+<br>
+
+## Case Studies {.tabset .tabset-fade}
+While high-level, aggregate datasets are useful for making causal inference, it is worth testing the conclusions drawn above (in the statistical analysis section) by applying them to specific case studies. This study examines the Jordan River, Colorado River, Mekong River, and Indus River basins. These cases are roughly comparable demographically and geopolitically, but have wide variability in the number of water conflicts they have experienced.
+
+```{r events_functions}
+
+event_processing <- function(basin_code) {
+  joined %>%
+  filter(bcode == basin_code) %>%
+  filter(str_detect(event_summary, c("conflict", "war", "violence", "military"))) %>%
+  arrange(date) %>%
+  distinct(date, .keep_all = TRUE)
+}
+
+plot_event_frequency <- function(dataset) {
+  ggplot(dataset, aes(year)) + 
+  geom_bar() + 
+  xlab("Year") + ylab("Count") + 
+  theme_classic()
+}
+
+plot_event_table <- function(dataset) {
+  dataset %>%
+    select(date, dyad_code, event_summary) %>%
+    gt() %>%
+    cols_label(date = "Date", 
+             dyad_code = "Conflict Dyad", 
+             event_summary = "Event Summary")
+}
+```
+
+```{r organization_functions}
+
+org_processing <- function(basin_code) {
+  joined %>%
+  filter(bcode == basin_code) %>%
+  distinct(rbo_name, .keep_all = TRUE)
+}
+
+plot_org_table <- function(dataset) {
+  dataset %>%
+    select(date, dyad_code, rbo_name, agreement_name, agreement_date) %>%
+    gt() %>%
+    cols_label(date = "Date", 
+             dyad_code = "Conflict Dyad", 
+             rbo_name = "Organization Name",
+             agreement_name = "Org Formation Agreement Name", 
+             agreement_date = "Agreement Date")
+}
+```
+
+### Jordan River Basin
+"Originating from the Anti-Lebanon and Mount Hermon mountain ranges, the Jordan River covers a distance of 223 km from north to south and discharges into the Dead Sea. The river has five riparians: Israel, Jordan, Lebanon, Palestine and Syria.
+
+The Jordan River headwaters (Hasbani, Banias and Dan) are fed by groundwater and seasonal surface runoff. The Lower Jordan River originally received its main inflow from the outlet of Lake Tiberias and the Yarmouk River, the largest tributary, as well as from several wadis and aquifers. The flow of the Upper Jordan River into Lake Tiberias remains nearly natural, but flow rates in the downstream part of the river have decreased sharply in the last 50 years due to the construction of a series of infrastructure and diversion schemes established in the basin. For instance, the mean annual historic flow of the Yarmouk that was estimated at 450-500 MCM in the 1950s has today decreased to 83-99 MCM. The current annual discharge of the Lower Jordan River into the Dead Sea is estimated at 20-200 MCM compared to the historic 1,300 MCM. Moreover, water quality in the Lower Jordan River is very low.
+
+Water use in the Jordan River basin is unevenly developed. Palestine and Syria have no access to the Jordan River; hence their use of water resources from the river itself is nil. However, Syria has built several dams in the Yarmouk River sub-basin, which is part of the Jordan River basin. The country uses about 450 MCM/yr of surface and groundwater resources in the basin, mainly for agricultural purposes. Annual abstractions in the Hasbani sub-basin in Lebanon are estimated at 9-10 MCM, which are mainly used for domestic water supply. Israel is the largest user of water from the Jordan River basin, with an annual withdrawal of between 580 and 640 MCM. It is also the only user of water from Lake Tiberias. Jordan uses about 290 MCM/yr of water from the Jordan River basin. Water diverted from the Yarmouk River to the King Abdullah Canal is used for irrigation of crops in the Jordan Valley and for domestic use in Amman. Overall, the Jordan River basin has an estimated total irrigated area of 100,000- 150,000 ha of which around 30% is located in Israel, Jordan and Syria, 5% in Palestine and 2% in Lebanon.
+
+Since the early 20th century, numerous attempts to foster cooperation between basin riparians have been hampered by the regional political conflict which continues to stand in the way of any basin-wide agreement on water. A number of bilateral agreements encourage cooperation over water between Israel and Jordan, and Israel and Palestine."^[For now, these descriptions are pulled from the [Inventory of Shared Water Resources in Western Asia](https://waterinventory.org/surface_water/). I will write my own descriptions as the project nears its final stages and I have more to conclusively write. For now, this serves as a sample of what I hope to eventually include.]
+
+<br>
+
+#### List of Conflict Events
+Then, I created a frequency histogram of these events over time. The relatively calm period in the 1970s and 80s is consistent with a period of stagnation that I've written about previously for other research projects.
+```{r jor_events}
+jord_events <- event_processing("JORD")
+
+plot_event_frequency(jord_events) + 
+  labs(title = "Water Conflict Events in the Jordan River Basin, 1948-2008", 
+       caption = "Source: OSU Program in Water Conflict Management and Transformation")
+
+plot_event_table(jord_events) %>%
+  tab_header("Water Conflict Events in the Jordan River Basin, 1948-2008")
+
+# I plan to convert this into a timeline using https://cran.r-project.org/web/packages/leaftime/index.html. 
+
+```
+
+Next, I created a table that displays the water conflict events in the basin. After looking at the events being returned, it seems like a more accurate title might be "Water Conflict and Diplomacy Events", since a number of the events in the OSU database are not so much violent conflict as violent rhetoric and/or negotiations to avoid conflict. 
+I have conducted research on the Jordan River Basin for over a year now; in my opinion, these events appropriately characterize the water conflict events that occured over this period. This reflects positively on the quality of the OSU dataset.
+
+<br>
+
+#### Active Organizations
+```{r jor_orgs}
+jord_orgs <- org_processing("JORD")
+
+plot_org_table(jord_orgs) %>%
+  tab_header("Transboundary Organizations in the Jordan River Basin, 1948-2008")
+```
+
+<br>
+
+#### Active Treaties
+[under construction]
+
+<br>
+
+#### Twitter Sentiments
+```{r twitter}
+# https://utstat.toronto.edu/~nathan/teaching/sta4002/Class1/scrapingtwitterinR-NT.html
+
+fn_twitter <- searchTwitter("jordan + river", n=18000,
+# geocode="39.5501,-105.7821,500km",
+retryOnRateLimit=200)
+
+fn_twitter_df <- twListToDF(fn_twitter) %>%
+    filter(isRetweet == FALSE) # Convert to data frame
+
+tweet_words <- fn_twitter_df %>% 
+  select(id, text) %>% 
+  unnest_tokens(word,text)
+
+my_stop_words <- stop_words %>% 
+  select(-lexicon) %>% 
+  bind_rows(data.frame(word = c("https", "t.co", "rt", "amp", "2", "i'm", "1", "20", "5", "7")))
+
+tweet_words_interesting <- tweet_words %>% 
+  anti_join(my_stop_words)
+
+tweet_words_interesting %>% 
+  group_by(word) %>% 
+  tally(sort=TRUE) %>% 
+  slice(1:25) %>% 
+  ggplot(aes(x = reorder(word, n, function(n) -n), y = n)) + 
+  geom_bar(stat = "identity") + 
+  theme(axis.text.x = element_text(angle = 60, hjust = 1)) + 
+  xlab("") + 
+  labs(title = "Words Appearing Alongside 'Jordan River' on Twitter (2018)")
+
+bing_lex <- get_sentiments("bing")
+tweet_words_interesting %>% 
+  left_join(bing_lex) %>%
+  filter(!is.na(sentiment)) %>% 
+  group_by(sentiment) %>% 
+  summarise(n=n()) %>%
+  gt() %>% 
+  tab_header(title = "Sentiment Analysis", subtitle = "Words Appearing Alongside 'Jordan River' on Twitter (2018)")
+
+# Create a word cloud? 
+
+```
+<br>
+
+### Colorado River Basin
+[Basin description here.]
+
+<br>
+
+#### List of Conflict Events
+There were no conflict events in the Colorado River Basin during this period.
+```{r cldo_events}
+cldo_events <- event_processing("CLDO")
+
+plot_event_frequency(cldo_events) + 
+  labs(title = "Water Conflict Events in the Colorado River Basin, 1948-2008", 
+       caption = "Source: OSU Program in Water Conflict Management and Transformation")
+
+plot_event_table(cldo_events) %>%
+  tab_header("Water Conflict Events in the Colorado River Basin, 1948-2008")
+```
+
+<br>
+
+#### Active Organizations
+```{r cldo_orgs}
+cldo_orgs <- org_processing("CLDO")
+
+plot_org_table(cldo_orgs) %>%
+  tab_header("Transboundary Organizations in the Colorado River Basin, 1948-2008")
+```
+<br>
+
+### Mekong River Basin
+[Basin description here.]
+
+<br>
+
+#### List of Conflict Events
+```{r meko_events}
+meko_events <- event_processing("MEKO")
+
+plot_event_frequency(meko_events) + 
+  labs(title = "Water Conflict Events in the Mekong River Basin, 1948-2008", 
+       caption = "Source: OSU Program in Water Conflict Management and Transformation")
+
+plot_event_table(meko_events) %>%
+  tab_header("Water Conflict Events in the Mekong River Basin, 1948-2008")
+```
+
+<br>
+
+#### Active Organizations
+```{r meko_orgs}
+meko_orgs <- org_processing("MEKO")
+
+plot_org_table(meko_orgs) %>%
+  tab_header("Transboundary Organizations in the Mekong River Basin, 1948-2008")
+```
+
+<br>
+
+### Indus River Basin
+[Basin description here.]
+
+<br>
+
+#### List of Conflict Events
+```{r indu_events}
+indu_events <- event_processing("INDU")
+
+plot_event_frequency(indu_events) + 
+  labs(title = "Water Conflict Events in the Indus River Basin, 1948-2008", 
+       caption = "Source: OSU Program in Water Conflict Management and Transformation")
+
+plot_event_table(indu_events) %>%
+  tab_header("Water Conflict Events in the Indus River Basin, 1948-2008")
+```
+
+<br>
+
+#### Active Organizations
+```{r indu_orgs}
+indu_orgs <- org_processing("INDU")
+
+plot_org_table(indu_orgs) %>%
+  tab_header("Transboundary Organizations in the Indus River Basin, 1948-2008")
+```
+
+<br>
+
+## Acknowledgements
+This project conceptually builds on several of my previous and current research projects, completed under the supervision of Professor William Clark, Professor Rosie Bsheer, Dr. Michaela Thompson, and Dr. Alicia Harley. I am also grateful for the guidance provided by David Kane and Alyssa Huberts as I learned the art of data science and developed this project.
+
+<br>
+
+## About Me
+I am a third-year undergraduate at Harvard University, pursuing a joint degree in Environmental Science & Public Policy and Near Eastern Languages & Civilizations. My research (and upcoming senior honors thesis) focuses on mechanisms for improving the governance of transboundary natural resources in conflict zones. You can reach me at [wyatthurt@college.harvard.edu](mailto:wyatthurt@college.harvard.edu). 
