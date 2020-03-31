@@ -22,12 +22,12 @@ library(twitteR)
 # became more important when creating my demo map. Source link:
 # https://datacatalog.worldbank.org/dataset/major-river-basins-world
 
-basins_geometry <- readOGR("geometry/wb_major_basins", layer = "Major_Basins_of_the_World")
+basins_geometry <- readOGR("raw_data/geometry/wb_major_basins", layer = "Major_Basins_of_the_World")
 
 # I also downloaded country shapefiles from the ArcGIS Hub. Source link:
 # https://hub.arcgis.com/datasets/a21fdb46d23e4ef896f31475217cbb08_1
 
-countries_geometry <- readOGR("geometry/countries_wgs84", layer = "Countries_WGS84")
+countries_geometry <- readOGR("raw_data/geometry/countries_wgs84", layer = "Countries_WGS84")
 
 # I tried the following approaches when Deprecated approaches
 # CRS("+proj=longlat +datum=WGS84") already has CRS arguments
@@ -117,25 +117,62 @@ trade_percent_gdp <- wb(indicator = "TG.VAL.TOTL.GD.ZS", startdate = 1900, endda
   mutate(date = as.double(date)) %>%
   left_join(wb_codes, by = c("code" = "country_code"))
 
+water_avail <- wb(indicator = "SH.H2O.SMDW.ZS", startdate = 1900, enddate = 2015) %>%
+  select(code = iso3c, date, water = value) %>%
+  mutate(date = as.double(date)) %>%
+  left_join(wb_codes, by = c("code" = "country_code"))
+
+# SH.H2O.BASW.ZS
+
 # See http://127.0.0.1:15723/library/wbstats/doc/Using_the_wbstats_package.html
 # for a user guide on using the wbstats() package.
 
 #################### Joining ##############################
+events_tidy <- events %>%
+  pivot_longer(cols = c(ccode1, ccode2),
+               names_to = "ccode_id",
+               values_to = "ccode") %>%
+  mutate(event_year = year(date))
 
-joined <- treaties %>%
-  full_join(organizations, by = "bccode", suffix = c("_treaties", "_orgs")) %>%
-  full_join(events, by = c("bccode" = "bccode1"), suffix = c("_treaties/orgs", "_events")) %>%
-  
-  # bccode2 transfers as its own column, so it should be okay that I am only
-  # merging by bccode 1.
-  
-  # match by year as well
-  # if not annual data, create a new "decade" column that could match wb data
-  # or, in wb data, could create artificial years that populate the data
-  
-  left_join(pop, by = c("ccode1" = "code", "year" = "date"), suffix = c("_", "_c1")) %>%
-  left_join(pop, by = c("ccode2" = "code", "year" = "date"), suffix = c("_", "_c2")) %>%
-  left_join(gdp, by = c("ccode1" = "code", "year" = "date"), suffix = c("_", "_c1")) %>%
-  left_join(gdp, by = c("ccode2" = "code", "year" = "date"), suffix = c("_", "_c2")) %>%
-  left_join(trade_percent_gdp, by = c("ccode1" = "code", "year" = "date"), suffix = c("_", "_c1")) %>%
-  left_join(trade_percent_gdp, by = c("ccode2" = "code", "year" = "date"), suffix = c("_", "_c2"))
+joined <- events_tidy %>%
+  full_join(organizations, by = "ccode", suffix = c("_events", "_orgs")) %>%
+  full_join(treaties, by = "ccode", suffix = c("_events_orgs", "_treaties")) %>%
+  left_join(pop, by = c("ccode" = "code", "event_year" = "date"), suffix = c("", "_pop")) %>%
+  left_join(gdp, by = c("ccode" = "code", "event_year" = "date"), suffix = c("", "_gdp")) %>%
+left_join(water_avail, by = c("ccode" = "code", "event_year" = "date"), suffix = c("", "_water"))%>%
+  left_join(trade_percent_gdp, by = c("ccode" = "code", "event_year" = "date"), suffix = c("", "_trade_percent_gdp")) %>%
+  distinct(ccode, event_year, event_summary, .keep_all = TRUE) %>%
+  select(ccode,
+         event_year,
+         bcode,
+         bccode1,
+         bccode2,
+         basin_name, 
+         document_name, 
+         date_signed, 
+         signatories, 
+         treaty_notes = notes, 
+         treaty_issue_area = issue_area,
+         basin_name_1 = basin_name, 
+         basin_name_2, 
+         rbo_name, 
+         agreement_name, 
+         agreement_date, 
+         issues_names, 
+         issue_types, 
+         org_type, 
+         event_date = date,
+         event_summary, 
+         event_comments = comments, 
+         event_issue, 
+         pop, 
+         gdp, 
+         water,
+         trade_percent_gdp)
+
+# bccode2 transfers as its own column, so it should be okay that I am only
+# merging by bccode 1.
+
+# match by year as well
+# if not annual data, create a new "decade" column that could match wb data
+# or, in wb data, could create artificial years that populate the data
