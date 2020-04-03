@@ -1,10 +1,36 @@
 library(shiny)
 library(shinythemes)
+
+library(readr)
+library(janitor)
+library(lubridate)
+library(wbstats)
+library(naniar)
+library(sf)
+library(rgdal)
+library(tidytext)
+library(twitteR)
 library(gt)
+library(leaflet)
 library(dplyr)
 library(tidyverse)
 
 # Define UI for application
+joined <- readRDS("joined.rds")
+
+regression_prep_conflict_events <- joined %>%
+  mutate(peaceful_1 = str_detect(event_summary, c("cooperation", "agreement", "meeting"))) %>%
+  mutate(peaceful_2 = str_detect(event_summary, c("plan", "signed", "treaty"))) %>%
+  mutate(peaceful_3 = str_detect(event_summary, c("coordination", "summit"))) %>%
+  # filter(peaceful_1 == TRUE | peaceful_2 == TRUE | peaceful_3 == TRUE) %>%
+  filter(peaceful_1 == FALSE | peaceful_2 == FALSE | peaceful_3 == FALSE) %>%
+  group_by(ccode) %>%
+  summarize(avg_gdp = mean(gdp, na.rm = TRUE), 
+            avg_pop = mean(pop, na.rm = TRUE),
+            avg_trade = mean(trade_percent_gdp, na.rm = TRUE),
+            avg_water = mean(water, na.rm = TRUE),
+            event_count = n())
+
 
 shinyUI(navbarPage(theme = shinytheme("yeti"),
                    "International Water Conflict",
@@ -12,14 +38,23 @@ shinyUI(navbarPage(theme = shinytheme("yeti"),
                             sidebarLayout(
                               
                               sidebarPanel(
+                                h5("Test"),
+                                varSelectInput("varOfinterest", "Variable:", regression_prep_conflict_events, selected = "avg_water"),
                                 checkboxInput("toggleLinear", label = "Linear Model", value = FALSE), 
-                                checkboxInput("toggleExponential", label = "Exponential Model", value = FALSE)
+                                checkboxInput("toggleLoess", label = "Loess Model", value = FALSE),
+                                checkboxInput("toggleGlm", label = "GLM Model", value = FALSE),
+                                checkboxInput("toggleGam", label = "GAM Model", value = FALSE)
                               ),
                               
                               mainPanel(
                                 plotOutput("water_regression")
                               )
                             )
+                            ),
+                   tabPanel("Map",
+                            leafletOutput("map"),
+                            ),
+                   tabPanel("Case Studies",
                             ),
                    tabPanel("About",
                             h3("Background"),

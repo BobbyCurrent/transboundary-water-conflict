@@ -28,21 +28,25 @@ saveRDS(joined, "shiny_app/joined.rds")
 
 regression_prep_conflict_events %>%
   ggplot(aes(x = avg_gdp, y = event_count)) + geom_point() + 
-  geom_smooth(method = "lm", se = FALSE, formula = y ~ x)
+  geom_smooth(method = "loess", se = TRUE, formula = y ~ x) + 
+  geom_jitter()
 
 regression_prep_conflict_events %>%
   ggplot(aes(x = avg_pop, y = event_count)) + geom_point() + 
-  geom_smooth(method = "lm", se = FALSE, formula = y ~ x)
+  geom_smooth(method = "lm", se = FALSE, formula = y ~ x) + 
+  geom_jitter()
 # Two potential outliers are China and India, though it seems unlikely to me that they are outliers.
 
 regression_prep_conflict_events %>%
   ggplot(aes(x = avg_trade, y = event_count)) + geom_point() + 
-  geom_smooth(method = "lm", se = FALSE, formula = y ~ x)
+  geom_smooth(method = "lm", se = FALSE, formula = y ~ x) + 
+  geom_jitter()
 
 regression_prep_conflict_events %>%
   filter(ccode != "SGP") %>%
   ggplot(aes(x = avg_water, y = event_count)) + geom_point() + 
-  geom_smooth(method = "lm", se = FALSE, formula = y ~ x)
+  geom_smooth(method = "loess", se = TRUE, formula = y ~ x) + 
+  geom_jitter()
 
 
 ###########################################

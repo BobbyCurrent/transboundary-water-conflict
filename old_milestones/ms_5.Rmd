@@ -17,7 +17,7 @@ knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 # since milestone 4):
 
 library(rmarkdown)
-render("gather.R")
+render("/Users/wyatthurt/GoogleDrive/3.2_spring_2020/GOV1005/final/gather.R")
 ```
 
 ## This Week's Progress
@@ -131,14 +131,15 @@ trade_mapping <- trade_percent_gdp %>%
 # the variable column includes NA values, so I replaced all NA values.
 
 basins_geometry@data <- left_join(basins_geometry@data, events_n, by = "NAME") %>%
-  left_join(treaties_n, by = "NAME") 
+  left_join(treaties_n, by = "NAME")
 # %>% left_join(orgs_n, by = "NAME")
 
 # Same approach for countries.
 
 countries_geometry@data <- left_join(countries_geometry@data, gdp_mapping, by = "CNTRY_NAME") %>%
   left_join(pop_mapping, by = "CNTRY_NAME") %>%
-  left_join(trade_mapping, by = "CNTRY_NAME")
+  left_join(trade_mapping, by = "CNTRY_NAME") %>%
+  saveRDS("/shiny_app/countries_geometry.rds")
 
 
 ################# Creating Leaflet Map #################
