@@ -2,6 +2,7 @@ library(shiny)
 library(shinythemes)
 
 library(readr)
+library(broom)
 library(janitor)
 library(lubridate)
 library(wbstats)
@@ -19,11 +20,11 @@ library(tidyverse)
 joined <- readRDS("joined.rds")
 
 regression_prep_conflict_events <- joined %>%
-  mutate(peaceful_1 = str_detect(event_summary, c("cooperation", "agreement", "meeting"))) %>%
-  mutate(peaceful_2 = str_detect(event_summary, c("plan", "signed", "treaty"))) %>%
-  mutate(peaceful_3 = str_detect(event_summary, c("coordination", "summit"))) %>%
+  # mutate(peaceful_1 = str_detect(event_summary, c("cooperation", "agreement", "meeting"))) %>%
+  # mutate(peaceful_2 = str_detect(event_summary, c("plan", "signed", "treaty"))) %>%
+  # mutate(peaceful_3 = str_detect(event_summary, c("coordination", "summit"))) %>%
   # filter(peaceful_1 == TRUE | peaceful_2 == TRUE | peaceful_3 == TRUE) %>%
-  filter(peaceful_1 == FALSE | peaceful_2 == FALSE | peaceful_3 == FALSE) %>%
+  # filter(peaceful_1 == FALSE | peaceful_2 == FALSE | peaceful_3 == FALSE) %>%
   group_by(ccode) %>%
   summarize(avg_gdp = mean(gdp, na.rm = TRUE), 
             avg_pop = mean(pop, na.rm = TRUE),
@@ -39,15 +40,27 @@ shinyUI(navbarPage(theme = shinytheme("yeti"),
                               
                               sidebarPanel(
                                 h5("Test"),
-                                varSelectInput("varOfinterest", "Variable:", regression_prep_conflict_events, selected = "avg_water"),
-                                checkboxInput("toggleLinear", label = "Linear Model", value = FALSE), 
+                                selectInput("varOI_x", "X1 variable:", choices = c("Water Access" = "avg_water",
+                                                                                "GDP" = "avg_gdp",
+                                                                                "Population" = "avg_pop",
+                                                                                "Trade as % of GDP" = "avg_trade",
+                                                                                "Event Count" = "event_count"), multiple = TRUE, selected = "avg_pop"),
+                                selectInput("varOI_y", "Y variable:", choices = c("Water Access" = "avg_water",
+                                                                                "GDP" = "avg_gdp",
+                                                                                "Population" = "avg_pop",
+                                                                                "Trade as % of GDP" = "avg_trade",
+                                                                                "Event Count" = "event_count"), selected = "event_count"),
+                                checkboxInput("toggleLinear", label = "Linear Model", value = TRUE), 
                                 checkboxInput("toggleLoess", label = "Loess Model", value = FALSE),
                                 checkboxInput("toggleGlm", label = "GLM Model", value = FALSE),
-                                checkboxInput("toggleGam", label = "GAM Model", value = FALSE)
+                                checkboxInput("toggleGam", label = "GAM Model", value = FALSE),
+                                checkboxInput("toggleMulti", label = "Multivariate Regression", value = FALSE),
+                                checkboxInput("toggleMultiinteraction", label = "Multivariate Regression w/ Interaction", value = FALSE),
                               ),
                               
                               mainPanel(
-                                plotOutput("water_regression")
+                                plotOutput("water_regression", height = 500),
+                                tableOutput(outputId = "RegSum")
                               )
                             )
                             ),
