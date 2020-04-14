@@ -2,16 +2,7 @@ library(shiny)
 library(shinythemes)
 
 library(readr)
-library(broom)
-library(janitor)
-library(lubridate)
-library(wbstats)
-library(naniar)
-library(sf)
-library(rgdal)
-library(tidytext)
-library(twitteR)
-library(gt)
+library(DT)
 library(leaflet)
 library(dplyr)
 library(tidyverse)
@@ -40,16 +31,19 @@ shinyUI(navbarPage(theme = shinytheme("yeti"),
                               
                               sidebarPanel(
                                 h5("Test"),
-                                selectInput("varOI_x", "X1 variable:", choices = c("Water Access" = "avg_water",
-                                                                                "GDP" = "avg_gdp",
-                                                                                "Population" = "avg_pop",
-                                                                                "Trade as % of GDP" = "avg_trade",
-                                                                                "Event Count" = "event_count"), multiple = TRUE, selected = "avg_pop"),
+                                selectInput("varOI_x", "X variable:", choices = c("Water Access" = "avg_water",
+                                                                                  "GDP" = "avg_gdp",
+                                                                                  "Population" = "avg_pop",
+                                                                                  "Trade as % of GDP" = "avg_trade",
+                                                                                  "Population" = "avg_pop",
+                                                                                  "Water Withdrawal" = "avg_water_withdraw",
+                                                                                  "Agricultural Land" = "avg_ag_land",
+                                                                                  "Droughts and Floods" = "avg_droughts_floods"), multiple = TRUE, selected = "avg_pop"),
                                 selectInput("varOI_y", "Y variable:", choices = c("Water Access" = "avg_water",
-                                                                                "GDP" = "avg_gdp",
-                                                                                "Population" = "avg_pop",
-                                                                                "Trade as % of GDP" = "avg_trade",
-                                                                                "Event Count" = "event_count"), selected = "event_count"),
+                                                                                  "GDP" = "avg_gdp",
+                                                                                  "Population" = "avg_pop",
+                                                                                  "Trade as % of GDP" = "avg_trade",
+                                                                                  "Event Count" = "event_count"), selected = "event_count"),
                                 checkboxInput("toggleLinear", label = "Linear Model", value = TRUE), 
                                 checkboxInput("toggleLoess", label = "Loess Model", value = FALSE),
                                 checkboxInput("toggleGlm", label = "GLM Model", value = FALSE),
@@ -60,14 +54,49 @@ shinyUI(navbarPage(theme = shinytheme("yeti"),
                               
                               mainPanel(
                                 plotOutput("water_regression", height = 500),
-                                tableOutput(outputId = "RegSum")
+                                verbatimTextOutput(outputId = "RegSum"),
+                                tags$style(type="text/css",
+                                           ".shiny-output-error {display: none;}",
+                                           ".shiny-output-error:before {display: none;}")
                               )
                             )
-                            ),
+                   ),
+                   tabPanel("Predictor",
+                            sidebarLayout(
+                              
+                              sidebarPanel(
+                                sliderInput("pop_pred", "Population:",
+                                            min = 0, max = 1500000000,
+                                            value = 1, step = 5),
+                                sliderInput("water_withdraw_pred", "Water Withdraw:",
+                                            min = 0, max = 100,
+                                            value = 1, step = 1),
+                                sliderInput("water_pred", "Water Access:",
+                                            min = 0, max = 4500,
+                                            value = 1, step = 5)
+                              ),
+                              
+                              mainPanel(
+                                verbatimTextOutput("predict")
+                              )
+                            )
+                   ),
                    tabPanel("Map",
-                            leafletOutput("map"),
+                            p("Map takes approximately 30 seconds to load."),
+                            leafletOutput("map", height = 600),
                             ),
                    tabPanel("Case Studies",
+                            fluidRow(
+                              column(width = 7,
+                                     selectInput("river_basin", "River Basin:", choices = c("Jordan River" = "JORD",
+                                                                                            "Mekong River" = "MEKO")),
+                                     dataTableOutput("case_study_table")
+                              ),
+                              column(width = 5,
+                                     plotOutput("case_conflict_over_time"),
+                                     plotOutput("treaties_over_time")
+                              )
+                            )
                             ),
                    tabPanel("About",
                             h3("Background"),

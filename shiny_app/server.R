@@ -6,23 +6,25 @@ regression_prep_conflict_events <- joined %>%
     mutate(peaceful_3 = str_detect(event_summary, c("coordination", "summit"))) %>%
     # filter(peaceful_1 == TRUE | peaceful_2 == TRUE | peaceful_3 == TRUE) %>%
     filter(peaceful_1 == FALSE | peaceful_2 == FALSE | peaceful_3 == FALSE) %>%
-    group_by(ccode) %>%
+    group_by(ccode, event_year) %>%
     summarize(avg_gdp = mean(gdp, na.rm = TRUE), 
               avg_pop = mean(pop, na.rm = TRUE),
               avg_trade = mean(trade_percent_gdp, na.rm = TRUE),
               avg_water = mean(water, na.rm = TRUE),
+              avg_water_withdraw = mean(water_withdraw, na.rm = TRUE),
+              avg_ag_land = mean(ag_land, na.rm = TRUE),
+              avg_droughts_floods = mean(droughts_floods, na.rm = TRUE),
               event_count = n())
 
 # Define server logic required to draw a histogram
 shinyServer(function(input, output) {
     output$water_regression <- renderPlot({
         p = regression_prep_conflict_events %>%
-            filter(!is.na(avg_water)) %>%
             ggplot(aes_string(x = input$varOI_x, y = input$varOI_y)) + 
             geom_point() + 
             theme_classic() +
             geom_jitter() +
-            labs(caption = "Sources: World Bank, Oregon State University)")
+            labs(caption = "Sources: World Bank, Oregon State University")
         if(input$varOI_x == "avg_water") p <- p + xlab("% of population with regular access to drinking water")
         if(input$varOI_x == "avg_pop") p <- p + xlab("Population")
         if(input$varOI_x == "avg_gdp") p <- p + xlab("Gross Domestic Product (GDP)")
@@ -203,16 +205,55 @@ shinyServer(function(input, output) {
     lm2 <- reactive({lm(reformulate(input$varOI_x, input$varOI_y), data = regression_prep_conflict_events, method = "loess")})
     lm3 <- reactive({lm(reformulate(input$varOI_x, input$varOI_y), data = regression_prep_conflict_events, method = "glm")})
     lm4 <- reactive({lm(reformulate(input$varOI_x, input$varOI_y), data = regression_prep_conflict_events, method = "gam")})
-    lm5 <- reactive({lm(as.formula(paste(input$varOI_y," ~ ",paste(input$varOI_x, input$varOI_x2, collapse="+"))), data=regression_prep_conflict_events)})
-    lm6 <- reactive({lm(as.formula(paste(input$varOI_y," ~ ",paste(input$varOI_x, input$varOI_x2, collapse="*"))), data=regression_prep_conflict_events)})
+    lm5 <- reactive({lm(as.formula(paste(input$varOI_y," ~ ",paste(input$varOI_x, collapse="+"))), data=regression_prep_conflict_events)})
+    lm6 <- reactive({lm(as.formula(paste(input$varOI_y," ~ ",paste(input$varOI_x, collapse="*"))), data=regression_prep_conflict_events)})
     
-    output$RegSum <- renderTable({
+    output$RegSum <- renderPrint({
         if(input$toggleLinear) lmsum <- lm1
         if(input$toggleLoess) lmsum <- lm2
         if(input$toggleGlm) lmsum <- lm3
         if(input$toggleGam) lmsum <- lm4
         if(input$toggleMulti) lmsum <- lm5
         if(input$toggleMultiinteraction) lmsum <- lm6
-        tidy(lmsum())
+        summary(lmsum())
         })
+    
+
+
+    
+    lm7 <- lm(event_count ~ avg_pop * avg_water_withdraw * avg_water, data = regression_prep_conflict_events)
+    
+    sliderValues <- reactive({data.frame(
+        avg_pop = input$pop_pred,
+        avg_water_withdraw = input$water_withdraw_pred,
+        avg_water = input$water_pred)
+        })
+    
+    prediction <- reactive({
+        predict(lm7,sliderValues(), interval = "confidence")
+    })
+    
+    output$predict <- renderPrint(
+        prediction()
+    )
+    
+    output$case_study_table <- renderDataTable(
+        datatable(joined %>%
+                          filter(bcode == input$river_basin) %>%
+                          select("Event Date" = event_date, "Event Summary" = event_summary), 
+        options = list(pageLength = 5))
+    )
+    
+    output$case_conflict_over_time <- renderPlot(
+        joined %>%
+            filter(bcode == input$river_basin) %>%
+            ggplot(aes(x = event_year)) + geom_histogram() + theme_classic() + labs(title = "Conflict Events Signed Over Time")
+        )
+    
+    output$treaties_over_time <- renderPlot(
+        joined %>%
+            filter(bcode == input$river_basin) %>%
+            filter(!is.na(treaty_notes)) %>%
+            ggplot(aes(x = event_year)) + geom_histogram() + theme_classic() + labs(title = "Treaties Signed Over Time")
+    )
 })

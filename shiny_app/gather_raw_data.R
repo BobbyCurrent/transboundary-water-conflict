@@ -70,6 +70,21 @@ water_avail <- wb(indicator = "SH.H2O.SMDW.ZS", startdate = 1900, enddate = 2015
   left_join(wb_codes, by = c("code" = "country_code"))
 saveRDS(water_avail, file = "water_avail.rds")
 
+water_withdraw <- wb(indicator = "ER.H2O.FWTL.ZS", startdate = 1900, enddate = 2016) %>%
+  select(code = iso3c, date, water_withdraw = value) %>%
+  mutate(date = as.double(date)) %>%
+  left_join(wb_codes, by = c("code" = "country_code"))
+
+ag_land <- wb(indicator = "AG.LND.AGRI.ZS", startdate = 1900, enddate = 2016) %>%
+  select(code = iso3c, date, ag_land = value) %>%
+  mutate(date = as.double(date)) %>%
+  left_join(wb_codes, by = c("code" = "country_code"))
+
+droughts_floods <- wb(indicator = "EN.CLC.MDAT.ZS", startdate = 1900, enddate = 2016) %>%
+  select(code = iso3c, date, droughts_floods = value) %>%
+  mutate(date = as.double(date)) %>%
+  left_join(wb_codes, by = c("code" = "country_code"))
+
 # SH.H2O.BASW.ZS
 
 # See http://127.0.0.1:15723/library/wbstats/doc/Using_the_wbstats_package.html
@@ -89,6 +104,9 @@ joined <- events_tidy %>%
   left_join(gdp, by = c("ccode" = "code", "event_year" = "date"), suffix = c("", "_gdp")) %>%
   left_join(water_avail, by = c("ccode" = "code", "event_year" = "date"), suffix = c("", "_water"))%>%
   left_join(trade_percent_gdp, by = c("ccode" = "code", "event_year" = "date"), suffix = c("", "_trade_percent_gdp")) %>%
+  left_join(ag_land, by = c("ccode" = "code", "event_year" = "date"), suffix = c("", "_ag_land")) %>%
+  left_join(water_withdraw, by = c("ccode" = "code", "event_year" = "date"), suffix = c("", "_water_withdraw")) %>%
+  left_join(droughts_floods, by = c("ccode" = "code", "event_year" = "date"), suffix = c("", "_droughts_floods")) %>%
   distinct(ccode, event_year, event_summary, .keep_all = TRUE) %>%
   select(ccode,
          event_year,
@@ -114,7 +132,9 @@ joined <- events_tidy %>%
          pop, 
          gdp, 
          water,
-         trade_percent_gdp)
+         trade_percent_gdp,
+         water_withdraw,
+         ag_land,
+         droughts_floods)
 
-saveRDS(joined, "joined.rds")
-
+saveRDS(joined, "shiny_app/joined.rds")
