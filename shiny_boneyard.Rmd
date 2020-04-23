@@ -1,0 +1,141 @@
+---
+title: "shiny_boneyard"
+author: "Wyatt Hurt"
+date: "4/23/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Leaflet Map
+```{r}
+binpal_num_treaties <- colorBin("Greens", basins_geometry$num_treaties, 5, pretty = FALSE, na.color = "#DFDFDF")
+        binpal_num_orgs <- colorBin("Yellows", basins_geometry$num_orgs, 5, pretty = FALSE, na.color = "#DFDFDF")
+        binpal_gdp <- colorBin("Reds", countries_geometry$gdp, 5, pretty = FALSE, na.color = "#DFDFDF")
+        binpal_pop <- colorBin("Purples", countries_geometry$pop, 5, pretty = FALSE, na.color = "#DFDFDF")
+        binpal_trade <- colorBin("Oranges", countries_geometry$trade_percent_gdp, 5, pretty = FALSE, na.color = "#DFDFDF")
+        
+        # MAP SHOULD HAVE A COLOR FOR AN EXTERNALLY_CHOSEN VAR, THEN A MARKER WITH TRAITS OF EACH BASIN
+        
+      addLayersControl(overlayGroups = c("Conflict Events"),
+                             options = layersControlOptions(collapsed = TRUE))
+      
+      # hideGroup(c("Treaties", "Population (2015)", "GDP (2015)", "Trade % GDP (2015)"))
+      
+      
+# It would be best to derive gdp, population, and trade from my "joined"
+# dataset, and allow the user to select a year to see these variables, in
+# addition to the organizations, treaties, and conflicts present in that year.
+# Once I have Shiny set up, I think I will be able to do that. For now, I just
+# displayed the most recently-available GDP from the World Bank dataset (2015).
+
+```
+
+```{r}
+################## Log regression ##################
+country_years <- tibble(year = rep(1938:2008, 264)) %>%
+  arrange(desc(year))
+
+country_years <- tibble(event_year = country_years %>% pull(year),
+                        ccode = rep(wb_codes %>% pull(country_code), 71))
+
+joined_log <- country_years %>%
+  full_join(joined, by = c("event_year" = "event_year", "ccode" = "ccode")) %>%
+  select(ccode,
+         event_year,
+         bcode,
+         bccode1,
+         bccode2,
+         basin_name,
+         document_name, 
+         date_signed, 
+         signatories, 
+         treaty_notes, 
+         treaty_issue_area,
+         rbo_name, 
+         agreement_name, 
+         agreement_date, 
+         issues_names, 
+         issue_types, 
+         org_type,
+         event_date,
+         event_summary, 
+         event_comments, 
+         event_issue) %>%
+  left_join(pop, by = c("ccode" = "code", "event_year" = "date"), suffix = c("", "_pop")) %>%
+  left_join(gdp, by = c("ccode" = "code", "event_year" = "date"), suffix = c("", "_gdp")) %>%
+  left_join(water_avail, by = c("ccode" = "code", "event_year" = "date"), suffix = c("", "_water"))%>%
+  left_join(trade_percent_gdp, by = c("ccode" = "code", "event_year" = "date"), suffix = c("", "_trade_percent_gdp")) %>%
+  left_join(ag_land, by = c("ccode" = "code", "event_year" = "date"), suffix = c("", "_ag_land")) %>%
+  left_join(water_withdraw, by = c("ccode" = "code", "event_year" = "date"), suffix = c("", "_water_withdraw")) %>%
+  left_join(eiu_mod, by = c("ccode" = "country_code"), suffix = c("", "_eiu_mod"))
+
+saveRDS(joined_log, "shiny_app/joined_log.rds")
+
+joined_log_normalized <- joined_log %>%
+  distinct(ccode, event_year, .keep_all = TRUE) %>%
+  mutate(conflict = ifelse(is.na(bcode), 0, 1))
+  # mutate(conflict = as.factor(conflict)) %>%
+  # filter(!is.na(conflict) & conflict != 0 & !is.nan(conflict))
+
+ggplot(joined_log_normalized, aes(x = x_eiu, y = conflict)) + 
+  geom_point() + 
+  geom_smooth(method = glm, formula = y ~ x, method.args = list(family = "binomial"))
+
+# ALYSSA: What is equivalent of R^2? 
+
+logistic_mod <- logistic_reg() %>%
+  set_engine("glm")
+
+logistic_fit2 <- fit(logistic_mod,
+                    factor(conflict) ~ x_eiu,
+                    data = joined_log_normalized) 
+
+logistic_pred <- predict(logistic_fit2, new_data = joined_log_normalized) %>%
+  bind_cols(joined_log_normalized, .) %>%
+  filter(!is.na(.pred_class)) %>%
+  mutate(error = as.numeric(.pred_class) - as.numeric(conflict))
+
+logistic_pred %>%
+  group_by(error) %>%
+  summarize(count = n())
+
+augment(logistic_fit2, newdata = joined_log_normalized)
+
+log_model <- glm(conflict ~ x_eiu * pop * trade_percent_gdp * gdp, data = joined_log_normalized)
+
+model_aug <- log_model %>%
+  augment(type.predict = "response",
+          type.residuals = "response") %>%
+  mutate(conf.low = .fitted - 2 * .se.fit,
+         conf.high = .fitted + 2 * .se.fit) %>%
+  select(conflict, .fitted, conf.low, conf.high, .resid) 
+
+View(predict(logistic_fit, new_data = joined_log_normalized))
+
+model_aug %>%
+  ggplot(aes(x = .resid)) + geom_histogram()
+
+model_aug %>%
+  mutate(.resid = abs(.resid)) %>%
+  summarize(mean = mean(.resid)) %>%
+  slice() %>%
+  pull()
+
+log_model
+
+augmented_vals <- augment(log_model, type.predict = "response", type.residuals = "response", data = joined_log_normalized) %>%
+  mutate(conf.low = .fitted - 2 * .se.fit,
+         conf.high = .fitted + 2 * .se.fit) %>%
+  arrange(desc(.resid))
+
+View(log_model %>%
+  tidy(conf.int = TRUE) %>%
+  select(term, estimate, conf.low, conf.high))
+
+```
+
+
+
