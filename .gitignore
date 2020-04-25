@@ -7,3 +7,4 @@
 .httr-oauth
 /rsconnect
 playground.R
+shiny_app/joined.rds

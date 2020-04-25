@@ -55,7 +55,7 @@ countries_geometry <-
 
 events_n <- joined %>%
   # filter(str_detect(event_summary, c("conflict", "war", "violence", "military"))) %>%
-  distinct(event_date, .keep_all = TRUE) %>%
+  distinct(event_summary, .keep_all = TRUE) %>%
   group_by(basin_name) %>%
   rename(NAME = basin_name) %>%
   count() %>%
@@ -106,6 +106,8 @@ trade_mapping <- trade_percent_gdp %>%
 basins_geometry@data <-
   left_join(basins_geometry@data, events_n, by = "NAME") %>%
   left_join(treaties_n, by = "NAME")
+
+write_rds(basins_geometry@data, "basins.rds")
 
 # %>% left_join(orgs_n, by = "NAME")
 

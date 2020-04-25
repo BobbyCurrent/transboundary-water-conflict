@@ -1,21 +1,11 @@
 ############## PREP ##############
 
 joined <- readRDS("joined.rds")
+joined_summarized <- readRDS("joined_summarized.rds")
+joined_logistic <- readRDS("joined_logistic.rds")
 
 # Summarizing the joined data, as needed for my regressions and statistics
 # throughout the project.
-
-regression_prep_conflict_events <- joined %>%
-    group_by(ccode, event_year) %>%
-    summarize(
-        avg_gdp = mean(gdp, na.rm = TRUE),
-        avg_pop = mean(pop, na.rm = TRUE),
-        avg_trade = mean(trade_percent_gdp, na.rm = TRUE),
-        avg_water = mean(water, na.rm = TRUE),
-        avg_water_withdraw = mean(water_withdraw, na.rm = TRUE),
-        avg_ag_land = mean(ag_land, na.rm = TRUE),
-        event_count = n()
-    )
 
 shinyServer(function(input, output) {
     ############################
@@ -26,16 +16,24 @@ shinyServer(function(input, output) {
     # Render histogram of water conflict events over time
     
     output$time_histogram <- renderPlot({
-        ggplot(joined %>% filter(!is.na(continent_name)),
-               aes(x = event_year, fill = continent_name)) +
+        ggplot(joined %>% filter(!is.na(continent_code)),
+               aes(x = event_year, fill = continent_code)) +
             geom_histogram() +
             theme_classic() +
             labs(title = "Water Conflict Events Over Time",
-                 subtitle = "Upward Trend Over Time",
+                 subtitle = "Upward trend over time.",
                  fill = "Continent") +
             xlab("Year") +
             ylab("Number of Water Conflict Events") +
             scale_fill_brewer(palette = "Spectral")
+    })
+    
+    output$frequency <- renderDataTable({datatable(
+        joined_summarized %>%
+            arrange(desc(event_count)) %>%
+            select("Basin Name" = basin_name, "Event Count" = event_count),
+        options = list(pageLength = 10)
+    )
     })
     
     # Render Leaflet map
@@ -50,7 +48,7 @@ shinyServer(function(input, output) {
             colorBin(
                 "Blues",
                 basins_geometry$num_events,
-                5,
+                9,
                 pretty = FALSE,
                 na.color = "#DFDFDF"
             )
@@ -87,7 +85,7 @@ shinyServer(function(input, output) {
                 "bottomright",
                 pal = binpal_num_events,
                 values = basins_geometry$num_events,
-                title = "# of water conflict <br> events since 1948",
+                title = "# of water conflict <br> events, 1960 - 2009",
                 opacity = 1,
                 labFormat = labelFormat(digits = 0),
                 group = "Conflict Events"
@@ -99,7 +97,7 @@ shinyServer(function(input, output) {
     
     ############## SECOND PAGE ##############
     output$water_regression <- renderPlot({
-        p = regression_prep_conflict_events %>%
+        p = joined_summarized %>%
             ggplot(aes_string(x = input$varOI_x, y = input$varOI_y)) +
             geom_point() +
             theme_classic() +
@@ -135,50 +133,30 @@ shinyServer(function(input, output) {
             p <- p + geom_smooth(method = "loess",
                                  se = TRUE,
                                  formula = y ~ x)
-        if (input$toggleGlm)
-            p <- p + geom_smooth(method = "glm",
-                                 se = TRUE,
-                                 formula = y ~ x)
-        if (input$toggleGam)
-            p <- p + geom_smooth(method = "gam",
-                                 se = TRUE,
-                                 formula = y ~ x)
         p
     })
     
     output$RegSum <- renderPrint({
+        
         if (input$toggleLinear)
             lmsum <-
                 reactive({
-                    lm(reformulate(input$varOI_x, input$varOI_y), data = regression_prep_conflict_events)
+                    lm(
+                        reformulate(input$varOI_x, input$varOI_y),
+                        data = joined_summarized
+                    )
                 })
+        
         if (input$toggleLoess)
             lmsum <-
                 reactive({
                     lm(
                         reformulate(input$varOI_x, input$varOI_y),
-                        data = regression_prep_conflict_events,
+                        data = joined_summarized,
                         method = "loess"
                     )
                 })
-        if (input$toggleGlm)
-            lmsum <-
-                reactive({
-                    lm(
-                        reformulate(input$varOI_x, input$varOI_y),
-                        data = regression_prep_conflict_events,
-                        method = "glm"
-                    )
-                })
-        if (input$toggleGam)
-            lmsum <-
-                reactive({
-                    lm(
-                        reformulate(input$varOI_x, input$varOI_y),
-                        data = regression_prep_conflict_events,
-                        method = "gam"
-                    )
-                })
+        
         if (input$toggleMulti)
             lmsum <-
                 reactive({
@@ -186,8 +164,9 @@ shinyServer(function(input, output) {
                         input$varOI_y,
                         " ~ ",
                         paste(input$varOI_x, collapse = "+")
-                    )), data = regression_prep_conflict_events)
+                    )), data = joined_summarized)
                 })
+        
         if (input$toggleMultiinteraction)
             lmsum <-
                 reactive({
@@ -195,34 +174,112 @@ shinyServer(function(input, output) {
                         input$varOI_y,
                         " ~ ",
                         paste(input$varOI_x, collapse = "*")
-                    )), data = regression_prep_conflict_events)
+                    )), data = joined_summarized)
                 })
-        summary(lmsum())
+        print(summary(lmsum()))
     })
     
-    lm7 <-
-        lm(event_count ~ avg_pop * avg_water_withdraw * avg_water, data = regression_prep_conflict_events)
-    
-    sliderValues <- reactive({
-        data.frame(
-            avg_pop = input$pop_pred,
-            avg_water_withdraw = input$water_withdraw_pred,
-            avg_water = input$water_pred
-        )
+    output$predictSum <- renderPrint({
+        
+        if (input$toggleLinear)
+            lmsum <-
+                reactive({
+                    lm(
+                        reformulate(input$varOI_x, input$varOI_y),
+                        data = joined_summarized
+                    )
+                })
+        
+        if (input$toggleLoess)
+            lmsum <-
+                reactive({
+                    lm(
+                        reformulate(input$varOI_x, input$varOI_y),
+                        data = joined_summarized,
+                        method = "loess"
+                    )
+                })
+        
+        if (input$toggleMulti)
+            lmsum <-
+                reactive({
+                    lm(as.formula(paste(
+                        input$varOI_y,
+                        " ~ ",
+                        paste(input$varOI_x, collapse = "+")
+                    )), data = joined_summarized)
+                })
+        
+        if (input$toggleMultiinteraction)
+            lmsum <-
+                reactive({
+                    lm(as.formula(paste(
+                        input$varOI_y,
+                        " ~ ",
+                        paste(input$varOI_x, collapse = "*")
+                    )), data = joined_summarized)
+                })
+        
+        sliderValues <- reactive({
+            data.frame(gdp_total = input$gdp_total_pred,
+                       gdp_avg = input$gdp_avg_pred,
+                       pop_total = input$pop_total_pred,
+                       pop_avg = input$pop_avg_pred,
+                       trade_percent_gdp_avg = input$trade_percent_gdp_avg_pred,
+                       water_withdraw_avg = input$water_withdraw_avg_pred,
+                       ag_land_total = input$ag_land_total_pred,
+                       ag_land_avg = input$ag_land_avg_pred,
+                       droughts_avg = input$droughts_avg_pred,
+                       eiu_avg = input$eiu_avg_pred,
+                       gdp_total_log = log(input$gdp_total_pred),
+                       gdp_avg_log = log(input$gdp_avg_pred),
+                       pop_total_log = log(input$pop_total_pred),
+                       pop_avg_log = log(input$pop_avg_pred),
+                       trade_percent_gdp_avg_log = log(input$trade_percent_gdp_avg_pred),
+                       water_withdraw_avg_log = log(input$water_withdraw_avg_pred),
+                       ag_land_total_log = log(input$ag_land_total_pred),
+                       ag_land_avg_log = log(input$ag_land_avg_pred),
+                       droughts_avg_log = log(input$droughts_avg_pred),
+                       eiu_avg_log = log(input$eiu_avg_pred))
+        })
+        
+        prediction <- reactive({
+            predict(lmsum(), newdata = sliderValues(), interval = "confidence")})
+        
+        print(prediction())
     })
     
-    prediction <- reactive({
-        predict(lm7, sliderValues(), interval = "confidence")
-    })
+    # lm_predict <-
+    # lm(event_count ~ pop_avg * water_withdraw_avg, data = joined_summarized)
     
-    output$predict <- renderPrint(prediction())
+    
+    # output$predict <- renderPrint(prediction())
     
     ############################
     
     
     ############## THIRD PAGE ##############
+    joined_wc_prep <- joined %>%
+        distinct(event_summary)
     
-    # No content yet.
+    myCorpus = Corpus(VectorSource(joined_wc_prep$event_summary))
+    myCorpus = tm_map(myCorpus, content_transformer(tolower))
+    myCorpus = tm_map(myCorpus, removePunctuation)
+    myCorpus = tm_map(myCorpus, removeNumbers)
+    myCorpus = tm_map(myCorpus, removeWords, stopwords("english"))
+    myDTM = TermDocumentMatrix(myCorpus,
+                               control = list(minWordLength = 1))
+    m = as.matrix(myDTM)
+    terms <- sort(rowSums(m), decreasing = TRUE)
+    
+    # Make the wordcloud drawing predictable during a session
+    wordcloud_rep <- repeatable(wordcloud)
+    
+    output$plot <- renderPlot({
+        wordcloud_rep(names(terms), terms, c(4,0.5),
+                      min.freq = input$freq, max.words=input$max,
+                      colors=brewer.pal(8, "Paired"))
+    })
     
     ############################
     
@@ -230,25 +287,35 @@ shinyServer(function(input, output) {
     ############## FOURTH PAGE ##############
     output$case_study_table <- renderDataTable(datatable(
         joined %>%
-            filter(bcode == input$river_basin) %>%
-            select("Event Date" = event_date, "Event Summary" = event_summary),
-        options = list(pageLength = 5)
+            filter(basin_name == input$river_basin) %>%
+            filter(!is.na(event_summary)) %>%
+            distinct(event_summary, .keep_all = TRUE) %>%
+            select("Event Date" = date.x, "Event Summary" = event_summary),
+        options = list(pageLength = 10)
     ))
     
     output$case_conflict_over_time <- renderPlot(
         joined %>%
-            filter(bcode == input$river_basin) %>%
+            filter(basin_name == input$river_basin) %>%
+            distinct(event_summary, .keep_all = TRUE) %>%
             ggplot(aes(x = event_year)) +
-            geom_histogram() +
+            geom_histogram(fill = "palegreen3") +
+            xlab("Year") +
+            ylab("Number of Conflict Events") +
             theme_classic() +
-            labs(title = "Conflict Events Over Time")
+            labs(title = "Water Conflict Events Over Time")
     )
     
     output$treaties_over_time <- renderPlot(
         joined %>%
-            filter(bcode == input$river_basin) %>%
-            filter(!is.na(treaty_notes)) %>%
-            ggplot(aes(x = event_year)) + geom_histogram() + theme_classic() + labs(title = "Treaties Signed Over Time")
+            filter(basin_name == input$river_basin) %>%
+            distinct(document_name, .keep_all = TRUE) %>%
+            ggplot(aes(x = year_signed)) + 
+            geom_histogram(fill = "dodgerblue3") +
+            xlab("Year") +
+            ylab("Number of Treaties Signed") +
+            theme_classic() + 
+            labs(title = "Treaties Signed Over Time")
     )
     
     ############################

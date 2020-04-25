@@ -1,0 +1,815 @@
+﻿country_name,bcode,ccode,bccode,alt_ccode,basin_name,continent_code,area
+Uzbekistan,ARAL,UZB,ARAL_UZB, ,Aral Sea,AS,375912
+Cote d'Ivoire,CSTO,CIV,CSTO_CIV, ,Cestos,AF,2228
+Afghanistan,HLMD,AFG,HLMD_AFG, ,Helmand,AS,312289
+Pakistan,INDU,PAK,INDU_PAK, ,Indus,AS,429387
+Cameroon,AKPA,CMR,AKPA_CMR, ,Akpa,AF,577
+Nigeria,AKPA,NGA,AKPA_NGA, ,Akpa,AF,1857
+Canada,ALSK,CAN,ALSK_CAN, ,Alsek,NA,26164
+United States of America,ALSK,USA,ALSK_USA, ,Alsek,NA,2056
+Guyana,AMCR,GUY,AMCR_GUY, ,Amacuro,SA,707
+Venezuela,AMCR,VEN,AMCR_VEN, ,Amacuro,SA,3011
+China,AMUR,CHN,AMUR_CHN, ,Amur,AS,889168
+Dem People's Rep of Korea,AMUR,PRK,AMUR_PRK, ,Amur,AS,60
+Mongolia,AMUR,MNG,AMUR_MNG, ,Amur,AS,195022
+Russian Federation,AMUR,RUS,AMUR_RUS, ,Amur,AS,1008440
+Lebanon,ANAK,LBN,ANAK_LBN, ,An Nahr Al Kabir,AS,297
+Syrian Arab Republic,ANAK,SYR,ANAK_SYR, ,An Nahr Al Kabir,AS,735
+Kazakhstan,ARAL,KAZ,ARAL_KAZ, ,Aral Sea,AS,357984
+Turkmenistan,ARAL,TKM,ARAL_TKM, ,Aral Sea,AS,58116
+Lebanon,ASIX,LBN,ASIX_LBN, ,Asi/Orontes,AS,2042
+Syrian Arab Republic,ASIX,SYR,ASIX_SYR, ,Asi/Orontes,AS,16081
+Turkey,ASIX,TUR,ASIX_TUR, ,Asi/Orontes,AS,5707
+Dominican Republic,ATBN,DOM,ATBN_DOM, ,Artibonite,NA,2608
+Haiti,ATBN,HTI,ATBN_HTI, ,Artibonite,NA,6252
+Azerbaijan,ATCY,AZE,ATCY_AZE, ,Astara Chay,AS,163
+Iran  (Islamic Republic of),ATCY,IRN,ATCY_IRN, ,Astara Chay,AS,240
+Iran  (Islamic Republic of),ATRK,IRN,ATRK_IRN, ,Atrak,AS,24715
+Turkmenistan,ATRK,TKM,ATRK_TKM, ,Atrak,AS,11706
+Argentina,AVLS,ARG,AVLS_ARG, ,Aviles,SA,264
+Chile,AVLS,CHL,AVLS_CHL, ,Aviles,SA,32
+Djibouti,AWSH,DJI,AWSH_DJI, ,Awash,AF,11071
+Ethiopia,AWSH,ETH,AWSH_ETH, ,Awash,AF,140988
+Somalia,AWSH,SOM,AWSH_SOM, ,Awash,AF,205
+Argentina,AYSN,ARG,AYSN_ARG, ,Aysen,SA,729
+Argentina,BAKR,ARG,BAKR_ARG, ,Baker,SA,6551
+Chile,BAKR,CHL,BAKR_CHL, ,Baker,SA,20335
+Ireland,BANN,IRL,BANN_IRL, ,Bann,EU,372
+U.K. of Great Britain and Northern Ireland,BANN,GBR,BANN_GBR, ,Bann,EU,5374
+France,BDSO,FRA,BDSO_FRA, ,Bidasoa,EU,17
+Spain,BDSO,ESP,BDSO_ESP, ,Bidasoa,EU,702
+Cameroon,BENT,CMR,BENT_CMR, ,Benito/Ntem,AF,17945
+Equatorial Guinea,BENT,GNQ,BENT_GNQ, ,Benito/Ntem,AF,14901
+Gabon,BENT,GAB,BENT_GAB, ,Benito/Ntem,AF,11483
+CÃ´te d'Ivoire,BIAX,CIV,BIAX_CIV, ,Bia,AF,4748
+Ghana,BIAX,GHA,BIAX_GHA, ,Bia,AF,6580
+China,BLUN,CHN,BLUN_CHN, ,Beilun,AS,712
+Viet Nam,BLUN,VNM,BLUN_VNM, ,Beilun,AS,128
+Guatemala,BLZE,GTM,BLZE_GTM, ,Belize,NA,2457
+Brunei Darussalam,BNGU,BRN,BNGU_BRN, ,Bangau,AS,117
+Malaysia,BNGU,MYS,BNGU_MYS, ,Bangau,AS,13
+Eritrea,BRKA,ERI,BRKA_ERI, ,Baraka,AF,42091
+Sudan,BRKA,SDN,BRKA_SDN, ,Baraka,AF,21679
+Guyana,BRMA,GUY,BRMA_GUY, ,Barima,SA,40
+Venezuela,BRMA,VEN,BRMA_VEN, ,Barima,SA,883
+Latvia,BRTA,LVA,BRTA_LVA, ,Barta,EU,2034
+Lithuania,BRTA,LTU,BRTA_LTU, ,Barta,EU,692
+Mozambique,BUZI,MOZ,BUZI_MOZ, ,Buzi,AF,24798
+Zimbabwe,BUZI,ZWE,BUZI_ZWE, ,Buzi,AF,3692
+Guatemala,CDLR,GTM,CDLR_GTM, ,Candelaria,NA,2333
+Mexico,CDLR,MEX,CDLR_MEX, ,Candelaria,NA,12276
+Costa Rica,CGNL,CRI,CGNL_CRI, ,Changuinola,NA,237
+Panama,CGNL,PAN,CGNL_PAN, ,Changuinola,NA,2979
+Argentina,CHIC,ARG,CHIC_ARG, ,Carmen Silva/Chico,SA,1219
+Chile,CHIC,CHL,CHIC_CHL, ,Carmen Silva/Chico,SA,846
+Ecuador,CHIR,ECU,CHIR_ECU, ,Chira,SA,7169
+Peru,CHIR,PER,CHIR_PER, ,Chira,SA,10515
+Honduras,CHLT,HND,CHLT_HND, ,Choluteca,NA,7769
+Nicaragua,CHLT,NIC,CHLT_NIC, ,Choluteca,NA,280
+Brazil,CHUY,BRA,CHUY_BRA, ,Chuy,SA,625
+Uruguay,CHUY,URY,CHUY_URY, ,Chuy,SA,97
+Canada,CLKT,CAN,CLKT_CAN, ,Chilkat,NA,1792
+United States of America,CLKT,USA,CLKT_USA, ,Chilkat,NA,2175
+Canada,CLMB,CAN,CLMB_CAN, ,Columbia,NA,102825
+Angola,CLNG,AGO,CLNG_AGO, ,Chiloango,AF,4580
+Congo,CLNG,COG,CLNG_COG, ,Chiloango,AF,1061
+Democratic Republic of the Congo,CLNG,ZAR,CLNG_ZAR, ,Chiloango,AF,7355
+Bolivia,CNCS,BOL,CNCS_BOL, ,Cancoso/Lauca,SA,26406
+Chile,CNCS,CHL,CNCS_CHL, ,Cancoso/Lauca,SA,6476
+Burundi,CNGO,BDI,CNGO_BDI, ,Congo/Zaire,AF,13659
+Cameroon,CNGO,CMR,CNGO_CMR, ,Congo/Zaire,AF,95006
+Malawi,CNGO,MWI,CNGO_MWI, ,Congo/Zaire,AF,58
+Rwanda,CNGO,RWA,CNGO_RWA, ,Congo/Zaire,AF,4541
+United Republic of Tanzania,CNGO,TZA,CNGO_TZA, ,Congo/Zaire,AF,161721
+Zambia,CNGO,ZMB,CNGO_ZMB, ,Congo/Zaire,AF,173779
+Honduras,COCO,HND,COCO_HND, ,Coco/Segovia,NA,5608
+Nicaragua,COCO,NIC,COCO_NIC, ,Coco/Segovia,NA,18901
+Argentina,COMA,ARG,COMA_ARG, ,Comau,SA,74
+Chile,COMA,CHL,COMA_CHL, ,Comau,SA,836
+Cameroon,CROS,CMR,CROS_CMR, ,Cross,AF,13399
+Georgia,CRUH,GEO,CRUH_GEO, ,Coruh,AS,1825
+Turkey,CRUH,TUR,CRUH_TUR, ,Coruh,AS,20213
+Ireland,CSTL,IRL,CSTL_IRL, ,Castletown,EU,80
+U.K. of Great Britain and Northern Ireland,CSTL,GBR,CSTL_GBR, ,Castletown,EU,186
+Liberia,CSTO,LBR,CSTO_LBR, ,Cestos,AF,10486
+Guatemala,CTAT,GTM,CTAT_GTM, ,Coatan Achute,NA,264
+Mexico,CTAT,MEX,CTAT_MEX, ,Coatan Achute,NA,415
+Colombia,CTTB,COL,CTTB_COL, ,Catatumbo,SA,16514
+Venezuela,CTTB,VEN,CTTB_VEN, ,Catatumbo,SA,10921
+Argentina,CULL,ARG,CULL_ARG, ,Cullen,SA,223
+Chile,CULL,CHL,CULL_CHL, ,Cullen,SA,695
+CÃ´te d'Ivoire,CVLY,CIV,CVLY_CIV, ,Cavally,AF,16157
+Liberia,CVLY,LBR,CVLY_LBR, ,Cavally,AF,11936
+Algeria,DAUR,DZA,DAUR_DZA, ,Daoura,AF,9598
+Morocco,DAUR,MAR,DAUR_MAR, ,Daoura,AF,40092
+Belarus,DNPR,BLR,DNPR_BLR, ,Dnieper,EU,118703
+Russian Federation,DNPR,RUS,DNPR_RUS, ,Dnieper,EU,99686
+Ukraine,DNPR,UKR,DNPR_UKR, ,Dnieper,EU,292995
+"Moldova, Republic of",DNSR,MDA,DNSR_MDA, ,Dniester,EU,19356
+Poland,DNSR,POL,DNSR_POL, ,Dniester,EU,232
+Ukraine,DNSR,UKR,DNSR_UKR, ,Dniester,EU,53794
+Ukraine,DONX,UKR,DONX_UKR, ,Don,EU,54722
+Croatia,DRAG,HRV,DRAG_HRV, ,Dragonja,EU,61
+Slovenia,DRAG,SVN,DRAG_SVN, ,Dragonja,EU,93
+Algeria,DRAX,DZA,DRAX_DZA, ,Dra,AF,15565
+Morocco,DRAX,MAR,DRAX_MAR, ,Dra,AF,78613
+Iran  (Islamic Republic of),DSHT,IRN,DSHT_IRN, ,Dasht,AS,6320
+Pakistan,DSHT,PAK,DSHT_PAK, ,Dasht,AS,24664
+Belarus,DUGV,BLR,DUGV_BLR, ,Daugava,EU,33431
+Estonia,DUGV,EST,DUGV_EST, ,Daugava,EU,131
+Latvia,DUGV,LVA,DUGV_LVA, ,Daugava,EU,23402
+Lithuania,DUGV,LTU,DUGV_LTU, ,Daugava,EU,1864
+Russian Federation,DUGV,RUS,DUGV_RUS, ,Daugava,EU,27516
+Portugal,DURO,PRT,DURO_PRT, ,Douro/Duero,EU,18672
+Spain,DURO,ESP,DURO_ESP, ,Douro/Duero,EU,78708
+France,EBRO,FRA,EBRO_FRA, ,Ebro,EU,525
+Spain,EBRO,ESP,EBRO_ESP, ,Ebro,EU,84482
+Russian Federation,ELNK,RUS,ELNK_RUS, ,Elancik,EU,937
+Ukraine,ELNK,UKR,ELNK_UKR, ,Elancik,EU,444
+Ireland,ERNE,IRL,ERNE_IRL, ,Erne,EU,2520
+U.K. of Great Britain and Northern Ireland,ERNE,GBR,ERNE_GBR, ,Erne,EU,1918
+Angola,ETOS,AGO,ETOS_AGO, ,Cuvelai/Etosha,AF,54110
+Namibia,ETOS,NAM,ETOS_NAM, ,Cuvelai/Etosha,AF,119573
+Ireland,FANE,IRL,FANE_IRL, ,Fane,EU,281
+U.K. of Great Britain and Northern Ireland,FANE,GBR,FANE_GBR, ,Fane,EU,60
+Ireland,FLRY,IRL,FLRY_IRL, ,Flurry,EU,155
+U.K. of Great Britain and Northern Ireland,FLRY,GBR,FLRY_GBR, ,Flurry,EU,46
+Bangladesh,FNNY,BGD,FNNY_BGD, ,Fenney,AS,1509
+India,FNNY,IND,FNNY_IND, ,Fenney,AS,1519
+Ireland,FOYL,IRL,FOYL_IRL, ,Foyle,EU,894
+U.K. of Great Britain and Northern Ireland,FOYL,GBR,FOYL_GBR, ,Foyle,EU,2028
+Canada,FRSR,CAN,FRSR_CAN, ,Fraser,NA,230962
+United States of America,FRSR,USA,FRSR_USA, ,Fraser,NA,631
+Canada,FRTH,CAN,FRTH_CAN, ,Firth,NA,3512
+United States of America,FRTH,USA,FRTH_USA, ,Firth,NA,2562
+Eritrea,GASH,ERI,GASH_ERI, ,Gash,AF,16843
+Ethiopia,GASH,ETH,GASH_ETH, ,Gash,AF,5961
+Sudan,GASH,SDN,GASH_SDN, ,Gash,AF,853
+Belize,GJLV,BLZ,GJLV_BLZ, ,Grijalva,NA,31
+Guatemala,GJLV,GTM,GJLV_GTM, ,Grijalva,NA,46941
+Mexico,GJLV,MEX,GJLV_MEX, ,Grijalva,NA,78703
+Norway,GLAM,NOR,GLAM_NOR, ,Glama,EU,41006
+Sweden,GLAM,SWE,GLAM_SWE, ,Glama,EU,370
+Malaysia,GLOK,MYS,GLOK_MYS, ,Golok,AS,989
+Thailand,GLOK,THA,GLOK_THA, ,Golok,AS,1330
+El Salvador,GOSR,SLV,GOSR_SLV, ,Goascoran,NA,1338
+Honduras,GOSR,HND,GOSR_HND, ,Goascoran,NA,1408
+Spain,GRON,ESP,GRON_ESP, ,Garonne,EU,589
+Guinea,GSCR,GIN,GSCR_GIN, ,Great Scarcies,AF,5235
+Sierra Leone,GSCR,SLE,GSCR_SLE, ,Great Scarcies,AF,2597
+Portugal,GUDN,PRT,GUDN_PRT, ,Guadiana,EU,11646
+Spain,GUDN,ESP,GUDN_ESP, ,Guadiana,EU,55415
+Algeria,GUIR,DZA,GUIR_DZA, ,Guir,AF,83613
+Morocco,GUIR,MAR,GUIR_MAR, ,Guir,AF,25120
+Estonia,GUJA,EST,GUJA_EST, ,Gauja,EU,1156
+Latvia,GUJA,LVA,GUJA_LVA, ,Gauja,EU,8050
+Dem People's Rep of Korea,HANX,PRK,HANX_PRK, ,Han,AS,8369
+Republic of Korea,HANX,KOR,HANX_KOR, ,Han,AS,25009
+Afghanistan,HARI,AFG,HARI_AFG, ,Hari/Harirud,AS,38895
+Iran  (Islamic Republic of),HARI,IRN,HARI_IRN, ,Hari/Harirud,AS,40855
+Turkmenistan,HARI,TKM,HARI_TKM, ,Hari/Harirud,AS,39346
+Iran  (Islamic Republic of),HIMR,IRN,HIMR_IRN, ,Hamun-i-Mashkel/Rakshan,AS,36442
+Pakistan,HIMR,PAK,HIMR_PAK, ,Hamun-i-Mashkel/Rakshan,AS,80064
+Iran  (Islamic Republic of),HLMD,IRN,HLMD_IRN, ,Helmand,AS,46606
+Pakistan,HLMD,PAK,HLMD_PAK, ,Helmand,AS,44148
+Belize,HOND,BLZ,HOND_BLZ, ,Hondo,NA,2703
+Guatemala,HOND,GTM,HOND_GTM, ,Hondo,NA,4914
+Mexico,HOND,MEX,HOND_MEX, ,Hondo,NA,5082
+China,HSIX,CHN,HSIX_CHN, ,Bei Jiang/Hsi,AS,389510
+Viet Nam,HSIX,VNM,HSIX_VNM, ,Bei Jiang/Hsi,AS,11573
+Mozambique,ICMT,MOZ,ICMT_MOZ, ,Incomati,AF,15333
+South Africa,ICMT,ZAF,ICMT_ZAF, ,Incomati,AF,28736
+Swaziland,ICMT,SWZ,ICMT_SWZ, ,Incomati,AF,2562
+Kazakhstan,ILIX,KAZ,ILIX_KAZ, ,Ili/Kunes He,AS,357239
+Kyrgyzstan,ILIX,KGZ,ILIX_KGZ, ,Ili/Kunes He,AS,727
+Aksai Chin,INDU,CHN/IND,INDU_CHN/IND, ,Indus,AS,8308
+China/India,INDU,CHN/IND,INDU_CHN/IND_1, ,Indus,AS,1863
+India,INDU,IND,INDU_IND, ,Indus,AS,78781
+Italy,ISNZ,ITA,ISNZ_ITA, ,Isonzo,EU,1134
+Slovenia,ISNZ,SVN,ISNZ_SVN, ,Isonzo,EU,2223
+Indonesia,JAPR,IDN,JAPR_IDN, ,Jayapura,AS,4765
+Papua New Guinea,JAPR,PNG,JAPR_PNG, ,Jayapura,AS,488
+Norway,JCBS,NOR,JCBS_NOR, ,Jacobs,EU,693
+Russian Federation,JCBS,RUS,JCBS_RUS, ,Jacobs,EU,251
+Egypt,JORD,EGY,JORD_EGY, ,Jordan,AS,2275
+Israel,JORD,ISR,JORD_ISR, ,Jordan,AS,9626
+Jordan,JORD,JOR,JORD_JOR, ,Jordan,AS,22644
+Lebanon,JORD,LBN,JORD_LBN, ,Jordan,AS,668
+Syrian Arab Republic,JORD,SYR,JORD_SYR, ,Jordan,AS,6791
+West Bank,JORD,PAL,JORD_PAL, ,Jordan,AS,3001
+Ethiopia,JUBA,ETH,JUBA_ETH, ,Juba-Shibeli,AF,365753
+Kenya,JUBA,KEN,JUBA_KEN, ,Juba-Shibeli,AF,208902
+Somalia,JUBA,SOM,JUBA_SOM, ,Juba-Shibeli,AF,217695
+Colombia,JURD,COL,JURD_COL, ,Jurado,SA,643
+Panama,JURD,PAN,JURD_PAN, ,Jurado,SA,275
+India,KALD,IND,KALD_IND, ,Kaladan,AS,8187
+Finland,KEMI,FIN,KEMI_FIN, ,Kemi,EU,50749
+Russian Federation,KEMI,RUS,KEMI_RUS, ,Kemi,EU,3144
+"Moldova, Republic of",KGNK,MDA,KGNK_MDA, ,Kogilnik,EU,1547
+Ukraine,KGNK,UKR,KGNK_UKR, ,Kogilnik,EU,2425
+Burkina Faso,KMOE,BFA,KMOE_BFA, ,Komoe,AF,17780
+CÃ´te d'Ivoire,KMOE,CIV,KMOE_CIV, ,Komoe,AF,62655
+Ghana,KMOE,GHA,KMOE_GHA, ,Komoe,AF,2535
+Mali,KMOE,MLI,KMOE_MLI, ,Komoe,AF,420
+Bangladesh,KNFL,BGD,KNFL_BGD, ,Karnaphuli,AS,9816
+India,KNFL,IND,KNFL_IND, ,Karnaphuli,AS,4093
+Afghanistan,KOWL,AFG,KOWL_AFG, ,Kowl E Namaksar,AS,13869
+Iran  (Islamic Republic of),KOWL,IRN,KOWL_IRN, ,Kowl E Namaksar,AS,28403
+Bosnia and Herzegovina,KRKA,BIH,KRKA_BIH, ,Krka,EU,86
+Croatia,KRKA,HRV,KRKA_HRV, ,Krka,EU,2402
+Norway,KRLV,NOR,KRLV_NOR, ,Klaralven,EU,9134
+Sweden,KRLV,SWE,KRLV_SWE, ,Klaralven,EU,40957
+Angola,KUNE,AGO,KUNE_AGO, ,Kunene,AF,94130
+Namibia,KUNE,NAM,KUNE_NAM, ,Kunene,AF,14433
+Armenia,KURA,ARM,KURA_ARM, ,Kura-Araks,AS,29624
+Iran  (Islamic Republic of),KURA,IRN,KURA_IRN, ,Kura-Araks,AS,37109
+Turkey,KURA,TUR,KURA_TUR, ,Kura-Araks,AS,28861
+Lithuania,LAVA,LTU,LAVA_LTU, ,Lava/Pregel,EU,60
+Poland,LAVA,POL,LAVA_POL, ,Lava/Pregel,EU,7885
+Russian Federation,LAVA,RUS,LAVA_RUS, ,Lava/Pregel,EU,6522
+Ethiopia,LGPS,ETH,LGPS_ETH, ,Lotagipi Swamp,AF,159
+Ilemi triangle,LGPS,KEN/SSD,LGPS_KEN/SSD, ,Lotagipi Swamp,AF,2564
+Kenya,LGPS,KEN,LGPS_KEN, ,Lotagipi Swamp,AF,20495
+South Sudan,LGPS,SSD,LGPS_SSD, ,Lotagipi Swamp,AF,6964
+Uganda,LGPS,UGA,LGPS_UGA, ,Lotagipi Swamp,AF,1577
+Portugal,LIMA,PRT,LIMA_PRT, ,Lima,EU,1163
+Spain,LIMA,ESP,LIMA_ESP, ,Lima,EU,1306
+Algeria,LKCH,DZA,LKCH_DZA, ,Lake Chad,AF,106021
+Cameroon,LKCH,CMR,LKCH_CMR, ,Lake Chad,AF,48031
+Chad,LKCH,TCD,LKCH_TCD, ,Lake Chad,AF,1133463
+Libya,LKCH,LBY,LKCH_LBY, ,Lake Chad,AF,57466
+Niger,LKCH,NER,LKCH_NER, ,Lake Chad,AF,694460
+Nigeria,LKCH,NGA,LKCH_NGA, ,Lake Chad,AF,178955
+Sudan,LKCH,SDN,LKCH_SDN, ,Lake Chad,AF,163701
+Argentina,LKFN,ARG,LKFN_ARG, ,Lake Fagnano,SA,3053
+Chile,LKFN,CHL,LKFN_CHL, ,Lake Fagnano,SA,504
+Kenya,LKNT,KEN,LKNT_KEN, ,Lake Natron,AF,17678
+United Republic of Tanzania,LKNT,TZA,LKNT_TZA, ,Lake Natron,AF,9603
+Bolivia,LKTC,BOL,LKTC_BOL, ,Lake Titicaca-Poopo System,SA,61739
+Chile,LKTC,CHL,LKTC_CHL, ,Lake Titicaca-Poopo System,SA,1341
+Peru,LKTC,PER,LKTC_PER, ,Lake Titicaca-Poopo System,SA,49160
+Ethiopia,LKTK,ETH,LKTK_ETH, ,Lake Turkana,AF,99011
+Ilemi triangle,LKTK,KEN/SSD,LKTK_KEN/SSD, ,Lake Turkana,AF,614
+Kenya,LKTK,KEN,LKTK_KEN, ,Lake Turkana,AF,65354
+South Sudan,LKTK,SSD,LKTK_SSD, ,Lake Turkana,AF,5290
+Uganda,LKTK,UGA,LKTK_UGA, ,Lake Turkana,AF,2874
+Mongolia,LKUN,MNG,LKUN_MNG, ,Lake Ubsa-Nur,AS,50151
+Russian Federation,LKUN,RUS,LKUN_RUS, ,Lake Ubsa-Nur,AS,20178
+Latvia,LLUP,LVA,LLUP_LVA, ,Lielupe,EU,8819
+Lithuania,LLUP,LTU,LLUP_LTU, ,Lielupe,EU,8848
+Ireland,LMEL,IRL,LMEL_IRL, ,Lough Melvin,EU,174
+U.K. of Great Britain and Northern Ireland,LMEL,GBR,LMEL_GBR, ,Lough Melvin,EU,115
+El Salvador,LMPA,SLV,LMPA_SLV, ,Lempa,NA,10145
+Guatemala,LMPA,GTM,LMPA_GTM, ,Lempa,NA,2604
+Honduras,LMPA,HND,LMPA_HND, ,Lempa,NA,5467
+Botswana,LMPO,BWA,LMPO_BWA, ,Limpopo,AF,81413
+Mozambique,LMPO,MOZ,LMPO_MOZ, ,Limpopo,AF,79517
+South Africa,LMPO,ZAF,LMPO_ZAF, ,Limpopo,AF,182834
+Zimbabwe,LMPO,ZWE,LMPO_ZWE, ,Limpopo,AF,62756
+Uruguay,LMRM,URY,LMRM_URY, ,Lagoon Dos Patos-Lagoon Mirim,SA,32572
+Indonesia,LOES,IDN,LOES_IDN, ,Loes,AS,710
+Timor-Leste,LOES,TLS,LOES_TLS, ,Loes,AS,1857
+Guinea,LOFF,GIN,LOFF_GIN, ,Loffa,AF,1442
+Liberia,LOFF,LBR,LOFF_LBR, ,Loffa,AF,9004
+Guinea,LSCR,GIN,LSCR_GIN, ,Little Scarcies,AF,5502
+Guinea,MANA,GIN,MANA_GIN, ,Mana-Morro,AF,33
+Liberia,MANA,LBR,MANA_LBR, ,Mana-Morro,AF,5691
+Sierra Leone,MANA,SLE,MANA_SLE, ,Mana-Morro,AF,1910
+Indonesia,MARO,IDN,MARO_IDN, ,Maro,AS,1660
+Papua New Guinea,MARO,PNG,MARO_PNG, ,Maro,AS,1659
+Dominican Republic,MASS,DOM,MASS_DOM, ,Massacre,NA,359
+Haiti,MASS,HTI,MASS_HTI, ,Massacre,NA,418
+Equatorial Guinea,MBEX,GNQ,MBEX_GNQ, ,Mbe,AF,655
+Algeria,MDJD,DZA,MDJD_DZA, ,Medjerda,AF,7806
+Tunisia,MDJD,TUN,MDJD_TUN, ,Medjerda,AF,15370
+Cambodia,MEKO,KHM,MEKO_KHM, ,Mekong,AS,154083
+China,MEKO,CHN,MEKO_CHN, ,Mekong,AS,164737
+Bangladesh,MHRI,BGD,MHRI_BGD, ,Muhuri (aka Little Feni),AS,1281
+India,MHRI,IND,MHRI_IND, ,Muhuri (aka Little Feni),AS,2506
+Portugal,MINO,PRT,MINO_PRT, ,Mino,EU,517
+Spain,MINO,ESP,MINO_ESP, ,Mino,EU,16163
+Colombia,MIRA,COL,MIRA_COL, ,Mira,SA,4216
+Ecuador,MIRA,ECU,MIRA_ECU, ,Mira,SA,6251
+Russian Federation,MIUS,RUS,MIUS_RUS, ,Mius,EU,2247
+Ukraine,MIUS,UKR,MIUS_UKR, ,Mius,EU,4840
+Guinea,MOAX,GIN,MOAX_GIN, ,Moa,AF,8509
+Liberia,MOAX,LBR,MOAX_LBR, ,Moa,AF,1712
+Sierra Leone,MOAX,SLE,MOAX_SLE, ,Moa,AF,9339
+Belize,MOHO,BLZ,MOHO_BLZ, ,Moho,NA,725
+Guatemala,MOHO,GTM,MOHO_GTM, ,Moho,NA,464
+Benin,MONO,BEN,MONO_BEN, ,Mono,AF,2705
+Togo,MONO,TGO,MONO_TGO, ,Mono,AF,21283
+Guatemala,MOTQ,GTM,MOTQ_GTM, ,Motaqua,NA,14230
+Honduras,MOTQ,HND,MOTQ_HND, ,Motaqua,NA,2041
+Afghanistan,MRGB,AFG,MRGB_AFG, ,Murgab,AS,38751
+Turkmenistan,MRGB,TKM,MRGB_TKM, ,Murgab,AS,54584
+Bulgaria,MRSA,BGR,MRSA_BGR, ,Maritsa,EU,35041
+Turkey,MRSA,TUR,MRSA_TUR, ,Maritsa,EU,14477
+Finland,NAAT,FIN,NAAT_FIN, ,Naatamo,EU,185
+Norway,NAAT,NOR,NAAT_NOR, ,Naatamo,EU,534
+Honduras,NEGR,HND,NEGR_HND, ,Negro,NA,993
+Canada,NELS,CAN,NELS_CAN, ,Nelson-Saskatchewan,NA,934028
+United States of America,NELS,USA,NELS_USA, ,Nelson-Saskatchewan,NA,154756
+Syrian Arab Republic,NHRK,SYR,NHRK_SYR, ,Nahr El Kebir,AS,1336
+Turkey,NHRK,TUR,NHRK_TUR, ,Nahr El Kebir,AS,262
+Belarus,NMAN,BLR,NMAN_BLR, ,Neman,EU,44839
+Latvia,NMAN,LVA,NMAN_LVA, ,Neman,EU,79
+Lithuania,NMAN,LTU,NMAN_LTU, ,Neman,EU,43730
+Poland,NMAN,POL,NMAN_POL, ,Neman,EU,2524
+Russian Federation,NMAN,RUS,NMAN_RUS, ,Neman,EU,1757
+Bosnia and Herzegovina,NRTV,BIH,NRTV_BIH, ,Neretva,EU,6376
+Croatia,NRTV,HRV,NRTV_HRV, ,Neretva,EU,432
+Belarus,NRVA,BLR,NRVA_BLR, ,Narva,EU,27
+Estonia,NRVA,EST,NRVA_EST, ,Narva,EU,17483
+Latvia,NRVA,LVA,NRVA_LVA, ,Narva,EU,3394
+Russian Federation,NRVA,RUS,NRVA_RUS, ,Narva,EU,35615
+Bulgaria,NSTO,BGR,NSTO_BGR, ,Nestos,EU,3404
+Congo,NYGA,COG,NYGA_COG, ,Nyanga,AF,4964
+Gabon,NYGA,GAB,NYGA_GAB, ,Nyanga,AF,19999
+Algeria,ODBN,DZA,ODBN_DZA, ,Oued Bon Naima,AF,101
+Morocco,ODBN,MAR,ODBN_MAR, ,Oued Bon Naima,AF,268
+Germany,ODER,DEU,ODER_DEU, ,Oder/Odra,EU,5720
+Cameroon,OGOO,CMR,OGOO_CMR, ,Ogooue,AF,5165
+Equatorial Guinea,OGOO,GNQ,OGOO_GNQ, ,Ogooue,AF,1655
+Angola,OKVG,AGO,OKVG_AGO, ,Okavango,AF,150103
+Botswana,OKVG,BWA,OKVG_BWA, ,Okavango,AF,344426
+Namibia,OKVG,NAM,OKVG_NAM, ,Okavango,AF,170188
+Zimbabwe,OKVG,ZWE,OKVG_ZWE, ,Okavango,AF,25464
+Finland,OLNG,FIN,OLNG_FIN, ,Olanga,EU,5786
+Russian Federation,OLNG,RUS,OLNG_RUS, ,Olanga,EU,35980
+Kazakhstan,ORAL,KAZ,ORAL_KAZ, ,Oral/Ural,EU,90374
+Russian Federation,ORAL,RUS,ORAL_RUS, ,Oral/Ural,EU,121347
+Botswana,ORAN,BWA,ORAN_BWA, ,Orange,AF,135377
+Lesotho,ORAN,LSO,ORAN_LSO, ,Orange,AF,30212
+Namibia,ORAN,NAM,ORAN_NAM, ,Orange,AF,242795
+Benin,OUEM,BEN,OUEM_BEN, ,Oueme,AF,49095
+Nigeria,OUEM,NGA,OUEM_NGA, ,Oueme,AF,10455
+Togo,OUEM,TGO,OUEM_TGO, ,Oueme,AF,323
+Finland,OULU,FIN,OULU_FIN, ,Oulu,EU,24684
+Russian Federation,OULU,RUS,OULU_RUS, ,Oulu,EU,1287
+Brazil,OYPK,BRA,OYPK_BRA, ,Oiapoque/Oyupock,SA,12638
+French Guiana,OYPK,GUF,OYPK_GUF, ,Oiapoque/Oyupock,SA,13357
+Kenya,PANG,KEN,PANG_KEN, ,Pangani,AF,2732
+United Republic of Tanzania,PANG,TZA,PANG_TZA, ,Pangani,AF,37584
+El Salvador,PAZX,SLV,PAZX_SLV, ,Paz,NA,963
+Guatemala,PAZX,GTM,PAZX_GTM, ,Paz,NA,1214
+Dominican Republic,PDNL,DOM,PDNL_DOM, ,Pedernales,NA,153
+Haiti,PDNL,HTI,PDNL_HTI, ,Pedernales,NA,167
+Myanmar,PKCN,MMR,PKCN_MMR, ,Pakchan,AS,1580
+Thailand,PKCN,THA,PKCN_THA, ,Pakchan,AS,1646
+Argentina,PLNA,ARG,PLNA_ARG, ,Palena,SA,5803
+Chile,PLNA,CHL,PLNA_CHL, ,Palena,SA,7427
+Brunei Darussalam,PNDR,BRN,PNDR_BRN, ,Pandaruan,AS,971
+Switzerland,POXX,CHE,POXX_CHE, ,Po,EU,3774
+Poland,PRLN,POL,PRLN_POL, ,Prohladnaja,EU,345
+Russian Federation,PRLN,RUS,PRLN_RUS, ,Prohladnaja,EU,1446
+Estonia,PRNU,EST,PRNU_EST, ,Parnu,EU,6914
+Latvia,PRNU,LVA,PRNU_LVA, ,Parnu,EU,10
+Argentina,PSCU,ARG,PSCU_ARG, ,Pascua,SA,7382
+Chile,PSCU,CHL,PSCU_CHL, ,Pascua,SA,6725
+Georgia,PSOU,GEO,PSOU_GEO, ,Psou,EU,221
+Russian Federation,PSOU,RUS,PSOU_RUS, ,Psou,EU,203
+Finland,PSVK,FIN,PSVK_FIN, ,Pasvik,EU,14256
+Norway,PSVK,NOR,PSVK_NOR, ,Pasvik,EU,1466
+Russian Federation,PSVK,RUS,PSVK_RUS, ,Pasvik,EU,2238
+Colombia,PTIA,COL,PTIA_COL, ,Patia,SA,21954
+Ecuador,PTIA,ECU,PTIA_ECU, ,Patia,SA,350
+Argentina,PUEL,ARG,PUEL_ARG, ,Puelo,SA,5933
+Chile,PUEL,CHL,PUEL_CHL, ,Puelo,SA,3230
+China,PULT,CHN,PULT_CHN, ,Pu Lun T'o,AS,38786
+Mongolia,PULT,MNG,PULT_MNG, ,Pu Lun T'o,AS,9889
+China,REDX,CHN,REDX_CHN, ,Red/Song Hong,AS,75049
+Bulgaria,REZV,BGR,REZV_BGR, ,Rezvaya,EU,152
+Turkey,REZV,TUR,REZV_TUR, ,Rezvaya,EU,619
+Mexico,RGNA,MEX,RGNA_MEX, ,Rio Grande (North America),NA,223752
+United States of America,RGNA,USA,RGNA_USA, ,Rio Grande (North America),NA,314650
+Argentina,RGSA,ARG,RGSA_ARG, ,Rio Grande (South America),SA,3931
+Chile,RGSA,CHL,RGSA_CHL, ,Rio Grande (South America),SA,4701
+Switzerland,RHON,CHE,RHON_CHE, ,Rhone,EU,7597
+Italy,ROIA,ITA,ROIA_ITA, ,Roia,EU,104
+Zimbabwe,SABI,ZWE,SABI_ZWE, ,Sabi,AF,84828
+Estonia,SALC,EST,SALC_EST, ,Salaca,EU,274
+Latvia,SALC,LVA,SALC_LVA, ,Salaca,EU,3312
+Azerbaijan,SAMR,AZE,SAMR_AZE, ,Samur,EU,491
+Cameroon,SANA,CMR,SANA_CMR, ,Sanaga,AF,132287
+Central African Republic,SANA,CAF,SANA_CAF, ,Sanaga,AF,722
+CÃ´te d'Ivoire,SASS,CIV,SASS_CIV, ,Sassandra,AF,59972
+Guinea,SASS,GIN,SASS_GIN, ,Sassandra,AF,8152
+Indonesia,SBKU,IDN,SBKU_IDN, ,Sebuku,AS,2664
+Malaysia,SBKU,MYS,SBKU_MYS, ,Sebuku,AS,406
+Belgium,SEIN,BEL,SEIN_BEL, ,Seine,EU,74
+Guinea,SENG,GIN,SENG_GIN, ,Senegal,AF,31470
+Mali,SENG,MLI,SENG_MLI, ,Senegal,AF,171576
+Mauritania,SENG,MRT,SENG_MRT, ,Senegal,AF,168343
+Senegal,SENG,SEN,SENG_SEN, ,Senegal,AF,76991
+Argentina,SENO,ARG,SENO_ARG, ,Seno Union/Serrano,SA,1876
+Chile,SENO,CHL,SENO_CHL, ,Seno Union/Serrano,SA,6772
+Indonesia,SEPK,IDN,SEPK_IDN, ,Sepik,AS,3460
+Papua New Guinea,SEPK,PNG,SEPK_PNG, ,Sepik,AS,76319
+Kazakhstan,SHUR,KAZ,SHUR_KAZ, ,Shu/Chu,AS,53509
+Kyrgyzstan,SHUR,KGZ,SHUR_KGZ, ,Shu/Chu,AS,21980
+Costa Rica,SIOL,CRI,SIOL_CRI, ,Sixaola,NA,2335
+Panama,SIOL,PAN,SIOL_PAN, ,Sixaola,NA,522
+Canada,SJNA,CAN,SJNA_CAN, ,St. John (North America),NA,36169
+United States of America,SJNA,USA,SJNA_USA, ,St. John (North America),NA,18887
+Costa Rica,SJUA,CRI,SJUA_CRI, ,San Juan,NA,13142
+Nicaragua,SJUA,NIC,SJUA_NIC, ,San Juan,NA,28218
+Canada,SKAG,CAN,SKAG_CAN, ,Skagit,NA,1045
+United States of America,SKAG,USA,SKAG_USA, ,Skagit,NA,7162
+Canada,SLAW,CAN,SLAW_CAN, ,St. Lawrence,NA,480712
+United States of America,SLAW,USA,SLAW_USA, ,St. Lawrence,NA,329917
+Argentina,SMAR,ARG,SMAR_ARG, ,San Martin,SA,73
+Chile,SMAR,CHL,SMAR_CHL, ,San Martin,SA,287
+Indonesia,SMBK,IDN,SMBK_IDN, ,Sembakung,AS,4820
+Malaysia,SMBK,MYS,SMBK_MYS, ,Sembakung,AS,5433
+Guinea,SPAU,GIN,SPAU_GIN, ,St. Paul,AF,9272
+Liberia,SPAU,LBR,SPAU_LBR, ,St. Paul,AF,11045
+"Moldova, Republic of",SRTA,MDA,SRTA_MDA, ,Sarata,EU,435
+Ukraine,SRTA,UKR,SRTA_UKR, ,Sarata,EU,802
+Belize,SRTU,BLZ,SRTU_BLZ, ,Sarstun,NA,220
+Guatemala,SRTU,GTM,SRTU_GTM, ,Sarstun,NA,1945
+Canada,STKN,CAN,STKN_CAN, ,Stikine,NA,49636
+United States of America,STKN,USA,STKN_USA, ,Stikine,NA,1242
+Greece,STUM,GRC,STUM_GRC, ,Struma,EU,6017
+Serbia,STUM,SRB,STUM_SRB, ,Struma,EU,683
+Guatemala,SUCT,GTM,SUCT_GTM, ,Suchiate,NA,1094
+Mexico,SUCT,MEX,SUCT_MEX, ,Suchiate,NA,315
+China,SUJF,CHN,SUJF_CHN, ,Sujfun,AS,10024
+Russian Federation,SUJF,RUS,SUJF_RUS, ,Sujfun,AS,6797
+Algeria,TAFN,DZA,TAFN_DZA, ,Tafna,AF,5350
+Morocco,TAFN,MAR,TAFN_MAR, ,Tafna,AF,1913
+Portugal,TAGU,PRT,TAGU_PRT, ,Tagus/Tejo,EU,15439
+Spain,TAGU,ESP,TAGU_ESP, ,Tagus/Tejo,EU,55751
+Canada,TAKU,CAN,TAKU_CAN, ,Taku,NA,16733
+United States of America,TAKU,USA,TAKU_USA, ,Taku,NA,763
+Kazakhstan,TALA,KAZ,TALA_KAZ, ,Talas,AS,34725
+Kyrgyzstan,TALA,KGZ,TALA_KGZ, ,Talas,AS,10700
+Papua New Guinea,TAMI,PNG,TAMI_PNG, ,Tami,AS,474
+Finland,TANA,FIN,TANA_FIN, ,Tana,EU,5905
+CÃ´te d'Ivoire,TANO,CIV,TANO_CIV, ,Tano,AF,1840
+Ghana,TANO,GHA,TANO_GHA, ,Tano,AF,14933
+Belize,TEMA,BLZ,TEMA_BLZ, ,Temash,NA,446
+Guatemala,TEMA,GTM,TEMA_GTM, ,Temash,NA,26
+Georgia,TERK,GEO,TERK_GEO, ,Terek,EU,1758
+Mexico,TIJU,MEX,TIJU_MEX, ,Tijuana,NA,3194
+United States of America,TIJU,USA,TIJU_USA, ,Tijuana,NA,1236
+Indonesia,TJWA,IDN,TJWA_IDN, ,Tjeroaka-Wanggoe,AS,5438
+Papua New Guinea,TJWA,PNG,TJWA_PNG, ,Tjeroaka-Wanggoe,AS,2612
+Finland,TORN,FIN,TORN_FIN, ,Torne/Tornealven,EU,12758
+Sweden,TORN,SWE,TORN_SWE, ,Torne/Tornealven,EU,26323
+Aksai Chin,TRIM,CHN/IND,TRIM_CHN/IND, ,Tarim,AS,22191
+Kazakhstan,TRIM,KAZ,TRIM_KAZ, ,Tarim,AS,108
+Finland,TULM,FIN,TULM_FIN, ,Tuloma,EU,2483
+Russian Federation,TULM,RUS,TULM_RUS, ,Tuloma,EU,24523
+Ecuador,TUMB,ECU,TUMB_ECU, ,Tumbes,SA,3631
+Peru,TUMB,PER,TUMB_PER, ,Tumbes,SA,1740
+Kenya,UMBA,KEN,UMBA_KEN, ,Umba,AF,1596
+United Republic of Tanzania,UMBA,TZA,UMBA_TZA, ,Umba,AF,5078
+Equatorial Guinea,UTBN,GNQ,UTBN_GNQ, ,Utamboni,AF,3839
+Gabon,UTBN,GAB,UTBN_GAB, ,Utamboni,AF,3560
+Indonesia,VAGR,IDN,VAGR_IDN, ,Vanimo-Green,AS,39
+Papua New Guinea,VAGR,PNG,VAGR_PNG, ,Vanimo-Green,AS,2631
+Argentina,VDVA,ARG,VDVA_ARG, ,Valdivia,SA,1040
+Chile,VDVA,CHL,VDVA_CHL, ,Valdivia,SA,9199
+Latvia,VENT,LVA,VENT_LVA, ,Venta,EU,6703
+Lithuania,VENT,LTU,VENT_LTU, ,Venta,EU,5197
+Albania,VJSE,ALB,VJSE_ALB, ,Vijose,EU,4478
+Greece,VJSE,GRC,VJSE_GRC, ,Vijose,EU,2338
+Bulgaria,VLKA,BGR,VLKA_BGR, ,Velaka,EU,785
+Turkey,VLKA,TUR,VLKA_TUR, ,Velaka,EU,290
+Kazakhstan,VOLG,KAZ,VOLG_KAZ, ,Volga,EU,1477
+Russian Federation,VOLG,RUS,VOLG_RUS, ,Volga,EU,1410272
+Greece,VRDR,GRC,VRDR_GRC, ,Vardar,EU,2900
+Serbia,VRDR,SRB,VRDR_SRB, ,Vardar,EU,1222
+Belarus,VSTL,BLR,VSTL_BLR, ,Vistula/Wista,EU,10118
+Ukraine,VSTL,UKR,VSTL_UKR, ,Vistula/Wista,EU,12762
+Belarus,VUKS,BLR,VUKS_BLR, ,Vuoksa,EU,464
+Finland,VUKS,FIN,VUKS_FIN, ,Vuoksa,EU,63862
+Russian Federation,VUKS,RUS,VUKS_RUS, ,Vuoksa,EU,222768
+Canada,WHIT,CAN,WHIT_CAN, ,Whiting,NA,1943
+United States of America,WHIT,USA,WHIT_USA, ,Whiting,NA,531
+Denmark,WIED,DNK,WIED_DNK, ,Wiedau,EU,1047
+Germany,WIED,DEU,WIED_DEU, ,Wiedau,EU,305
+China,YALU,CHN,YALU_CHN, ,Yalu,AS,31724
+Dem People's Rep of Korea,YALU,PRK,YALU_PRK, ,Yalu,AS,30571
+Mexico,YAQU,MEX,YAQU_MEX, ,Yaqui,NA,68694
+United States of America,YAQU,USA,YAQU_USA, ,Yaqui,NA,4184
+Argentina,YELC,ARG,YELC_ARG, ,Yelcho,SA,7278
+Chile,YELC,CHL,YELC_CHL, ,Yelcho,SA,4131
+Mongolia,YNSY,MNG,YNSY_MNG, ,Jenisej/Yenisey,AS,317891
+Russian Federation,YNSY,RUS,YNSY_RUS, ,Jenisej/Yenisey,AS,2186713
+Belgium,YSER,BEL,YSER_BEL, ,Yser,EU,1182
+France,YSER,FRA,YSER_FRA, ,Yser,EU,378
+Canada,YUKN,CAN,YUKN_CAN, ,Yukon,NA,333179
+Argentina,ZAPL,ARG,ZAPL_ARG, ,Zapaleri,SA,465
+Bolivia,ZAPL,BOL,ZAPL_BOL, ,Zapaleri,SA,560
+Chile,ZAPL,CHL,ZAPL_CHL, ,Zapaleri,SA,1482
+Venezuela,ESQB,VEN,ESQB_VEN, ,Essequibo,SA,38987
+Bolivia,AMZN,BOL,AMZN_BOL, ,Amazon,SA,712549
+Colombia,AMZN,COL,AMZN_COL, ,Amazon,SA,340712
+Ecuador,AMZN,ECU,AMZN_ECU, ,Amazon,SA,132057
+Peru,AMZN,PER,AMZN_PER, ,Amazon,SA,961197
+Albania,LKPP,ALB,LKPP_ALB, ,Lake Prespa,EU,6561
+Greece,LKPP,GRC,LKPP_GRC, ,Lake Prespa,EU,350
+The former Yugoslav Republic of Macedonia,LKPP,MFD,LKPP_MFD,MKD,Lake Prespa,EU,793
+Austria,ELBE,AUT,ELBE_AUT, ,Elbe,EU,930
+Czech Republic,ELBE,CZE,ELBE_CZE, ,Elbe,EU,49873
+Poland,ELBE,POL,ELBE_POL, ,Elbe,EU,238
+Botswana,ZAMB,BWA,ZAMB_BWA, ,Zambezi,AF,17037
+Malawi,ZAMB,MWI,ZAMB_MWI, ,Zambezi,AF,110154
+Mozambique,ZAMB,MOZ,ZAMB_MOZ, ,Zambezi,AF,158969
+Namibia,ZAMB,NAM,ZAMB_NAM, ,Zambezi,AF,17094
+United Republic of Tanzania,ZAMB,TZA,ZAMB_TZA, ,Zambezi,AF,27669
+Zambia,ZAMB,ZMB,ZAMB_ZMB, ,Zambezi,AF,575711
+Zimbabwe,ZAMB,ZWE,ZAMB_ZWE, ,Zambezi,AF,212510
+Ecuador,ZARM,ECU,ZARM_ECU, ,Zarumilla,SA,517
+Peru,ZARM,PER,ZARM_PER, ,Zarumilla,SA,539
+Benin,NGER,BEN,NGER_BEN, ,Niger,AF,44742
+Burkina Faso,NGER,BFA,NGER_BFA, ,Niger,AF,83415
+Cameroon,NGER,CMR,NGER_CMR, ,Niger,AF,86807
+Chad,NGER,TCD,NGER_TCD, ,Niger,AF,19461
+CÃ´te d'Ivoire,NGER,CIV,NGER_CIV, ,Niger,AF,23566
+Guinea,NGER,GIN,NGER_GIN, ,Niger,AF,95775
+Mali,NGER,MLI,NGER_MLI, ,Niger,AF,555687
+Mauritania,NGER,MRT,NGER_MRT, ,Niger,AF,2714
+Niger,NGER,NER,NGER_NER, ,Niger,AF,487892
+Gambia,GAMB,GMB,GAMB_GMB, ,Gambia,AF,9859
+Guinea,GAMB,GIN,GAMB_GIN, ,Gambia,AF,11756
+Senegal,GAMB,SEN,GAMB_SEN, ,Gambia,AF,55564
+Mozambique,PUNG,MOZ,PUNG_MOZ, ,Pungwe,AF,30739
+Zimbabwe,PUNG,ZWE,PUNG_ZWE, ,Pungwe,AF,1398
+Canada,MISS,CAN,MISS_CAN, ,Mississippi,NA,52262
+United States of America,MISS,USA,MISS_USA, ,Mississippi,NA,3212497
+Argentina,GALG,ARG,GALG_ARG, ,Gallegos/Chico,SA,10152
+Chile,GALG,CHL,GALG_CHL, ,Gallegos/Chico,SA,6655
+Argentina,LPTA,ARG,LPTA_ARG, ,La Plata,SA,807261
+Bolivia,LPTA,BOL,LPTA_BOL, ,La Plata,SA,221963
+Brazil,LPTA,BRA,LPTA_BRA, ,La Plata,SA,1413686
+Paraguay,LPTA,PRY,LPTA_PRY, ,La Plata,SA,399368
+Uruguay,LPTA,URY,LPTA_URY, ,La Plata,SA,139239
+Colombia,ORIN,COL,ORIN_COL, ,Orinoco,SA,346187
+Guyana,ORIN,GUY,ORIN_GUY, ,Orinoco,SA,10
+Indonesia,DIGL,IDN,DIGL_IDN, ,Digul,AS,29524
+Papua New Guinea,DIGL,PNG,DIGL_PNG, ,Digul,AS,510
+South Africa,MPUT,ZAF,MPUT_ZAF, ,Maputo,AF,17465
+Swaziland,MPUT,SWZ,MPUT_SWZ, ,Maputo,AF,11106
+Abyei,NILE,SDN/SSD,NILE_SDN/SSD, ,Nile,AF,9938
+Burundi,NILE,BDI,NILE_BDI, ,Nile,AF,13198
+Democratic Republic of the Congo,NILE,ZAR,NILE_ZAR, ,Nile,AF,20487
+Egypt,NILE,EGY,NILE_EGY, ,Nile,AF,236413
+Eritrea,NILE,ERI,NILE_ERI, ,Nile,AF,7657
+Ethiopia,NILE,ETH,NILE_ETH, ,Nile,AF,357336
+Hala'ib triangle,NILE,EGY/SDN,NILE_EGY/SDN_1, ,Nile,AF,4058
+Kenya,NILE,KEN,NILE_KEN, ,Nile,AF,49534
+Ma'tan al-Sarra,NILE,EGY/SDN,NILE_EGY/SDN, ,Nile,AF,1990
+Rwanda,NILE,RWA,NILE_RWA, ,Nile,AF,20847
+United Republic of Tanzania,NILE,TZA,NILE_TZA, ,Nile,AF,119729
+Albania,DRIN,ALB,DRIN_ALB, ,Drin,EU,7662
+Montenegro,DRIN,MNE,DRIN_MNE,MON,Drin,EU,3348
+Serbia,DRIN,SRB,DRIN_SRB, ,Drin,EU,4688
+The former Yugoslav Republic of Macedonia,DRIN,MFD,DRIN_MFD,MKD,Drin,EU,2515
+Italy,ADIG,ITA,ADIG_ITA, ,Adige,EU,14348
+Switzerland,ADIG,CHE,ADIG_CHE, ,Adige,EU,129
+Kenya,ANNL,KEN,ANNL_KEN, ,Annole,AF,6606
+Somalia,ANNL,SOM,ANNL_SOM, ,Annole,AF,4613
+Egypt,BATU,EGY,BATU_EGY, ,Bahr at Tubat,AF,6163
+Libya,BATU,LBY,BATU_LBY, , Bahr at Tubat,AF,1601
+Algeria,BNSA,DZA,BNSA_DZA, ,Oued Bou Namoussa,AF,2374
+Tunisia,BNSA,TUN,BNSA_TUN, ,Oued Bou Namoussa,AF,389
+Canada,CAET,CAN,CAET_CAN, ,Caetani,NA,163
+United States of America,CAET,USA,CAET_USA, ,Caetani,NA,704
+Bosnia and Herzegovina,CTNA,BIH,CTNA_BIH, ,Cetina,EU,3225
+Croatia,CTNA,HRV,CTNA_HRV, ,Cetina,EU,1874
+Canada,CNCT,CAN,CNCT_CAN, ,Connecticut,NA,307
+Canada,COPR,CAN,COPR_CAN, ,Copper,NA,3436
+United States of America,COPR,USA,COPR_USA, ,Copper,NA,62659
+Kenya,GLNA,KEN,GLNA_KEN, ,Galana,AF,40856
+United Republic of Tanzania,GLNA,TZA,GLNA_TZA, ,Galana,AF,5806
+Russian Federation,GRYE,RUS,GRYE_RUS, ,Gruzskiy Yelanchik,EU,103
+Ukraine,GRYE,UKR,GRYE_UKR, ,Gruzskiy Yelanchik,EU,1140
+Norway,INDL,NOR,INDL_NOR, ,Indalsalven,EU,2059
+Sweden,INDL,SWE,INDL_SWE, ,Indalsalven,EU,24521
+Argentina,LGFL,ARG,LGFL_ARG, ,Laguna Filaret,SA,239
+Chile,LGFL,CHL,LGFL_CHL, ,Laguna Filaret,SA,1818
+Kenya,LKDR,KEN,LKDR_KEN, ,Lak Dera,AF,2763
+Dominican Republic,LKAZ,DOM,LKAZ_DOM, ,Lake Azuei,NA,88
+Haiti,LKAZ,HTI,LKAZ_HTI, ,Lake Azuei,NA,826
+Angola,LKCY,AGO,LKCY_AGO, ,Lake Cayo,AF,107
+Congo,LKCY,COG,LKCY_COG, ,Lake Cayo,AF,3445
+Malawi,LKCW,MWI,LKCW_MWI, ,Lake Chilwa,AF,5847
+Mozambique,LKCW,MOZ,LKCW_MOZ, ,Lake Chilwa,AF,2906
+Dominican Republic,LKEQ,DOM,LKEQ_DOM, ,Lake Enriquillo,NA,2846
+Haiti,LKEQ,HTI,LKEQ_HTI, ,Lake Enriquillo,NA,221
+United Republic of Tanzania,LKRW,TZA,LKRW_TZA, ,Lake Rukwa,AF,77699
+Zambia,LKRW,ZMB,LKRW_ZMB, ,Lake Rukwa,AF,1576
+Turkmenistan,LKSG,TKM,LKSG_TKM, ,Lake Sarygamesh,AS,63611
+Uzbekistan,LKSG,UZB,LKSG_UZB, ,Lake Sarygamesh,AS,8822
+Canada,LUCI,CAN,LUCI_CAN, ,Lucia,NA,1584
+United States of America,LUCI,USA,LUCI_USA, ,Lucia,NA,1400
+Kazakhstan,NYNK,KAZ,NYNK_KAZ, ,Narynka,EU,74700
+Russian Federation,NYNK,RUS,NYNK_RUS, ,Narynka,EU,17295
+Norway,NDLV,NOR,NDLV_NOR, ,Nidelva,EU,2838
+Sweden,NDLV,SWE,NDLV_SWE, ,Nidelva,EU,266
+Finland,PCHA,FIN,PCHA_FIN, ,Peschanaya,EU,1215
+Russian Federation,PCHA,RUS,PCHA_RUS, ,Peschanaya,EU,120
+Kazakhstan,PLDV,KAZ,PLDV_KAZ, ,Poldnevaya,EU,479
+Russian Federation,PLDV,RUS,PLDV_RUS, ,Poldnevaya,EU,2090
+Cambodia,RGTH,KHM,RGTH_KHM, ,Rach Giang Thanh,AS,1722
+Viet Nam,RGTH,VNM,RGTH_VNM, ,Rach Giang Thanh,AS,492
+Mexico,SACL,MEX,SACL_MEX, ,Santa Clara,NA,4137
+United States of America,SACL,USA,SACL_USA, ,Santa Clara,NA,467
+China,SGTY,CHN,SGTY_CHN, ,Song Tien Yen,AS,75
+Norway,BRBY,NOR,BRBY_NOR, ,Berbyelva,EU,695
+Sweden,BRBY,SWE,BRBY_SWE, ,Berbyelva,EU,622
+Mozambique,UBLZ,MOZ,UBLZ_MOZ, ,Umbeluzi,AF,6066
+South Africa,UBLZ,ZAF,UBLZ_ZAF, ,Umbeluzi,AF,90
+Swaziland,UBLZ,SWZ,UBLZ_SWZ, ,Umbeluzi,AF,3622
+Canada,UNUK,CAN,UNUK_CAN, ,Unuk,NA,1662
+United States of America,UNUK,USA,UNUK_USA, ,Unuk,NA,810
+Germany,VCHT,DEU,VCHT_DEU, ,Vecht,EU,3256
+Netherlands,VCHT,NLD,VCHT_NLD, ,Vecht,EU,7354
+Norway,VFSN,NOR,VFSN_NOR, ,Vefsna,EU,3569
+Sweden,VFSN,SWE,VFSN_SWE, ,Vefsna,EU,582
+Czech Republic,ODER,CZE,ODER_CZE, ,Oder/Odra,EU,7262
+Norway,TANA,NOR,TANA_NOR, ,Tana,EU,10981
+Norway,TORN,NOR,TORN_NOR, ,Torne/Tornealven,EU,1756
+Norway,ANGE,NOR,ANGE_NOR, ,Angerman,EU,1515
+Sweden,ANGE,SWE,ANGE_SWE, ,Angerman,EU,31432
+Chile,AYSN,CHL,AYSN_CHL, ,Aysen,SA,11824
+Belize,BLZE,BLZ,BLZE_BLZ, ,Belize,NA,6111
+Mexico,CLDO,MEX,CLDO_MEX, ,Colorado,NA,14726
+United States of America,CLDO,USA,CLDO_USA, ,Colorado,NA,647774
+United States of America,CLMB,USA,CLMB_USA, ,Columbia,NA,551479
+United States of America,CNCT,USA,CNCT_USA, ,"Connecticut
+Connecticut
+Connecticut",NA,28825
+Nigeria,CROS,NGA,CROS_NGA, ,Cross,AF,39441
+Albania,DANU,ALB,DANU_ALB, ,Danube,EU,137
+Bosnia and Herzegovina,DANU,BIH,DANU_BIH, ,Danube,EU,37842
+Bulgaria,DANU,BGR,DANU_BGR, ,Danube,EU,47566
+Croatia,DANU,HRV,DANU_HRV, ,Danube,EU,33671
+Czech Republic,DANU,CZE,DANU_CZE, ,Danube,EU,21710
+Germany,DANU,DEU,DANU_DEU, ,Danube,EU,56077
+Hungary,DANU,HUN,DANU_HUN, ,Danube,EU,93119
+Italy,DANU,ITA,DANU_ITA, ,Danube,EU,697
+"Moldova, Republic of",DANU,MDA,DANU_MDA, ,Danube,EU,12250
+Montenegro,DANU,MNE,DANU_MNE,MON,Danube,EU,6857
+Romania,DANU,ROM,DANU_ROM,ROU,Danube,EU,232507
+Serbia,DANU,SRB,DANU_SRB, ,Danube,EU,81885
+Slovenia,DANU,SVN,DANU_SVN, ,Danube,EU,16273
+Switzerland,DANU,CHE,DANU_CHE, ,Danube,EU,1803
+The former Yugoslav Republic of Macedonia,DANU,MFD,DANU_MFD,MKD,Danube,EU,51
+Ukraine,DANU,UKR,DANU_UKR, ,Danube,EU,30357
+Russian Federation,DONX,RUS,DONX_RUS, ,Don,EU,384555
+Germany,ELBE,DEU,ELBE_DEU, ,Elbe,EU,94116
+Indonesia,FLYX,IDN,FLYX_IDN, ,Fly,AS,2593
+Papua New Guinea,FLYX,PNG,FLYX_PNG, ,Fly,AS,68853
+Bangladesh,GANG,BGD,GANG_BGD, ,Ganges-Brahmaputra-Meghna,AS,117580
+Bhutan,GANG,BTN,GANG_BTN, ,Ganges-Brahmaputra-Meghna,AS,37674
+China/India,GANG,CHN/IND,GANG_CHN/IND_1, ,Ganges-Brahmaputra-Meghna,AS,1663
+Guinea,GEBA,GIN,GEBA_GIN, ,Geba-Corubal,AF,17750
+Guinea-Bissau,GEBA,GNB,GEBA_GNB, ,Geba-Corubal,AF,14646
+Senegal,GEBA,SEN,GEBA_SEN, ,Geba-Corubal,AF,4233
+France,GRON,FRA,GRON_FRA, ,Garonne,EU,80667
+Somalia,LKDR,SOM,LKDR_SOM, ,Lak Dera,AF,2664
+Brazil,LMRM,BRA,LMRM_BRA, ,Lagoon Dos Patos-Lagoon Mirim,SA,136122
+Gabon,MBEX,GAB,MBEX_GAB, ,Mbe,AF,7529
+Mozambique,MPUT,MOZ,MPUT_MOZ, ,Maputo,AF,2011
+Colombia,MTJE,COL,MTJE_COL, ,Mataje,SA,438
+Ecuador,MTJE,ECU,MTJE_ECU, ,Mataje,SA,570
+Nicaragua,NEGR,NIC,NEGR_NIC, ,Negro,NA,5167
+India,RAKU,IND,RAKU_IND, ,Rann of Kutch,AS,288298
+Pakistan,RAKU,PAK,RAKU_PAK, ,Rann of Kutch,AS,114475
+Austria,RHIN,AUT,RHIN_AUT, ,Rhine-Meuse,EU,2387
+Belgium,RHIN,BEL,RHIN_BEL, ,Rhine-Meuse,EU,14560
+France,RHIN,FRA,RHIN_FRA, ,Rhine-Meuse,EU,32742
+Germany,RHIN,DEU,RHIN_DEU, ,Rhine-Meuse,EU,106445
+Italy,RHIN,ITA,RHIN_ITA, ,Rhine-Meuse,EU,53
+Liechtenstein,RHIN,LIE,RHIN_LIE, ,Rhine-Meuse,EU,151
+Luxembourg,RHIN,LUX,RHIN_LUX, ,Rhine-Meuse,EU,2621
+Netherlands,RHIN,NLD,RHIN_NLD, ,Rhine-Meuse,EU,11419
+Switzerland,RHIN,CHE,RHIN_CHE, ,Rhine-Meuse,EU,27918
+Malawi,RVMA,MWI,RVMA_MWI, ,Ruvuma,AF,2654
+Mozambique,RVMA,MOZ,RVMA_MOZ, ,Ruvuma,AF,100527
+United Republic of Tanzania,RVMA,TZA,RVMA_TZA, ,Ruvuma,AF,51976
+Mozambique,SABI,MOZ,SABI_MOZ, ,Sabi,AF,17567
+Cambodia,SAIG,KHM,SAIG_KHM, ,Nha Be-Saigon-Song Vam Co Dong,AS,7327
+Viet Nam,SAIG,VNM,SAIG_VNM, ,Nha Be-Saigon-Song Vam Co Dong,AS,38681
+Canada,SCRO,CAN,SCRO_CAN, ,St. Croix,NA,1656
+United States of America,SCRO,USA,SCRO_USA, ,St. Croix,NA,2605
+France,SEIN,FRA,SEIN_FRA, ,Seine,EU,73558
+Viet Nam,SGTY,VNM,SGTY_VNM, ,Song Tien Yen,AS,1084
+Belgium,SHLD,BEL,SHLD_BEL, ,Schelde,EU,12812
+France,SHLD,FRA,SHLD_FRA, ,Schelde,EU,6697
+Netherlands,SHLD,NLD,SHLD_NLD, ,Schelde,EU,230
+Liberia,SJAF,LBR,SJAF_LBR, ,St. John (Africa),AF,13664
+Indonesia,TAMI,IDN,TAMI_IDN, ,Tami,AS,78229
+China,TUMN,CHN,TUMN_CHN, ,Tumen,AS,22719
+Dem People's Rep of Korea,TUMN,PRK,TUMN_PRK, ,Tumen,AS,10472
+Russian Federation,TUMN,RUS,TUMN_RUS, ,Tumen,AS,154
+Benin,VOLT,BEN,VOLT_BEN, ,Volta,AF,15123
+Burkina Faso,VOLT,BFA,VOLT_BFA, ,Volta,AF,172085
+CÃ´te d'Ivoire,VOLT,CIV,VOLT_CIV, ,Volta,AF,12971
+Ghana,VOLT,GHA,VOLT_GHA, ,Volta,AF,167070
+Mali,VOLT,MLI,VOLT_MLI, ,Volta,AF,16816
+Togo,VOLT,TGO,VOLT_TGO, ,Volta,AF,27179
+United States of America,YUKN,USA,YUKN_USA, ,Yukon,NA,515536
+Central African Republic,CNGO,CAF,CNGO_CAF, ,Congo/Zaire,AF,404100
+Democratic Republic of the Congo,CNGO,ZAR,CNGO_ZAR, ,Congo/Zaire,AF,2300554
+Suriname,CRTY,SUR,CRTY_SUR, ,Corantijn/Courantyne,SA,37746
+Guinea,CVLY,GIN,CVLY_GIN, ,Cavally,AF,1408
+Austria,DANU,AUT,DANU_AUT, ,Danube,EU,80645
+Andorra,EBRO,AND,EBRO_AND, ,Ebro,EU,455
+Arunachal Pradesh,GANG,CHN/IND,GANG_CHN/IND, ,Ganges-Brahmaputra-Meghna,AS,67965
+Nepal,GANG,NPL,GANG_NPL, ,Ganges-Brahmaputra-Meghna,AS,147437
+Andorra,GRON,AND,GRON_AND, ,Garonne,EU,19
+Mongolia,HRUN,MNG,HRUN_MNG, ,Har Us Nur,AS,183576
+Myanmar,KALD,MMR,KALD_MMR, ,Kaladan,AS,15511
+Azerbaijan,KURA,AZE,KURA_AZE, ,Kura-Araks,AS,59767
+Central African Republic,LKCH,CAF,LKCH_CAF, ,Lake Chad,AF,214769
+Sierra Leone,LSCR,SLE,LSCR_SLE, ,Little Scarcies,AF,13057
+French Guiana,MRNI,GUF,MRNI_GUF, ,Maroni,SA,28275
+Suriname,MRNI,SUR,MRNI_SUR, ,Maroni,SA,38001
+Nigeria,NGER,NGA,NGER_NGA, ,Niger,AF,571166
+Sudan,NILE,SDN,NILE_SDN, ,Nile,AF,1265525
+South Sudan,NILE,SSD,NILE_SSD, ,Nile,AF,617567
+Uganda,NILE,UGA,NILE_UGA, ,Nile,AF,237043
+Mongolia,OBXX,MNG,OBXX_MNG, ,Ob,AS,1118
+Gabon,OGOO,GAB,OGOO_GAB, ,Ogooue,AF,187905
+France,POXX,FRA,POXX_FRA, ,Po,EU,128
+Italy,POXX,ITA,POXX_ITA, ,Po,EU,70214
+France,RHON,FRA,RHON_FRA, ,Rhone,EU,89110
+France,ROIA,FRA,ROIA_FRA, ,Roia,EU,593
+Russian Federation,SAMR,RUS,SAMR_RUS, ,Samur,EU,6389
+Guinea,SJAF,GIN,SJAF_GIN, ,St. John (Africa),AF,2654
+Bulgaria,STUM,BGR,STUM_BGR, ,Struma,EU,8505
+Russian Federation,SULK,RUS,SULK_RUS, ,Sulak,EU,13204
+Russian Federation,TERK,RUS,TERK_RUS, ,Terek,EU,41251
+China,ALKL,CHN,ALKL_CHN, ,Alakol,AS,20355
+Kazakhstan,ALKL,KAZ,ALKL_KAZ, ,Alakol,AS,43145
+Brazil,AMZN,BRA,AMZN_BRA, ,Amazon,SA,3741933
+Guyana,AMZN,GUY,AMZN_GUY, ,Amazon,SA,12388
+Venezuela,AMZN,VEN,AMZN_VEN, ,Amazon,SA,51760
+Afghanistan,ARAL,AFG,ARAL_AFG, ,Aral Sea,AS,166446
+Kyrgyzstan,ARAL,KGZ,ARAL_KGZ, ,Aral Sea,AS,118835
+Tajikistan,ARAL,TJK,ARAL_TJK, ,Aral Sea,AS,141085
+Lao People's Democratic Republic,CAXX,LAO,CAXX_LAO, ,Ca/Song Lam,AS,9270
+Viet Nam,CAXX,VNM,CAXX_VNM, ,Ca/Song Lam,AS,17979
+Angola,CNGO,AGO,CNGO_AGO, ,Congo/Zaire,AF,287671
+Congo,CNGO,COG,CNGO_COG, ,Congo/Zaire,AF,247798
+Guyana,CRTY,GUY,CRTY_GUY, ,Corantijn/Courantyne,SA,27603
+Poland,DANU,POL,DANU_POL, ,Danube,EU,370
+Slovakia,DANU,SVK,DANU_SVK, ,Danube,EU,47153
+Guyana,ESQB,GUY,ESQB_GUY, ,Essequibo,SA,118542
+China,GANG,CHN,GANG_CHN, ,Ganges-Brahmaputra-Meghna,AS,317702
+India,GANG,IND,GANG_IND, ,Ganges-Brahmaputra-Meghna,AS,971170
+Myanmar,GANG,MMR,GANG_MMR, ,Ganges-Brahmaputra-Meghna,AS,782
+Russian Federation,HRUN,RUS,HRUN_RUS, ,Har Us Nur,AS,3601
+China,ILIX,CHN,ILIX_CHN, ,Ili/Kunes He,AS,56973
+Afghanistan,INDU,AFG,INDU_AFG, ,Indus,AS,71267
+China,INDU,CHN,INDU_CHN, ,Indus,AS,82210
+Jammu and Kashmir,INDU,CHN/IND/PAK,INDU_CHN/IND/PAK, ,Indus,AS,184059
+China,IRWD,CHN,IRWD_CHN, ,Irrawaddy,AS,21391
+India,IRWD,IND,IRWD_IND, ,Irrawaddy,AS,17233
+Myanmar,IRWD,MMR,IRWD_MMR, ,Irrawaddy,AS,336764
+Georgia,KURA,GEO,KURA_GEO, ,Kura-Araks,AS,34532
+Lao People's Democratic Republic,MAXX,LAO,MAXX_LAO, ,Ma,AS,12601
+Viet Nam,MAXX,VNM,MAXX_VNM, ,Ma,AS,16885
+Lao People's Democratic Republic,MEKO,LAO,MEKO_LAO, ,Mekong,AS,206524
+Myanmar,MEKO,MMR,MEKO_MMR, ,Mekong,AS,21715
+Thailand,MEKO,THA,MEKO_THA, ,Mekong,AS,188101
+Greece,MRSA,GRC,MRSA_GRC, ,Maritsa,EU,2965
+Algeria,NGER,DZA,NGER_DZA, ,Niger,AF,161024
+Greece,NSTO,GRC,NSTO_GRC, ,Nestos,EU,2546
+China,OBXX,CHN,OBXX_CHN, ,Ob,AS,49989
+Kazakhstan,OBXX,KAZ,OBXX_KAZ, ,Ob,AS,790694
+Russian Federation,OBXX,RUS,OBXX_RUS, ,Ob,AS,2205770
+Poland,ODER,POL,ODER_POL, ,Oder/Odra,EU,106271
+Congo,OGOO,COG,OGOO_COG, ,Ogooue,AF,20210
+South Africa,ORAN,ZAF,ORAN_ZAF, ,Orange,AF,557211
+Venezuela,ORIN,VEN,ORIN_VEN, ,Orinoco,SA,627603
+Malaysia,PNDR,MYS,PNDR_MYS, ,Pandaruan,AS,225
+Lao People's Democratic Republic,REDX,LAO,REDX_LAO, ,Red/Song Hong,AS,1604
+Viet Nam,REDX,VNM,REDX_VNM, ,Red/Song Hong,AS,64650
+China,SALW,CHN,SALW_CHN, ,Salween,AS,136785
+Myanmar,SALW,MMR,SALW_MMR, ,Salween,AS,109340
+Thailand,SALW,THA,SALW_THA, ,Salween,AS,19232
+The former Yugoslav Republic of Macedonia,STUM,MFD,STUM_MFD,MKD,Struma,EU,1623
+Georgia,SULK,GEO,SULK_GEO, ,Sulak,EU,947
+China,TRIM,CHN,TRIM_CHN, ,Tarim,AS,1048733
+Jammu and Kashmir,TRIM,CHN/IND/PAK,TRIM_CHN/IND/PAK, ,Tarim,AS,1976
+Kyrgyzstan,TRIM,KGZ,TRIM_KGZ, ,Tarim,AS,23932
+Tajikistan,TRIM,TJK,TRIM_TJK, ,Tarim,AS,919
+The former Yugoslav Republic of Macedonia,VRDR,MFD,VRDR_MFD,MKD,Vardar,EU,20433
+Poland,VSTL,POL,VSTL_POL, ,Vistula/Wista,EU,167270
+Slovakia,VSTL,SVK,VSTL_SVK, ,Vistula/Wista,EU,1919
+Angola,ZAMB,AGO,ZAMB_AGO, ,Zambezi,AF,255831
+Iran  (Islamic Republic of),TIGR,IRN,TIGR_IRN, ,Tigris-Euphrates/Shatt al Arab,AS,164501
+Iraq,TIGR,IRQ,TIGR_IRQ, ,Tigris-Euphrates/Shatt al Arab,AS,397730
+Jordan,TIGR,JOR,TIGR_JOR, ,Tigris-Euphrates/Shatt al Arab,AS,222
+Saudi Arabia,TIGR,SAU,TIGR_SAU, ,Tigris-Euphrates/Shatt al Arab,AS,16728
+Syrian Arab Republic,TIGR,SYR,TIGR_SYR, ,Tigris-Euphrates/Shatt al Arab,AS,114015
+Turkey,TIGR,TUR,TIGR_TUR, ,Tigris-Euphrates/Shatt al Arab,AS,175794
+Viet Nam,MEKO,VNM,MEKO_VNM, ,Mekong,AS,46483
+Bangladesh,NAAF,BGD,NAAF_BGD, ,Naaf River,AS,392
+Myanmar,NAAF,MMR,NAAF_MMR, ,Naaf River,AS,1218

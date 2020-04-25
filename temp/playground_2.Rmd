@@ -1,0 +1,114 @@
+---
+title: "playground_2"
+author: "Wyatt Hurt"
+date: "4/23/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+joined <- joined_test_x
+```
+
+```{r}
+library(wordcloud)
+library(RColorBrewer)
+library(wordcloud2)
+library(tm)
+
+# Filter by River Basin
+
+joined_wc_prep <- joined %>%
+  distinct(event_summary)
+
+joined_wc <- Corpus(VectorSource(joined_wc_prep$event_summary)) %>%
+  tm_map(removeNumbers) %>%
+  tm_map(removePunctuation) %>%
+  tm_map(stripWhitespace)
+
+joined_wc <- tm_map(joined_wc, content_transformer(tolower))
+joined_wc <- tm_map(joined_wc, removeWords, stopwords("english"))
+
+dtm <- TermDocumentMatrix(joined_wc) 
+matrix <- as.matrix(dtm) 
+words <- sort(rowSums(matrix),decreasing=TRUE) 
+df <- data.frame(word = names(words),freq=words)
+
+set.seed(1234) # for reproducibility 
+wordcloud(words = df$word, freq = df$freq, min.freq = 1,  max.words=200, random.order=FALSE, rot.per=0.35, colors=brewer.pal(8, "Paired"), scale=c(3.5,0.25))
+
+df %>%
+  arrange(desc(freq)) %>% 
+  slice(1:20) %>%
+  arrange(desc(freq)) %>% 
+  ggplot(aes(x = word, y = freq)) + geom_col()
+```
+
+```{r}
+joined %>%
+  distinct(event_summary, .keep_all = TRUE) %>%
+  filter(!is.na(event_issue)) %>%
+  group_by(event_issue) %>%
+  summarize(count = n()) %>%
+  arrange(desc(count)) %>%
+  slice(1:25) %>%
+  ggplot(aes(x = event_issue, y = count)) + 
+  geom_col() + 
+  theme_classic() +
+            labs(title = "Water Conflict Events Over Time",
+                 subtitle = "Upward Trend Over Time",
+                 fill = "Continent") +
+            xlab("Year") +
+            ylab("Number of Water Conflict Events") + 
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+```
+
+```{r}
+
+ggplot(joined_summarized, aes(x = gdp_total_log, y = event_count_log)) + 
+  geom_point() + geom_smooth(method = "lm")
+
+glm(formula = y ~ x, method = "lm", data = joined)
+```
+
+```{r}
+country_years <- tibble(year = rep(1960:2005, 262)) %>%
+  arrange(desc(year))
+
+country_years <- tibble(event_year = country_years %>% pull(year),
+                        ccode = rep(wb_codes %>% pull(country_code), 46))
+
+joined_log <- country_years %>%
+  full_join(joined, by = c("event_year" = "event_year", "ccode" = "ccode")) %>%
+  select(ccode,
+         event_year,
+         bcode,
+         bccode1,
+         bccode2,
+         basin_name,
+         document_name, 
+         date_signed, 
+         signatories, 
+         treaty_notes, 
+         treaty_issue_area,
+         rbo_name, 
+         agreement_name, 
+         agreement_date, 
+         issues_names, 
+         issue_types, 
+         org_type,
+         event_date,
+         event_summary, 
+         event_comments, 
+         event_issue) %>%
+  left_join(pop, by = c("ccode" = "code", "event_year" = "date"), suffix = c("", "_pop")) %>%
+  left_join(gdp, by = c("ccode" = "code", "event_year" = "date"), suffix = c("", "_gdp")) %>%
+  left_join(water_avail, by = c("ccode" = "code", "event_year" = "date"), suffix = c("", "_water"))%>%
+  left_join(trade_percent_gdp, by = c("ccode" = "code", "event_year" = "date"), suffix = c("", "_trade_percent_gdp")) %>%
+  left_join(ag_land, by = c("ccode" = "code", "event_year" = "date"), suffix = c("", "_ag_land")) %>%
+  left_join(water_withdraw, by = c("ccode" = "code", "event_year" = "date"), suffix = c("", "_water_withdraw")) %>%
+  left_join(eiu_mod, by = c("ccode" = "country_code"), suffix = c("", "_eiu_mod"))
+
+```
+
