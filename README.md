@@ -7,24 +7,23 @@ Since the 1990s, there has been a precipitous increase in the frequency and seve
 [View the live Shiny App here](https://wyatthurt.shinyapps.io/water_conflict/).
 
 ### Repository Guide
-* /archive: 
-* /shiny-app
-    * /geometry
-    * /raw_data
-    * ag_land.rds
+* /archive: Archived course milestone assignments.
+* /shiny-app: Files to render Shiny App.
+    * /raw_data: Raw data files from the Oregon State University Program on Water Conflict Transformation, and country/river basin polygons from the World Bank.
+    * ag_land.rds: Agricultural land per country-year. Rendered using the 'gather_raw_data.R' script.
     * basins.rds
-    * eiu_mod.rds
+    * eiu_mod.rds: Democracy data per country in 2015. Rendered using the 'gather_raw_data.R' script.
     * gather_leaflet.R
     * gather_raw_data.R
-    * gdp.rds
+    * gdp.rds: GDP per country-year. Rendered using the 'gather_raw_data.R' script.
     * joined.rds
-    * joined_logistic.rds
-    * joined_summarized.rds
-    * pop.rds
-    * server.R
-    * trade_percent_gdp.rds
-    * ui.R
-    * water_withdraw.rds
+    * joined_logistic.rds: Transforms the 'joined.rds' dataset to be used for logistic regression (each country-year is coded 0/1, where 1 means that an event occured).
+    * joined_summarized.rds: Transforms the 'joined.rds' dataset to be used for glm regression (by performing summary statistics that average over the period extending from 1960 to 2009).
+    * pop.rds: Population per country-year. Rendered using the 'gather_raw_data.R' script.
+    * server.R Shiny App server script.
+    * trade_percent_gdp.rds: Trade as a percent of GDP per country-year. Rendered using the 'gather_raw_data.R' script.
+    * ui.R: Shiny App UI script.
+    * water_withdraw.rds: Water withdrawal as a percentage of total water resources per country-year. Rendered using the 'gather_raw_data.R' script.
 * .gitignore
 * README.md
 

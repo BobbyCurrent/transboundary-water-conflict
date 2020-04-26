@@ -323,7 +323,11 @@ shinyUI(
     
     tabPanel("Key Issues",
              sidebarLayout(
-               # Sidebar with a slider and selection inputs
+               
+               # Slider inputs to set the minimum number of occurences and
+               # maximum number of issues that can appear in the interactive
+               # word cloud.
+               
                sidebarPanel(
                  sliderInput(
                    "freq",
@@ -341,7 +345,6 @@ shinyUI(
                  )
                ),
                
-               # Show Word Cloud
                mainPanel(
                  p(
                    "Event frequency can only tell us so much.
@@ -350,6 +353,9 @@ shinyUI(
                  The more frequently a word appears in the dataset, the larger it is in the plot below.
                  Use the sliders at left to adjust the thresholds required for a word to appear in the word cloud."
                  ),
+                 
+                 # Render word cloud.
+                 
                  plotOutput("plot")
                )
              )),
@@ -371,6 +377,12 @@ shinyUI(
       fluidRow(
         column(
           width = 7,
+          
+          # Dropdown menu to select the relevant river basin. If I could find a
+          # way to automaically generate a dropdown, that would be great. For
+          # now, I just wrote a quick R script that generates the list based on
+          # the 'joined' dataset.
+          
           selectInput(
             "river_basin",
             "River Basin:",
@@ -688,11 +700,20 @@ shinyUI(
               "Naaf River"
             )
           ),
+          
+          # Display event data table.
+          
           dataTableOutput("case_study_table")
         ),
         column(
           width = 5,
+          
+          # Display histogram with conflict over time.
+          
           plotOutput("case_conflict_over_time"),
+          
+          # Display histogram with treaties signed over time. 
+          
           plotOutput("treaties_over_time")
         )
       )
