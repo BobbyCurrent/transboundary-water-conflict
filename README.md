@@ -7,7 +7,7 @@ Since the 1990s, there has been a precipitous increase in the frequency and seve
 [View the live Shiny App here](https://wyatthurt.shinyapps.io/water_conflict/).
 
 ### Repository Guide
-* /old_milestones: 
+* /archive: 
 * /shiny-app
     * /geometry
     * /raw_data

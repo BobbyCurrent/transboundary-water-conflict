@@ -170,7 +170,7 @@ treaties <- read_csv("raw_data/treaties_raw.csv") %>%
 ############## Perform Join ##############
 joined <- joined_initial %>%
   full_join(events_tidy, by = c("ccode", "bcode" = "b_code", "event_year" = "event_year")) %>%
-  left_join(organizations, by = c("ccode", "bccode")) %>%
+  # left_join(organizations, by = c("ccode", "bccode")) %>%
   left_join(treaties, by = c("ccode", "bccode"))
 
 write_rds(joined, "joined.rds")
@@ -222,38 +222,14 @@ joined_logistic <- joined %>%
   mutate(conflict = ifelse(!is.na(event_summary), 1, 0)) %>%
   mutate(conflict = as.factor(conflict))
 
-joined_logistic %>%
-  group_by(conflict) %>%
-  summarize(count = n())
-
 write_rds(joined_logistic, "joined_logistic.rds")
 
 
 ############### Word Cloud ##################
-library(wordcloud)
-library(RColorBrewer)
-library(wordcloud2)
-library(tm)
-
-joined_wc_prep <- joined %>%
-  distinct(event_summary)
-
-joined_wc <- Corpus(VectorSource(joined_wc_prep$event_summary)) %>%
-  tm_map(removeNumbers) %>%
-  tm_map(removePunctuation) %>%
-  tm_map(stripWhitespace)
-
-joined_wc <- tm_map(joined_wc, content_transformer(tolower))
-joined_wc <- tm_map(joined_wc, removeWords, stopwords("english"))
-
-dtm <- TermDocumentMatrix(joined_wc)
-matrix <- as.matrix(dtm)
-words <- sort(rowSums(matrix),decreasing=TRUE)
-df <- data.frame(word = names(words),freq=words)
-
-set.seed(1234) # for reproducibility 
-wordcloud(words = df$word, freq = df$freq, min.freq = 1,  max.words=200, random.order=FALSE, rot.per=0.35, colors=brewer.pal(8, "Paired"), scale=c(.5,.1), dpi = 1600)
-
+# library(wordcloud)
+# library(RColorBrewer)
+# library(wordcloud2)
+# library(tm)
 
 
 
