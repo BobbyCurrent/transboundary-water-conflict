@@ -11,10 +11,10 @@ Since the 1990s, there has been a precipitous increase in the frequency and seve
 * /shiny-app: Files to render Shiny App.
     * /raw_data: Raw data files from the Oregon State University Program on Water Conflict Transformation, and country/river basin polygons from the World Bank.
     * ag_land.rds: Agricultural land per country-year. Rendered using the 'gather_raw_data.R' script.
-    * basins.rds
+    * basins.rds: List of world river basins, compiled by joining the World Bank river basin index and the Oregon State University river basin index.
     * eiu_mod.rds: Democracy data per country in 2015. Rendered using the 'gather_raw_data.R' script.
-    * gather_leaflet.R
-    * gather_raw_data.R
+    * gather_leaflet.R: Modifies river basin and country shapefiles to include relevant metrics.
+    * gather_raw_data.R: Gathers, cleans, tidies and joins 8 datasets (water conflict metrics and country-level statistics).
     * gdp.rds: GDP per country-year. Rendered using the 'gather_raw_data.R' script.
     * joined.rds: Master dataset with all relevant metrics, organized by country-year, joined and cleaned from all the raw datasets. Renered using the 'gather_raw_data.R' script.
     * joined_logistic.rds: Transforms the 'joined.rds' dataset to be used for logistic regression (each basin-year is coded 0/1, where 1 means that an event occured).

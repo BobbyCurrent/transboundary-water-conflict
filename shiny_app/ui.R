@@ -334,8 +334,8 @@ shinyUI(
                    "freq",
                    "Minimum Number of Occurences:",
                    min = 1,
-                   max = 500,
-                   value = 200
+                   max = 100,
+                   value = 50
                  ),
                  sliderInput(
                    "max",
