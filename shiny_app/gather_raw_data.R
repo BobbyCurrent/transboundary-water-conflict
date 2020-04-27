@@ -42,7 +42,7 @@ pop <- wb(indicator = "SP.POP.TOTL", startdate = 1900, enddate = 2015) %>%
   select(code = iso3c, date, pop = value) %>%
   mutate(date = as.double(date))
 
-gdp <- wb(indicator = "NY.GDP.PCAP.CD", startdate = 1900, enddate = 2015) %>%
+gdp <- wb(indicator = "NY.GDP.MKTP.CD", startdate = 1900, enddate = 2015) %>%
   select(code = iso3c, date, gdp = value) %>%
   mutate(date = as.double(date))
 
@@ -93,19 +93,19 @@ na_strings <- c("NA", "N.A.", "n/a", "?location", "?relvant", ".", " ")
 
 # Clean events data.
 
+peace_terms <- c("cooperation", "cooperate", "cooperating", "agreement", "meeting", "plan", "signed", "treaty", "coordination", "coordinate", "talks", "summit", "agreed")
+
 events <- read_csv("raw_data/events_raw.csv") %>%
   clean_names() %>%
   select(!c(id, id1, event_master, event_type)) %>%
   mutate(date = ymd(date), doc_date = ymd(doc_date)) %>%
   mutate(year = year(date)) %>%
+  filter(bar_scale <= 0) %>%
+  mutate(conflict = str_detect(event_summary, regex(paste(peace_terms, collapse = "|"), ignore_case = TRUE), negate = TRUE)) %>%
   
-  # Filter for conflict events only (rather than including conflict mitigation events. 
+  # Filter for conflict events only (rather than including conflict mitigation events).
   
-  mutate(peaceful_1 = str_detect(event_summary, c("cooperation", "agreement", "meeting"))) %>%
-  mutate(peaceful_2 = str_detect(event_summary, c("plan", "signed", "treaty"))) %>%
-  mutate(peaceful_3 = str_detect(event_summary, c("coordination", "summit"))) %>%
-  # filter(peaceful_1 == TRUE | peaceful_2 == TRUE | peaceful_3 == TRUE) %>%
-  filter(peaceful_1 == FALSE | peaceful_2 == FALSE | peaceful_3 == FALSE)
+  filter(conflict == TRUE)
 
 events_tidy <- events %>%
   pivot_longer(cols = c(ccode1, ccode2),
@@ -121,9 +121,7 @@ events_tidy <- events %>%
          issue_type2,
          event_issue,
          event_year = year,
-         peaceful_1,
-         peaceful_2,
-         peaceful_3,
+         bar_scale,
          ccode,
          bccode = bccode1) %>%
   replace_with_na_all(condition = ~.x %in% na_strings)
@@ -182,7 +180,7 @@ joined_summarized <- joined %>%
   filter(event_year <= 2005) %>%
   filter(event_year >= 1960) %>%
   filter(!is.na(basin_name) & bcode != "UNKN") %>%
-  distinct(event_year, event_summary, .keep_all = TRUE) %>%
+  distinct(event_year, event_summary, ccode, .keep_all = TRUE) %>%
   group_by(basin_name) %>%
   summarize(event_count = n(),
             gdp_total = sum(gdp, na.rm = TRUE),
@@ -230,6 +228,3 @@ write_rds(joined_logistic, "joined_logistic.rds")
 # library(RColorBrewer)
 # library(wordcloud2)
 # library(tm)
-
-
-

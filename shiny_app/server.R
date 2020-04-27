@@ -16,7 +16,7 @@ shinyServer(function(input, output) {
     # Render histogram of water conflict events over time, grouped by continent.
     
     output$time_histogram <- renderPlot({
-        ggplot(joined %>% filter(!is.na(continent_code)),
+        ggplot(joined %>% distinct(event_summary, .keep_all = TRUE) %>% filter(!is.na(continent_code)),
                aes(x = event_year, fill = continent_code)) +
             geom_histogram() +
             theme_classic() +
@@ -32,7 +32,11 @@ shinyServer(function(input, output) {
     
     output$frequency <- renderDataTable({
         datatable(
-            joined_summarized %>%
+            joined %>%
+                distinct(event_summary, .keep_all = TRUE) %>%
+                filter(!is.na(basin_name)) %>%
+                group_by(basin_name) %>%
+                summarize(event_count = n()) %>%
                 arrange(desc(event_count)) %>%
                 select("Basin Name" = basin_name, "Event Count" = event_count),
             options = list(pageLength = 10)
@@ -111,30 +115,103 @@ shinyServer(function(input, output) {
             geom_point() +
             theme_classic() +
             geom_jitter() +
-            labs(caption = "Sources: World Bank, Oregon State University")
+            labs(title = "Basin-level Water Conflict Metrics",
+                 subtitle = "Summarized at the basin-country level over the period 1960-2009",
+                 caption = "Sources: World Bank, Oregon State University")
         
         # Add appropriate axis labels based on variables selected.
         
-        if (input$varOI_x == "avg_water")
-            p <- p + xlab("% of population with regular access to drinking water")
-        if (input$varOI_x == "avg_pop")
-            p <- p + xlab("Population")
-        if (input$varOI_x == "avg_gdp")
-            p <- p + xlab("Gross Domestic Product (GDP)")
-        if (input$varOI_x == "avg_trade")
-            p <- p + xlab("Average trade as a percent of GDP")
         if (input$varOI_x == "event_count")
-            p <- p + xlab("Number of water conflict events since 1948")
-        if (input$varOI_y == "avg_water")
-            p <- p + ylab("% of population with regular access to drinking water")
-        if (input$varOI_y == "avg_pop")
-            p <- p + ylab("Population")
-        if (input$varOI_y == "avg_gdp")
-            p <- p + ylab("Gross Domestic Product (GDP)")
-        if (input$varOI_y == "avg_trade")
-            p <- p + ylab("Average trade as a percent of GDP")
+            p <- p + xlab("Number of water conflict events")
+        if (input$varOI_x == "gdp_total")
+            p <- p + xlab("Total GDP ($)")
+        if (input$varOI_x == "gdp_avg")
+            p <- p + xlab("Average GDP ($)")
+        if (input$varOI_x == "pop_total")
+            p <- p + xlab("Total population")
+        if (input$varOI_x == "pop_avg")
+            p <- p + xlab("Average population")
+        if (input$varOI_x == "trade_percent_gdp_avg")
+            p <- p + xlab("Average % GDP made up by international trade")
+        if (input$varOI_x == "water_withdraw_avg")
+            p <- p + xlab("Average annual rate of water consumption (as % of total water resources)")
+        if (input$varOI_x == "ag_land_total")
+            p <- p + xlab("Total basin agricultural land (km^2)")
+        if (input$varOI_x == "ag_land_avg")
+            p <- p + xlab("Average agricultural land (km^2)")
+        if (input$varOI_x == "droughts_avg")
+            p <- p + xlab("Average % of population affected by drought between 1960 and 2009")
+        if (input$varOI_x == "eiu_avg")
+            p <- p + xlab("Average democratization index score (10 most democratic)")
+        
+        if (input$varOI_x == "event_count_log")
+            p <- p + xlab("Number of water conflict events (logged)")
+        if (input$varOI_x == "gdp_total_log")
+            p <- p + xlab("Total GDP (logged $)")
+        if (input$varOI_x == "gdp_avg_log")
+            p <- p + xlab("Average GDP (logged $)")
+        if (input$varOI_x == "pop_total_log")
+            p <- p + xlab("Total population (logged)")
+        if (input$varOI_x == "pop_avg_log")
+            p <- p + xlab("Average population (logged)")
+        if (input$varOI_x == "trade_percent_gdp_avg_log")
+            p <- p + xlab("Average % GDP made up by international trade (logged)")
+        if (input$varOI_x == "water_withdraw_avg_log")
+            p <- p + xlab("Average annual rate of water consumption (as logged % of total water resources)")
+        if (input$varOI_x == "ag_land_total_log")
+            p <- p + xlab("Total basin agricultural land (logged km^2)")
+        if (input$varOI_x == "ag_land_avg_log")
+            p <- p + xlab("Average agricultural land (logged km^2)")
+        if (input$varOI_x == "droughts_avg_log")
+            p <- p + xlab("Average % of population affected by drought between 1960 and 2009 (logged)")
+        if (input$varOI_x == "eiu_avg_log")
+            p <- p + xlab("Average democratization index score (logged)")
+        
         if (input$varOI_y == "event_count")
-            p <- p + ylab("Number of water conflict events since 1948")
+            p <- p + ylab("Number of water conflict events")
+        if (input$varOI_y == "gdp_total")
+            p <- p + ylab("Total GDP ($)")
+        if (input$varOI_y == "gdp_avg")
+            p <- p + ylab("Average GDP ($)")
+        if (input$varOI_y == "pop_total")
+            p <- p + ylab("Total population")
+        if (input$varOI_y == "pop_avg")
+            p <- p + ylab("Average population")
+        if (input$varOI_y == "trade_percent_gdp_avg")
+            p <- p + ylab("Average % GDP made up by international trade")
+        if (input$varOI_y == "water_withdraw_avg")
+            p <- p + ylab("Average annual rate of water consumption (as % of total water resources)")
+        if (input$varOI_y == "ag_land_total")
+            p <- p + ylab("Total basin agricultural land (km^2)")
+        if (input$varOI_y == "ag_land_avg")
+            p <- p + ylab("Average agricultural land (km^2)")
+        if (input$varOI_y == "droughts_avg")
+            p <- p + ylab("Average % of population affected by drought between 1960 and 2009")
+        if (input$varOI_y == "eiu_avg")
+            p <- p + ylab("Average democratization index score")
+        
+        if (input$varOI_y == "event_count_log")
+            p <- p + ylab("Number of water conflict events (logged)")
+        if (input$varOI_y == "gdp_total_log")
+            p <- p + ylab("Total GDP (logged $)")
+        if (input$varOI_y == "gdp_avg_log")
+            p <- p + ylab("Average GDP (logged $)")
+        if (input$varOI_y == "pop_total_log")
+            p <- p + ylab("Total population (logged)")
+        if (input$varOI_y == "pop_avg_log")
+            p <- p + ylab("Average population (logged)")
+        if (input$varOI_y == "trade_percent_gdp_avg_log")
+            p <- p + ylab("Average % GDP made up by international trade (logged)")
+        if (input$varOI_y == "water_withdraw_avg_log")
+            p <- p + ylab("Average annual rate of water consumption (as logged % of total water resources)")
+        if (input$varOI_y == "ag_land_total_log")
+            p <- p + ylab("Total basin agricultural land (logged km^2)")
+        if (input$varOI_y == "ag_land_avg_log")
+            p <- p + ylab("Average agricultural land (logged km^2)")
+        if (input$varOI_y == "droughts_avg_log")
+            p <- p + ylab("Average % of population affected by drought between 1960 and 2009 (logged)")
+        if (input$varOI_y == "eiu_avg_log")
+            p <- p + ylab("Average democratization index score (logged)")
         
         # Add appropriate trendline, based on user selection. 
         

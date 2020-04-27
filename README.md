@@ -16,9 +16,9 @@ Since the 1990s, there has been a precipitous increase in the frequency and seve
     * gather_leaflet.R
     * gather_raw_data.R
     * gdp.rds: GDP per country-year. Rendered using the 'gather_raw_data.R' script.
-    * joined.rds
-    * joined_logistic.rds: Transforms the 'joined.rds' dataset to be used for logistic regression (each country-year is coded 0/1, where 1 means that an event occured).
-    * joined_summarized.rds: Transforms the 'joined.rds' dataset to be used for glm regression (by performing summary statistics that average over the period extending from 1960 to 2009).
+    * joined.rds: Master dataset with all relevant metrics, organized by country-year, joined and cleaned from all the raw datasets. Renered using the 'gather_raw_data.R' script.
+    * joined_logistic.rds: Transforms the 'joined.rds' dataset to be used for logistic regression (each basin-year is coded 0/1, where 1 means that an event occured).
+    * joined_summarized.rds: Transforms the 'joined.rds' dataset to be used for glm regression (by performing summary statistics at a basin-year level, averaged over the period extending from 1960 to 2009).
     * pop.rds: Population per country-year. Rendered using the 'gather_raw_data.R' script.
     * server.R Shiny App server script.
     * trade_percent_gdp.rds: Trade as a percent of GDP per country-year. Rendered using the 'gather_raw_data.R' script.

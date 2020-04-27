@@ -10,6 +10,7 @@ library(lubridate)
 library(stats)
 library(dplyr)
 library(tm)
+# library(sjPlot)
 library(wordcloud)
 
 # Read in datasets created using the 'gather_raw_data.R' script.
@@ -157,7 +158,7 @@ shinyUI(
               "Log(average democratization index score)" = "eiu_avg_log"
             ),
             multiple = TRUE,
-            selected = "gdp_total"
+            selected = "gdp_avg"
           ),
           
           # Select Y variable(s) for model.
@@ -215,14 +216,14 @@ shinyUI(
             "gdp_total_pred",
             "Total basin GDP ($):",
             min = 0,
-            max = 10000000,
+            max = 100000000000000,
             value = 100000
           ),
           sliderInput(
             "gdp_avg_pred",
             "Average GDP ($):",
             min = 0,
-            max = 10000000,
+            max = 100000000000000,
             value = 100000
           ),
           sliderInput(
@@ -248,9 +249,9 @@ shinyUI(
           ),
           sliderInput(
             "water_withdraw_avg_pred",
-            "Average rate of water consumption:",
+            "Average rate of water consumption (as % of total resources):",
             min = 0,
-            max = 100,
+            max = 1000,
             value = 50
           ),
           sliderInput(
@@ -289,12 +290,12 @@ shinyUI(
           
           plotOutput("water_regression", height = 500),
           
-          # Output summary of regression output. 
+          # Output summary of regression output. I would like to present this in a nicer format over the next 10 days.
           
           verbatimTextOutput(outputId = "RegSum"),
           p(
             "Now, let's take the model above and predict the number of water conflict events over the next 50 years for a a hypothetical river basin with the inputs given at left.
-          Three numbers are provided. Fit is the model's best guess for the number of conflict events. Low and high provide the range of values within which we are 95% confident that the true value lies."
+          Three numbers are provided. 'Fit' is the model's best guess for the number of conflict events. 'Low' and 'high' provide the range of values within which we are 95% confident that the true value lies."
           ),
           
           # Output predict() results. 
