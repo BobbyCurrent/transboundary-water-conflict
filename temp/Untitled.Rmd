@@ -1,6 +1,0 @@
----
-output: html_document
----
-
-# This is a test
-Does this render correctly?

@@ -11,7 +11,8 @@ library(lubridate)
 library(wbstats)
 library(naniar)
 library(democracyData)
-library(tidymodels)
+library(textdata)
+library(tm)
 library(tidyverse)
 
 # Import World Bank country codes:
@@ -24,8 +25,13 @@ wb_codes <- read_csv("raw_data/wb_country_codes_2.csv") %>%
 
 
 ############## Cleaning Events ##############
+
+# Read in Basin Register data
+
 basin_register <- read_csv("raw_data/intl_river_basin_register.csv") %>%
   select(bcode, ccode, basin_name, country_name, continent_code, area)
+
+# Create a tibble for each country-year from 1960 to 2005. 
 
 country_years <- tibble(year = rep(1960:2005, 812)) %>%
   arrange(desc(year))
@@ -38,39 +44,58 @@ country_years <- tibble(event_year = country_years %>% pull(year),
                         continent_code = rep(basin_register %>% pull(continent_code), 46),
                         area = rep(basin_register %>% pull(area), 46))
 
+# Import World Bank population data. 
+
 pop <- wb(indicator = "SP.POP.TOTL", startdate = 1900, enddate = 2015) %>%
   select(code = iso3c, date, pop = value) %>%
   mutate(date = as.double(date))
+
+# Import World Bank GDP data. 
 
 gdp <- wb(indicator = "NY.GDP.MKTP.CD", startdate = 1900, enddate = 2015) %>%
   select(code = iso3c, date, gdp = value) %>%
   mutate(date = as.double(date))
 
+# Import World Bank trade as a percentage of GDP data. 
+
 trade_percent_gdp <- wb(indicator = "TG.VAL.TOTL.GD.ZS", startdate = 1900, enddate = 2015) %>%
   select(code = iso3c, date, trade_percent_gdp = value) %>%
   mutate(date = as.double(date))
+
+# Import World Bank water availability data. 
 
 water_avail <- wb(indicator = "SH.H2O.SMDW.ZS", startdate = 1900, enddate = 2015) %>%
   select(code = iso3c, date, water = value) %>%
   mutate(date = as.double(date))
 
+# Import World Bank water withdrawal data data. 
+
 water_withdraw <- wb(indicator = "ER.H2O.FWTL.ZS", startdate = 1900, enddate = 2016) %>%
   select(code = iso3c, date, water_withdraw = value) %>%
   mutate(date = as.double(date))
+
+# Import World Bank agricultural land data. 
 
 ag_land <- wb(indicator = "AG.LND.AGRI.ZS", startdate = 1900, enddate = 2016) %>%
   select(code = iso3c, date, ag_land = value) %>%
   mutate(date = as.double(date))
 
+# Import World Bank drought data. 
+
 droughts <- wb(indicator = "EN.CLC.MDAT.ZS", startdate = 1900, enddate = 2016) %>%
   select(code = iso3c, date, droughts = value) %>%
   mutate(date = as.double(date))
+
+# Import Democratization index data. 
 
 eiu_mod <- eiu %>%
   select(country = eiu_country, x_eiu = eiu) %>%
   right_join(wb_codes, by = c("country" = "country_name")) %>%
   distinct(country, .keep_all = TRUE) %>%
   select(country_code, x_eiu)
+
+# Join World Bank and democratization data with previously-created country-year
+# tibble.
 
 joined_initial <- country_years %>%
   left_join(pop, by = c("ccode" = "code", "event_year" = "date"), suffix = c("", "_pop")) %>%
@@ -87,13 +112,18 @@ joined_initial <- country_years %>%
 
 ############## Cleaning Events ##############
 
-# Definining improperly formatted NA values.
+# Define improperly-formatted NA values.
 
 na_strings <- c("NA", "N.A.", "n/a", "?location", "?relvant", ".", " ")
 
-# Clean events data.
+# Define terms that characterize peaceful events.
 
 peace_terms <- c("cooperation", "cooperate", "cooperating", "agreement", "meeting", "plan", "signed", "treaty", "coordination", "coordinate", "talks", "summit", "agreed")
+
+# Clean events data by filtering for events whose bar_scale value is less than 0
+# (the bar_scale is a political science index used to denote water conflict
+# severity, where values less than 0 indicate violent events). Also, filter out
+# evens matching the peace_terms defined above.
 
 events <- read_csv("raw_data/events_raw.csv") %>%
   clean_names() %>%
@@ -106,6 +136,11 @@ events <- read_csv("raw_data/events_raw.csv") %>%
   # Filter for conflict events only (rather than including conflict mitigation events).
   
   filter(conflict == TRUE)
+
+# Tidy the conflict events data by making each observation a country-event,
+# rather than a country-country-event (in diads). This is necessary so that I
+# can join the World Bank and democratization datsets, which are at the country
+# level.
 
 events_tidy <- events %>%
   pivot_longer(cols = c(ccode1, ccode2),
@@ -124,7 +159,44 @@ events_tidy <- events %>%
          bar_scale,
          ccode,
          bccode = bccode1) %>%
-  replace_with_na_all(condition = ~.x %in% na_strings)
+  
+  # Replace improperly-formatted NA strings with the standard NA value.
+  
+  replace_with_na_all(condition = ~.x %in% na_strings) %>%
+  
+  # Rename issue type factors based on the codebook (included in the 'raw-data'
+  # folder).
+  
+  mutate(issue_type1 = as.character(issue_type1),
+         issue_type2 = as.character(issue_type2)) %>%
+  mutate(issue_type1 = ifelse(issue_type1 == "0", NA, issue_type1)) %>%
+  mutate(issue_type1 = ifelse(issue_type1 == "1", "Water Quality", issue_type1)) %>%
+  mutate(issue_type1 = ifelse(issue_type1 == "2", "Water Quantity", issue_type1)) %>%
+  mutate(issue_type1 = ifelse(issue_type1 == "3", "Hydro-Power", issue_type1)) %>%
+  mutate(issue_type1 = ifelse(issue_type1 == "4", "Navigation", issue_type1)) %>%
+  mutate(issue_type1 = ifelse(issue_type1 == "5", "Fishing", issue_type1)) %>%
+  mutate(issue_type1 = ifelse(issue_type1 == "6", "Flood Control/Relief", issue_type1)) %>%
+  mutate(issue_type1 = ifelse(issue_type1 == "7", "Economic Development", issue_type1)) %>%
+  mutate(issue_type1 = ifelse(issue_type1 == "8", "Joint Management", issue_type1)) %>%
+  mutate(issue_type1 = ifelse(issue_type1 == "9", "Irrigation", issue_type1)) %>%
+  mutate(issue_type1 = ifelse(issue_type1 == "10", "Infrastructure/Development", issue_type1)) %>%
+  mutate(issue_type1 = ifelse(issue_type1 == "11", "Technical Assistance", issue_type1)) %>%
+  mutate(issue_type1 = ifelse(issue_type1 == "12", "Border Issues", issue_type1)) %>%
+  mutate(issue_type1 = ifelse(issue_type1 == "13", "Territorial Issues", issue_type1)) %>%
+  mutate(issue_type2 = ifelse(issue_type2 == "0", NA, issue_type2)) %>%
+  mutate(issue_type2 = ifelse(issue_type2 == "1", "Water Quality", issue_type2)) %>%
+  mutate(issue_type2 = ifelse(issue_type2 == "2", "Water Quantity", issue_type2)) %>%
+  mutate(issue_type2 = ifelse(issue_type2 == "3", "Hydro-Power", issue_type2)) %>%
+  mutate(issue_type2 = ifelse(issue_type2 == "4", "Navigation", issue_type2)) %>%
+  mutate(issue_type2 = ifelse(issue_type2 == "5", "Fishing", issue_type2)) %>%
+  mutate(issue_type2 = ifelse(issue_type2 == "6", "Flood Control/Relief", issue_type2)) %>%
+  mutate(issue_type2 = ifelse(issue_type2 == "7", "Economic Development", issue_type2)) %>%
+  mutate(issue_type2 = ifelse(issue_type2 == "8", "Joint Management", issue_type2)) %>%
+  mutate(issue_type2 = ifelse(issue_type2 == "9", "Irrigation", issue_type2)) %>%
+  mutate(issue_type2 = ifelse(issue_type2 == "10", "Infrastructure/Development", issue_type2)) %>%
+  mutate(issue_type2 = ifelse(issue_type2 == "11", "Technical Assistance", issue_type2)) %>%
+  mutate(issue_type2 = ifelse(issue_type2 == "12", "Border Issues", issue_type2)) %>%
+  mutate(issue_type2 = ifelse(issue_type2 == "13", "Territorial Issues", issue_type2)) 
 
 ############################
 
@@ -166,16 +238,25 @@ treaties <- read_csv("raw_data/treaties_raw.csv") %>%
 
 
 ############## Perform Join ##############
+
+# Join the 'events' and 'treaties' datasets. Unfortunately, including the
+# 'organizations' dataset led my Shiny App to run out of memory, so I had to
+# exclude it for now.
+
 joined <- joined_initial %>%
   full_join(events_tidy, by = c("ccode", "bcode" = "b_code", "event_year" = "event_year")) %>%
   # left_join(organizations, by = c("ccode", "bccode")) %>%
   left_join(treaties, by = c("ccode", "bccode"))
 
 write_rds(joined, "joined.rds")
+
 ############################
 
 
 ############## Summarize Join ##############
+
+# Summarize the joined data, for use in regressions. 
+
 joined_summarized <- joined %>%
   filter(event_year <= 2005) %>%
   filter(event_year >= 1960) %>%
@@ -206,10 +287,16 @@ joined_summarized <- joined %>%
          eiu_avg_log = log(eiu_avg))
 
 write_rds(joined_summarized, "joined_summarized.rds")
+
 ############################
 
 
 ############## Logistic Join ##############
+
+# Summarize the joined data, for use in logistic regressions. Each river
+# basin-year is coded as '1' or '0', depending on whether or not a conflict
+# event occured in that basin-year.
+
 joined_logistic <- joined %>%
   filter(event_year <= 2005) %>%
   filter(event_year >= 1960) %>%
@@ -220,11 +307,50 @@ joined_logistic <- joined %>%
   mutate(conflict = ifelse(!is.na(event_summary), 1, 0)) %>%
   mutate(conflict = as.factor(conflict))
 
+# Save the resulting data for use in Shiny App.
+
 write_rds(joined_logistic, "joined_logistic.rds")
 
+############################
 
-############### Word Cloud ##################
-# library(wordcloud)
-# library(RColorBrewer)
-# library(wordcloud2)
-# library(tm)
+
+############## Text Corpus for Chatterplot ##############
+
+# Filter for distinct events only. 
+
+joined_wc_prep <- joined %>%
+  distinct(event_summary)
+
+# Create a text corpus using the terms in the event summaries.
+
+myCorpus = Corpus(VectorSource(joined_wc_prep$event_summary))
+
+# Clean up the corpus by making all words lowercase, removing punctuation
+# and numbers, and removing insignificant English words.
+
+myCorpus = tm_map(myCorpus, content_transformer(tolower))
+myCorpus = tm_map(myCorpus, removePunctuation)
+myCorpus = tm_map(myCorpus, removeNumbers)
+myCorpus = tm_map(myCorpus, removeWords, stopwords("english"))
+
+# Convert corpus into a matrix input, which is needed to generate a frequency
+# distribution.
+
+myDTM = TermDocumentMatrix(myCorpus,
+                           control = list(minWordLength = 1))
+
+# Generate the frequency of each term. 
+
+terms <- tidy(myDTM) %>%
+  group_by(term) %>%
+  summarize(count = sum(count)) %>%
+  
+  # Download the AFINN Sentiment Lexicon and join it to the term-frequency
+  # tibble.
+  
+  left_join(get_sentiments("afinn"), by = c(term = "word")) %>%
+  mutate(value = ifelse(is.na(value), 0, value))
+
+# Save the resulting data for use in Shiny App.
+
+saveRDS(terms, "terms.RDS")

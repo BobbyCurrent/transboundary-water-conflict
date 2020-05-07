@@ -5,6 +5,7 @@
 joined <- readRDS("joined.rds")
 joined_summarized <- readRDS("joined_summarized.rds")
 joined_logistic <- readRDS("joined_logistic.rds")
+terms <- readRDS("terms.RDS")
 
 shinyServer(function(input, output) {
     
@@ -61,7 +62,7 @@ shinyServer(function(input, output) {
             )
         
         # Build map using CARTO DB Positron provider tiles. Center view in the
-        # middle of the Earth, zoomed out enough to see all countries..
+        # middle of the Earth, zoomed out enough to see all countries.
         
         leaflet(width = "100%") %>%
             addProviderTiles(providers$CartoDB.Positron) %>%
@@ -69,13 +70,14 @@ shinyServer(function(input, output) {
                     lat = 30,
                     zoom = 1.5) %>%
             
-            # Build polygons that display the number of conflict events.
+            # Build river basin polygons that display the number of conflict
+            # events.
             
             addPolygons(
                 data = basins_geometry,
                 stroke = FALSE,
                 smoothFactor = 0.2,
-                fillOpacity = .6,
+                fillOpacity = 1,
                 popup = paste(
                     basins_geometry$NAME,
                     "Basin <br>",
@@ -106,7 +108,7 @@ shinyServer(function(input, output) {
     
     ############## SECOND PAGE ##############
     
-    # Render plot that display a scatterplot and line of best fit when 1 X and 1
+    # Render plot that displays a scatterplot and line of best fit when 1 X and 1
     # Y variable are selected.
     
     output$water_regression <- renderPlot({
@@ -314,7 +316,8 @@ shinyServer(function(input, output) {
                 })
         
         # Set independent variable slider values equal to the input names
-        # required by the above models.
+        # required by the above models. Note that the slider names could not be
+        # the same as the input names, or else Shiny threw an error.
         
         sliderValues <- reactive({
             data.frame(
@@ -359,57 +362,76 @@ shinyServer(function(input, output) {
     
     ############## THIRD PAGE ##############
     
-    # Filter for only unique event summaries.
-    
-    joined_wc_prep <- joined %>%
-        distinct(event_summary)
-    
-    # Create a text corpus using the terms in the event summaries.
-    
-    myCorpus = Corpus(VectorSource(joined_wc_prep$event_summary))
-    
-    # Clean up the corpus by making all words lowercase, removing punctuation
-    # and numbers, and removing insignificant English words.
-    
-    myCorpus = tm_map(myCorpus, content_transformer(tolower))
-    myCorpus = tm_map(myCorpus, removePunctuation)
-    myCorpus = tm_map(myCorpus, removeNumbers)
-    myCorpus = tm_map(myCorpus, removeWords, stopwords("english"))
-    
-    # Convert corpus into a matrix input, which is required to generate a word
-    # cloud.
-    
-    myDTM = TermDocumentMatrix(myCorpus,
-                               control = list(minWordLength = 1))
-    m = as.matrix(myDTM)
-    terms <- sort(rowSums(m), decreasing = TRUE)
-    
-    # Generate the word cloud, using repeatable() to ensure the result is
-    # consistent each time.
-    
-    wordcloud_rep <- repeatable(wordcloud)
+    # Create a plot that shows the most frequently-used terms in the conflict
+    # event descriptions.
     
     output$plot <- renderPlot({
-        wordcloud_rep(
-            names(terms),
-            terms,
-            c(4, 0.5),
+        
+        # Exclude '0' sentiment values, if the appropriate box is checked. 
+        
+        if (input$toggleZero) terms <- terms %>% filter(value != 0)
+        
+        # Set filter terms based on user input through the slider sidebar.
+        
+        terms %>%
+            filter(count >= input$freq[1]) %>%
+            filter(count <= input$freq[2]) %>%
+            filter(value >= input$sentiment[1]) %>%
+            filter(value <= input$sentiment[2]) %>%
+            # top_n(100, wt = count) %>%
             
-            # Set the frequency and maximum number of words based on user input. 
+            # Create plot, using geom_text_repel() to minimize word overlap.
             
-            min.freq = input$freq,
-            max.words = input$max,
-            colors = brewer.pal(8, "Paired")
-        )
-        
-        # I am dissatisfied with the large margin around the word cloud, but
-        # could not find a fix online. Hopefully I will be able to resolve this
-        # in the next 10 days.
-        
-        # I am interested in potentially adding more to this page, but ran out
-        # of Shiny memory. Perhaps I should pre-render the corpus, though I am
-        # unsure how to store a matrix object.
-        
+            ggplot(aes(x = value, y = count, label = term)) + 
+            geom_text_repel(segment.alpha = 0, aes(color = value, size = count)) + 
+            scale_color_gradient(high="green3", low="violetred", 
+                                 guide = FALSE) + 
+            
+            # Set word size restrictions, to make them as readable as possible
+            # (not too large or too small).
+            
+            scale_size_continuous(range = c(4, 8),
+                                  guide = FALSE) + 
+            labs(title = "Most Frequent Keywords in Water Conflict Event Descriptions",
+                 subtitle = "Sorted by sentiment, where - 2 is most negative and + 2 is most positive",
+                 caption = "Event descriptions written by the OSU Program on Water Conflict Transformation",
+                 x = "Sentiment", y = "Frequency") +
+            theme_classic()
+    })
+    
+    # Create a plot that displays the frequency of each issue type, from 1960 to
+    # 2005.
+    
+    output$issuePlot <- renderPlot({
+        joined %>%
+            
+            # Tidy the 'joined' data, so that each issue_type is its own observation. 
+            
+            pivot_longer(cols = c(issue_type1, issue_type2), names_to = "number", values_to = "issue_type") %>%
+            filter(!is.na(issue_type) & !is.na(continent_code)) %>%
+            
+            # Find the frequency of each issue type. 
+            
+            group_by(issue_type, continent_code) %>%
+            summarize(count = n()) %>%
+
+            # Create the plot, reordering the issue types in descending order by
+            # frequency, and flipping the coordinates to yield a horizontal bar
+            # chart (which fit better on the page aesthetically.)
+            
+            ggplot(aes(x = reorder(issue_type, count), y = count, fill = continent_code)) + 
+            geom_col() + 
+            coord_flip() + 
+            labs(title = "Most Frequent Issues Sparking Water Conflict",
+                 caption = "Coded by the OSU Program on Water Conflict Transformation",
+                 x = "Issue Type", y = "Frequency",
+                 fill = "Continent") + 
+            scale_y_continuous(expand = c(0, 0), limits = c(0, 2000)) +
+            theme_classic() + 
+            
+            # Use same colors as on page 1, for continuity. 
+            
+            scale_fill_brewer(palette = "Spectral")
     })
     
     ############################
