@@ -505,11 +505,22 @@ shinyUI(
                                  description of the organization's activities."
           )
         ),
-        "This research also uses data from the",
-        a("World Bank", href = "https://data.worldbank.org"),
-        "accessed using the",
-        a("wbstats() package", href = "https://cran.r-project.org/web/packages/wbstats/index.html"),
-        "in R."
+        "This research also uses data from the following sources:",
+        tags$ol(
+          tags$li(
+            a("The World Bank,", href = "https://data.worldbank.org"),"accessed using the",
+            a("wbstats() package.", href = "https://cran.r-project.org/web/packages/wbstats/index.html")
+          ),
+          tags$li(
+            a("EIU Democratization Index,", href = "https://www.eiu.com/topic/democracy-index"), "accessed using the",
+            a("democracyData package.", href = "https://github.com/xmarquez/democracyData")
+          ),
+          tags$li(
+            a("AFINN Sentiment Lexicon,", href = "http://corpustext.com/reference/sentiment_afinn.html"), "accessed using the",
+            a("tidytext package.", href = "https://github.com/xmarquez/democracyData")
+          )
+        )
+       
       ),
       
       h3("Acknowledgements"),
