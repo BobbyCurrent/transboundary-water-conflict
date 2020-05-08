@@ -20,7 +20,8 @@ Since the 1990s, there has been a precipitous increase in the frequency and seve
     * joined_logistic.rds: Transforms the 'joined.rds' dataset to be used for logistic regression (each basin-year is coded 0/1, where 1 means that an event occured).
     * joined_summarized.rds: Transforms the 'joined.rds' dataset to be used for glm regression (by performing summary statistics at a basin-year level, averaged over the period extending from 1960 to 2009).
     * pop.rds: Population per country-year. Rendered using the 'gather_raw_data.R' script.
-    * server.R Shiny App server script.
+    * server.R: Shiny App server script.
+    * terms.rds: Terms for chatterplot. Rendered using the 'gather_raw_data.R' script.
     * trade_percent_gdp.rds: Trade as a percent of GDP per country-year. Rendered using the 'gather_raw_data.R' script.
     * ui.R: Shiny App UI script.
     * water_withdraw.rds: Water withdrawal as a percentage of total water resources per country-year. Rendered using the 'gather_raw_data.R' script.

@@ -33,7 +33,7 @@ shinyUI(
       "The Puzzle",
       h2("Water conflict: A puzzling issue."),
       p(
-        "Since the 1990s, there has been a precipitous increase in the frequency and severity of water conflicts around the world.
+        "Since the 1990s, there has been a precipitous increase in the frequency and severity of water conflicts (violent interactions between states where water is a primary source of conflict or is used as a weapon of conflict) around the world.
       Scholars have primarily studied this phenomenon qualitatively and at a regional level, hypothesizing that increased water conflict might be due to scarcity resulting from population increases, economic development, climatic conditions, or anti-democratic governance.
       This project compiles and analyzes a wide variety of metrics for the 254 major river basins of the world, taking a first step toward evaluating the claims of these qualitative scholars.
       By showing which factors are correlated with water conflict, this project serves as the groundwork for my senior honors thesis on the governance of transboundary natural resources in the Middle East."
@@ -53,8 +53,7 @@ shinyUI(
                    h3("Water conflict is increasing with time."),
                    p(
                      "As the graph at left shows, there has been a general upward trend in water conflict over time, with an especially significant increase beginning in the 1990s.
-                   This increase has been especially significant in Asia and Europe, while South America has seen a large decrease in conflict.
-                     Scholars have attributed this increase to a number of different factors.
+                   This increase has been largest in Asia and Europe, while South America has seen a large decrease in conflict.
                      Interestingly, note that Africa, which frequently dominates global narratives about water conflict, has experienced relatively few conflict events.
                      Of course, it is important to remember that the severity of conflict is independent from the frequency of conflict events."
                    )
@@ -63,8 +62,8 @@ shinyUI(
           4,
           h3("Water conflict occurs around the world."),
           p(
-            "As can be seen in the map at right, water conflict is a ubiquitous phenomenon.
-            However, there are hotspots.
+            "As can be seen in the map at right, water conflict is not isolated to one region.
+            However, there are notable hotspots.
             Click on the river basins at right for counts of their water conflict events."
           ),
           
@@ -90,39 +89,42 @@ shinyUI(
       h2("Predicting Water Conflict"),
       p(
         "This project's dataset is the first publicly-available data source to provide comprehensive statistics at a basin level for all of the world's major River Basins.
-        Combining data from the Oregon State University Program on Water Conflict Transformation, the World Bank, the United Nations, and the EIU Democracy Index, this dataset covers all 254 major river basins of the world from 1960 to 2009:"
+        Combining data from the Oregon State University Program on Water Conflict Transformation, the World Bank, and the EIU Democracy Index, this dataset covers all 254 major river basins of the world from 1960 to 2005 (see the", tags$a("About page", href="https://wyatthurt.shinyapps.io/water_conflict/_w_32445f8c/#tab-9893-5"), "for more information on these data sources):"
       ),
       tags$ul(
         tags$li(
-          "Basin GDP is country-level GDP for each year, either summed or averaged across each river basin (source: World Bank)"
+          tags$b("Number of conflict events"), "is the total number of water conflict events for each river basin, summed over the period from 1960 to 2005. (source: OSU Program on Water Conflict Transformation)."
         ),
         tags$li(
-          "Basin population is country-level population for each year, either summed or averaged across each river basin (source: United Nations"
+          tags$b("Basin GDP"), "is country-level GDP for each year, either summed or averaged across each river basin (source: World Bank)."
         ),
         tags$li(
-          "Trade as a percentage of GDP is given at a country level for each year, averaged across each river basin (source: World Bank)"
+          tags$b("Basin population"), "is country-level population for each year, either summed or averaged across each river basin (source: World Bank)."
         ),
         tags$li(
-          "Rate of water consumption is the amount of water each basin country consumes, divided by the country's total available water resources. This metric is averaged across each river basin (source: World Bank)"
+          tags$b("Trade as a percentage of GDP"), "is calculated at the country level for each year and averaged across each river basin (source: World Bank)."
         ),
         tags$li(
-          "Agricultural land is the total area of agricultural land per country for each year (in km^2), either summed or averaged (source: World Bank)"
+          tags$b("Rate of water consumption"), "is the amount of water each basin country consumes, divided by the country's total available water resources. This metric is averaged across each river basin (source: World Bank)."
         ),
         tags$li(
-          "Percent of population affected by drought is the percentage of each country's population that experienced a drought event over the 60 year period, averaged across each river basin (source: World Bank)"
+          tags$b("Agricultural land"), "is the total area of agricultural land per country for each year (in km), either summed or averaged across each river basin (source: World Bank)."
         ),
         tags$li(
-          "The Democratization index score is the democracy score (from 1 to 10, where 10 is most democratic) assigned to each country in 2015, averaged across each river basin (source: EIU Democratization Index)"
+          tags$b("Percent of population affected by drought"), "is the percentage of each country's population that experienced a drought event betwen 1960 and 2005, averaged across each river basin (source: World Bank)."
         ),
         tags$li(
-          "All of the above variables can be logged() as well, which can improve the quality of regression."
+          "The", tags$b("Democratization index score"), "is the democracy score (from 1 to 10, where 10 is most democratic) assigned to each country in 2015, averaged across each river basin (source: EIU Democratization Index)."
+        ),
+        tags$li(
+          "All of the above variables can be logged as well, which can improve the quality of regression for clustered data."
         )
       ),
       p(
-        "Having so many statistics at the basin (rather than country) level provides a rich opportunity to test various hypotheses about water conflict. Use the dashboard below to construct a model.
-        Then, use the sliders at left to predict the expected level of water conflict over a 50 year period, given your inputs.
-        Note that several other modeling options were explored as part of this project, but I could not establish strong relationships between any of the given explanatory variables and the propensity for water conflict within a given river bain in a given year (using either logistic or linear regression).
-        However, as can be seen below, strong correlations can be observed when data is aggregated over a 50 year period. This suggests that it is very difficult to predict whether water conflict will occur within a given year, but that long-range estimates can be quite accurate."
+        "Having so many statistics at the river basin level provides a rich opportunity to test various hypotheses about water conflict. Use the dashboard below to construct a model.
+        Then, use the sliders at left to predict the expected level of water conflict over a 50 year period, given the selected inputs.
+        Note that models at using country-level units and country-year-level units were explored as part of this project, but neither resulted in strong correlations between any of the given explanatory variables and the propensity for water conflict within a given river bain in a given year.
+        However, as can be seen below, strong correlations can be observed when data is aggregated at the river basin level over a 50 year period. This suggests that it is very difficult to predict whether water conflict will occur within a given year or given country, but that long-range estimates at the basin level can be quite accurate."
       ),
       sidebarLayout(
         sidebarPanel(
@@ -295,7 +297,7 @@ shinyUI(
           verbatimTextOutput(outputId = "RegSum"),
           p(
             "Now, let's take the model above and predict the number of water conflict events over the next 50 years for a a hypothetical river basin with the inputs given at left.
-          Three numbers are provided. 'Fit' is the model's best guess for the number of conflict events. 'Low' and 'high' provide the range of values within which we are 95% confident that the true value lies."
+          Three numbers are provided. 'Fit' is the model's best guess for the number of conflict events. 'Lwr' and 'upr' provide the range of values within which we are 95% confident that the true number of conflict events lies."
           ),
           
           # Output predict() results. 
@@ -330,11 +332,11 @@ shinyUI(
                
                sidebarPanel(
                  p(
-                   "Event frequency can only tell us so much.
-                   Now, we examine the issues that most frequently arise in water conflicts.
-                   The word cloud below displays terms from water conflict event descriptions written by the Oregon State University Program on Water Conflict Transformation.
-                   The more frequently a word appears in the dataset, the larger it is in the plot below.
-                   Use the sliders at left to adjust the thresholds required for a word to appear in the word cloud."
+                   "Now that we've explored some of the potential causes of water conflict, let's examine the nature of the conflicts themselves.
+                   The", a("chatterplot", href = "https://towardsdatascience.com/rip-wordclouds-long-live-chatterplots-e76a76896098"), "at right displays terms from water conflict event descriptions written by the Oregon State University Program on Water Conflict Transformation.
+                   The more frequently a word appears in the dataset, the larger it appears in the plot.
+                   Words are coded based on the", a("AFINN Sentiment Lexicon,", href = "http://corpustext.com/reference/sentiment_afinn.html"), "where green words are most positive, and red words are most negative.
+                   Use the sliders below to adjust the thresholds required for a word to appear in the plot."
                  ),
                  
                  # Slider inputs to set the range of term frequencies and
@@ -370,7 +372,7 @@ shinyUI(
              h4("Most Frequent Conflict Types"),
              p("The sentiment analysis above is useful, but tells us little about the broad-strokes issues that define water conflict. 
                Researchers at the Oregon State University Program on Water Conflict Transformation assigned up to two 'issue types' to each conflict event in their database. 
-               The plot below displays the top issue types from 1960 to 2009."),
+               The plot below displays the top issue types from 1960 to 2005."),
              
              # Render issue_type frequency plot.
              
@@ -388,7 +390,7 @@ shinyUI(
       p(
         "Aggregate data are useful, but it is also important to examine variation and nuances between individual river basins.
              The dashboard below provides a number of measures at a basin-specific level.
-             Use the dropdown to select a river basin. All basis which have experienced 5 or more water conflicts since 1960 are included.
+             Use the dropdown to select one of the river basins which has experienced 5 or more water conflicts since 1960.
              If there are no relevant elements for a given measure, its corresponding graph or table will not appear."
       ),
       fluidRow(
@@ -445,7 +447,7 @@ shinyUI(
     ############## FIFTH PAGE ##############
     
     tabPanel(
-      "About",
+      "About", value = "about_page",
       h3("Background"),
       p(
         "In recent years, journalists, policymakers, and academics
@@ -454,8 +456,7 @@ shinyUI(
                               Approximately",
         a("1.2 billion people",
           href = "https://www.un.org/waterforlifedecade/scarcity.shtml"),
-        "live
-                                in water-scarce areas worldwide, and this number is expected to
+                              "live in water-scarce areas worldwide, and this number is expected to
                               increase significantly under the stress of ",
         a("climate change",
           href = "https://blogs.ei.columbia.edu/2019/09/23/climate-change-impacts-water/"),
@@ -465,16 +466,15 @@ shinyUI(
         "Some academics have suggested that countries will turn to violent conflict as they
                               attempt to preserve precious transboundary water supplies. Others, led by",
         a("Elinor Ostrom", href = "https://www.econlib.org/library/Enc/bios/Ostrom.html"),
-        "winner
-                              of the Nobel Prize in Economics, have suggested that increased scarcity will motivate states
+        "(winner of the Nobel Prize in Economics), have suggested that increased scarcity will motivate states
                               to cooperate with one another as they attempt to collectively govern shared waters."
       ),
       p(
-        "While many academics have conducted in-depth qualitative case studies of water governance
-                            in transboundary river basins—including the Jordan River, Nile River, and Indus River—few
+        "While many academics have conducted in-depth", a("qualitative case studies", href = "https://www.annualreviews.org/doi/abs/10.1146/annurev.energy.32.041006.101434"),  
+                            "of water governance in transboundary river basins—including the Jordan River, Nile River, and Indus River—few
                             quantitative studies have examined the effect of resource scarcity on water conflict.
                             This project aims to fill that research gap using newly-released datasets covering water
-                            governance outcomes between 1960 and 2009. In so doing, it seeks to take a first step toward evaluating claims about the causes of water conflict."
+                            governance outcomes between 1960 and 2005. In so doing, it seeks to take a first step toward evaluating claims about the causes of water conflict."
       ),
       p(
         "This project's GitHub repository lives",
@@ -485,7 +485,7 @@ shinyUI(
       h3("The Data"),
       p(
         "This project draws heavily on the following datasets from the Oregon State University",
-        a("Program in Water Conflict Management and Transformation", href = "https://transboundarywaters.science.oregonstate.edu/content/data-and-datasets"),
+        a("Program in Water Conflict Management and Transformation:", href = "https://transboundarywaters.science.oregonstate.edu/content/data-and-datasets"),
         tags$ol(
           tags$li(
             "International Freshwater Treaties Database: A dataset of over 600 international,

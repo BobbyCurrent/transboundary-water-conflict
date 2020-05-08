@@ -81,7 +81,7 @@ shinyServer(function(input, output) {
                 popup = paste(
                     basins_geometry$NAME,
                     "Basin <br>",
-                    "Number of Violent Conflicts:",
+                    "Water Conflict Events:",
                     basins_geometry$num_events
                 ),
                 color = ~ binpal_num_events(num_events)
@@ -95,7 +95,7 @@ shinyServer(function(input, output) {
                 "bottomright",
                 pal = binpal_num_events,
                 values = basins_geometry$num_events,
-                title = "# of water conflict <br> events, 1960 - 2009",
+                title = "# of water conflict <br> events, 1960 - 2005",
                 opacity = 1,
                 labFormat = labelFormat(digits = 0)
                 # group = "Conflict Events" (deprecated after removing other
@@ -118,7 +118,7 @@ shinyServer(function(input, output) {
             theme_classic() +
             geom_jitter() +
             labs(title = "Basin-level Water Conflict Metrics",
-                 subtitle = "Summarized at the basin-country level over the period 1960-2009",
+                 subtitle = "Summarized at the basin-country level over the period 1960-2005",
                  caption = "Sources: World Bank, Oregon State University")
         
         # Add appropriate axis labels based on variables selected.
@@ -142,7 +142,7 @@ shinyServer(function(input, output) {
         if (input$varOI_x == "ag_land_avg")
             p <- p + xlab("Average agricultural land (km^2)")
         if (input$varOI_x == "droughts_avg")
-            p <- p + xlab("Average % of population affected by drought between 1960 and 2009")
+            p <- p + xlab("Average % of population affected by drought between 1960 and 2005")
         if (input$varOI_x == "eiu_avg")
             p <- p + xlab("Average democratization index score (10 most democratic)")
         
@@ -165,7 +165,7 @@ shinyServer(function(input, output) {
         if (input$varOI_x == "ag_land_avg_log")
             p <- p + xlab("Average agricultural land (logged km^2)")
         if (input$varOI_x == "droughts_avg_log")
-            p <- p + xlab("Average % of population affected by drought between 1960 and 2009 (logged)")
+            p <- p + xlab("Average % of population affected by drought between 1960 and 2005 (logged)")
         if (input$varOI_x == "eiu_avg_log")
             p <- p + xlab("Average democratization index score (logged)")
         
@@ -188,7 +188,7 @@ shinyServer(function(input, output) {
         if (input$varOI_y == "ag_land_avg")
             p <- p + ylab("Average agricultural land (km^2)")
         if (input$varOI_y == "droughts_avg")
-            p <- p + ylab("Average % of population affected by drought between 1960 and 2009")
+            p <- p + ylab("Average % of population affected by drought between 1960 and 2005")
         if (input$varOI_y == "eiu_avg")
             p <- p + ylab("Average democratization index score")
         
@@ -211,7 +211,7 @@ shinyServer(function(input, output) {
         if (input$varOI_y == "ag_land_avg_log")
             p <- p + ylab("Average agricultural land (logged km^2)")
         if (input$varOI_y == "droughts_avg_log")
-            p <- p + ylab("Average % of population affected by drought between 1960 and 2009 (logged)")
+            p <- p + ylab("Average % of population affected by drought between 1960 and 2005 (logged)")
         if (input$varOI_y == "eiu_avg_log")
             p <- p + ylab("Average democratization index score (logged)")
         
