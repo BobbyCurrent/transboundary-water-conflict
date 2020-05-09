@@ -33,7 +33,7 @@ shinyUI(
       "The Puzzle",
       h2("Water conflict: A puzzling issue."),
       p(
-        "Since the 1990s, there has been a precipitous increase in the frequency and severity of water conflicts (violent interactions between states where water is a primary source of conflict or is used as a weapon of conflict) around the world.
+      "Since the 1990s, there has been a precipitous increase in the frequency and severity of water conflicts (violent interactions between states where water is a primary source of conflict or is used as a weapon of conflict) around the world.
       Scholars have primarily studied this phenomenon qualitatively and at a regional level, hypothesizing that increased water conflict might be due to scarcity resulting from population increases, economic development, climatic conditions, or anti-democratic governance.
       This project compiles and analyzes a wide variety of metrics for the 254 major river basins of the world, taking a first step toward evaluating the claims of these qualitative scholars.
       By showing which factors are correlated with water conflict, this project serves as the groundwork for my senior honors thesis on the governance of transboundary natural resources in the Middle East."
@@ -52,10 +52,10 @@ shinyUI(
                    5,
                    h3("Water conflict is increasing with time."),
                    p(
-                     "As the graph at left shows, there has been a general upward trend in water conflict over time, with an especially significant increase beginning in the 1990s.
+                   "As the graph at left shows, there has been a general upward trend in water conflict over time, with an especially significant increase beginning in the 1990s.
                    This increase has been largest in Asia and Europe, while South America has seen a large decrease in conflict.
-                     Interestingly, note that Africa, which frequently dominates global narratives about water conflict, has experienced relatively few conflict events.
-                     Of course, it is important to remember that the severity of conflict is independent from the frequency of conflict events."
+                   Interestingly, note that Africa, which frequently dominates global narratives about water conflict, has experienced relatively few conflict events.
+                   Of course, it is important to remember that the severity of conflict is independent from the frequency of conflict events."
                    )
                  )),
         fluidRow(column(
